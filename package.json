@@ -4,9 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "heroku-postbuild": "ng build --configuration=production",
+    "heroku-postbuild": "npm install --legacy-peer-deps && npm run build",
     "test": "ng test"
   },
   "private": true,
