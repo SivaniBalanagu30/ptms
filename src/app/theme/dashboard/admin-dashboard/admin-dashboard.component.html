@@ -1,0 +1,259 @@
+<p-toast></p-toast>
+<h1 class="topHeader" style="color: #3F51B5; margin-left: 1rem; font-size: 20px;">Dashboard</h1>
+<div class="p-0" style="border-radius: 1rem; margin-top: -2%;">
+ <div class="col-lg-12 d-flex">
+  <div class="card col-lg-7" style="border-radius: 1rem;">
+    <!-- <div class="card"  > -->
+      <h4 style="color: #3F51B5;font-weight: 600;padding-top: 11px;">Timesheets</h4>
+      <table class="table table-bordered">
+        <thead style="background-color:#F8F8F8; border-bottom: rgb(221, 219, 219) solid 1px;">
+          <tr>
+            <th class ="font"scope="col">Dates</th>
+            <th class ="font" style="width:90px" scope="col" (click)="sortStatusColumn()">Status
+              <span data-toggle="tooltip" data-placement="top" title="Sort" [ngClass]="{'fa-solid fas fa-arrow-up': statusSortDirection === 'asc', 'fa-solid fa-arrow-down': statusSortDirection === 'desc'}"></span>
+            </th>
+            <th class ="font ml-1"   scope="col">Comments</th>
+            <th class ="font" scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let row of timeSheetList; let i = index">
+          <tr>
+            <td class="font">{{ row?.start_date | customDate }} - {{ row?.end_date | customDate }}</td>
+            <td class="font" [ngStyle]="{ color: getStatusColor(row?.status) }">
+              {{ row?.status === 'Saved' ? 'Draft' : '' || row?.status === 'NotSubmitted' ? 'Pending Submission' : '' || row?.status }}
+            </td>
+            <td class="font">
+              <div class="truncate-text" title="{{row?.approver_comments}}">
+                {{row?.approver_comments}}
+              </div>
+            </td>
+            <td class="font" style="width: 130px;">
+              <!-- <img class='edit mr-1' width='20' height='20' style='cursor:pointer;' src='https://img.icons8.com/ios/50/create-new.png' alt='create-new' data-toggle='tooltip' data-placement='top' title='Edit timesheets' (click)="row.status === 'Saved' || row.status === 'Submitted' || row.status === 'NotSubmitted' || row.status === 'Rejected' ? editTimesheet(row) : null" [ngClass]="{ 'disabled-icon': !(row.status === 'Saved' || row.status === 'NotSubmitted' || row.status === 'Rejected') }"/> -->
+              <i data-toggle="tooltip" *ngIf="isAllowedUploadTimesheet == 'true'" data-placement="top" title="Edit timesheets" (click)="row.status === 'Saved' || row.status === 'Submitted' || row.status === 'NotSubmitted' || row.status === 'Rejected' || row.status === 'Approved' ? editTimesheet(row) : null"
+                class="fa-solid fas fa-file-pen" [ngClass]="{ 'disabled-icon':  row.manual_entry === true }"
+                style="cursor: pointer; margin-right: 10px; font-size:17px;"></i>
+              <i data-toggle="tooltip" *ngIf="isAllowedUploadTimesheet == 'false'" data-placement="top" title="Edit timesheets" (click)="row.status === 'Saved' || row.status === 'Submitted' || row.status === 'NotSubmitted' || row.status === 'Rejected' ? editTimesheet(row) : null"
+                class="fa-solid fas fa-file-pen" [ngClass]="{ 'disabled-icon': row.status === 'Approved' || row.status === 'Submitted'}"
+                style="cursor: pointer; margin-right: 10px; font-size:17px;"></i>
+
+
+                <i class='view mr-1 mb-1 fa-solid fa-file-lines' *ngIf="isAllowedUploadTimesheet == 'true'" style='cursor:pointer;color: #b8b894; font-size: 17px;' alt='fine-print--v1' data-toggle='tooltip' data-placement='top' title='View timesheets' (click)="row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected' ? showModal(row) : null" 
+                [ngClass]="{ 'disabled-icon': row.manual_entry == false }"></i>
+                <i class='view mr-1 mb-1 fa-solid fa-file-lines' *ngIf="isAllowedUploadTimesheet == 'false'" style='cursor:pointer;color: #b8b894; font-size: 17px;' alt='fine-print--v1' data-toggle='tooltip' data-placement='top' title='View timesheets' (click)="row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected' ? showModal(row) : null" 
+                [ngClass]="{ 'disabled-icon': row.status==='NotSubmitted'}"></i>
+              <!-- <i data-toggle="tooltip" data-placement="top" title="View Timesheets" (click)="row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected' ? showModal(row) : null"
+                class="fa fa-eye" aria-hidden="true" [ngClass]="{ 'disabled-icon': !(row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected') }"
+                style="cursor: pointer; margin-right: 5px;"></i> --> 
+              <i data-toggle="tooltip" *ngIf="isAllowedUploadTimesheet == 'true'" data-placement="top" title="Download timesheets" (click)="row.status === 'Approved' || (row.status === 'Submitted') ? downloadTimesheetPDF(row) : null" class="fas fa-file-pdf"
+                [ngClass]="{ 'disabled-icon': row.manual_entry == false || row.status==='Rejected'}" style="cursor: pointer; margin-left: 10px; font-size:17px; color: red;"></i>
+              <i data-toggle="tooltip" *ngIf="isAllowedUploadTimesheet == 'false'" data-placement="top" title="Download timesheets" (click)="row.status === 'Approved' || (row.status === 'Submitted') ? downloadTimesheetPDF(row) : null" class="fas fa-file-pdf"
+                [ngClass]="{ 'disabled-icon': row.status === 'Submitted' || row.status === 'NotSubmitted' || row.status === 'Saved' || row.status === 'Rejected'}" style="cursor: pointer; margin-left: 10px; font-size:17px; color: red;"></i>
+
+              <i *ngIf="isAllowedUploadTimesheet == 'true'" (click)="downloadApprovedTimesheetFile(row)" [ngClass]="{ 'disabled-icon': row.download_doc === false }" data-toggle="tooltip" data-placement="top" title="Download uploaded document" class="fa-solid fa-file-circle-check" style="cursor: pointer; margin-left: 10px; font-size:17px; color: #DF920B
+                ;"></i>
+            </td>
+          </tr>
+        </tbody>
+                      
+      </table>
+      <div *ngIf="this.timeSheetList?.length > 8"class="text-right">
+        <a [routerLink]="['/myTimeSheet']" style="color: blue; text-decoration: underline;cursor: pointer; font-size: 12px;"> View more >></a>
+
+      </div>
+
+    <!-- </div> -->
+  </div>
+  <div class="card col-lg-4" style="border-radius: 1rem;">
+    <!-- <div class="card" > -->
+      <h4 style="color: #3F51B5;font-weight: 600;padding-top: 11px;">Projects</h4>
+    <table class="table table-bordered">
+      <thead style="background-color:#F8F8F8; border-bottom: rgb(221, 219, 219) solid 1px;">
+        <tr>
+          <th scope="col">Project Name</th>
+          <th scope="col">Work Hours Limit</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let row of projectList?.length >= 8 ? projectList.slice(0,8) : projectList; let i =  index">
+        <tr>
+          <td class="font">{{row.project.project_name}}</td>
+          <td class="font">{{row.work_hour_limit}}</td>
+          <td class="font" [ngStyle]="{color:row.status == 'Assigned' ? 'green' : 'red'}">{{row.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="projectList?.length > 8" class="text-right">
+      <!-- <a [routerLink]="['/project-list/my-projects']" >>> View more</a> -->
+      <a  (click)="navigateToProjectTab()" style="color: blue; text-decoration: underline; cursor: pointer;font-size: 12px;"> View more >></a>
+
+
+      </div>
+    </div>
+    </div>
+  <!-- </div> -->
+ </div>
+
+ <!-----------Approvals------------>
+ <div class="col-lg-12" *ngIf="role !== 'Resource'">
+  <div class="card" style="border-radius: 1rem;">
+    <div >
+      <h4 style="color: #3F51B5;font-weight: 600;padding-top: 11px;">Approvals</h4>
+    </div>
+    <ag-grid-angular class="ag-theme-alpine pt-3" [rowData]="this.timeSheetList1"
+    [columnDefs]="approvalColumnDefs" [pagination]="true" [paginationPageSize]="10"  [suppressHorizontalScroll]="true"
+    (gridReady)="onGridReadyView($event)"></ag-grid-angular>
+      <div *ngIf="this.timeSheetList?.length > 8"class="text-right">
+        <a [routerLink]="['/myTimeSheet']" style="cursor: pointer;font-size: 12px;"> View more >></a>
+  
+      </div>
+  </div>
+  
+ </div>
+ 
+
+
+  
+<div  [config]="{backdrop: 'static'}" bsModal #timesheetData="bs-modal" class="modal fade" tabindex="-1" id="timesheetDataModal" role="dialog"
+aria-hidden="true">
+<div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+    <div class="modal-header">
+        <strong class="ml-2 mt-2">Timesheets</strong>
+        <span type="button" class="close mr-2" (click)="hideModal()">&times;</span>
+    </div>
+    <div class="modal-body pt-2">
+      
+      <ng-container *ngFor="let gridConfig of gridConfigurations; let i = index">
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <h3 *ngIf="gridConfigurations.length > 1" style="margin-top: 5px; font-weight: bold; color: #5865C7;">Timesheet - {{i+1}}</h3>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="row">
+          <span class="col-lg-5"><b class="form-label">Client Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.client_name}}</span>
+        </div>
+        <div class="row">
+          <span class="col-lg-5"><b class="form-label">Project Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.project_name}}</span>
+        </div>
+        <div class="row">
+          <span class="col-lg-5"><b class="form-label">Project Manager Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.project_manager_name}}</span>
+        </div>
+        <div class="row">
+          <span class="col-lg-5"><b class="form-label">Time Approver Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.time_approver_name}}</span>
+        </div>
+        <div class="row" *ngIf="gridConfig.rowData.resource_details?.timesheet_status == 'Rejected' || gridConfig.rowData.resource_details?.timesheet_status == 'Approved'">
+          <span class="col-lg-5"><b class="form-label">Approver Comments</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.approver_comments}}</span>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="row">
+          <span class="col-lg-5"><b class="form-label">Project Work Hour Limit</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.project_work_hour_limit}}</span>
+        </div>
+        <div class="row">
+          <span class="col-lg-5"><b class="form-label">Project Work Hours Entered</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label" [ngStyle]="{'color':gridConfig.rowData.resource_details?.project_work_hours > gridConfig.rowData.resource_details?.project_work_hour_limit ? 'red' : ''}">{{gridConfig.rowData.resource_details?.project_work_hours}}</span>
+        </div>
+        <div class="row">
+          <span class="col-lg-5"><b class="form-label">Timesheet Status</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label" [ngStyle]="{'color':getStatusColor(gridConfig.rowData.resource_details?.timesheet_status)}">{{gridConfig.rowData.resource_details?.timesheet_status}}</span>
+        </div>
+      </div>
+    </div>
+    <ag-grid-angular class="ag-theme-alpine view-timesheets pt-3"
+      [rowData]="gridConfig.rowData.timesheets"
+      [columnDefs]="gridConfig.columnDefs"
+      [pagination]="gridConfig.pagination"
+      [paginationPageSize]="gridConfig.paginationPageSize"
+      [suppressHorizontalScroll]="true"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </ng-container>
+    </div>
+    </div>
+</div>
+</div>
+
+<div  [config]="{backdrop: 'static'}" bsModal #dashboardTimesheetDataModal="bs-modal" class="modal fade" tabindex="-1" id="dashboardTimesheetDataModal" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <strong class="ml-2 mt-2">Timesheets</strong>
+                <span type="button" class="close mr-2" (click)="hideDashboardModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="row d-flex">
+                    <div class="col-lg-6">
+                        <!-- <b>Total Work hours : {{this.totalHours }}</b> -->
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Resource Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.resource_name}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Project Manager Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.project_manager_name}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Client Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.client_name}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Project Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.project_name}}</span>
+                        </div>
+                        <div class="row" *ngIf="timeSheetStatus == 'Rejected' || timeSheetStatus == 'Approved'">
+                            <span class="col-lg-5"><b class="form-label">Approver Comments</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.approver_comments}}</span>
+                        </div>
+                        <!-- <span class="col-lg-2"><b>Resource Name</b></span><span class="col-lg-1"><b>:</b></span> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- <b>Total Work hours : {{this.totalHours }}</b> -->
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Total Work Hours (All Projects)</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.total_work_hours_limit}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Project Work Hour Limit</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.project_work_hour_limit}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Project Work Hours Entered</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" [ngStyle]="{'color':totalHours > timesheetResourceDetails?.project_work_hour_limit ? 'red' : ''}" class="form-label">{{totalHours}}</span>
+                        </div>
+                        <!-- <span class="col-lg-2"><b>Resource Name</b></span><span class="col-lg-1"><b>:</b></span> -->
+                    </div>
+                    <!-- <div class="col-lg-3">
+                        <button class="btn btn-success" (click)="approve('Approve')">Approve</button>&nbsp;
+                        <button class="btn btn-danger" (click)="approve('Reject')">Reject</button>
+
+                    </div> -->
+              
+
+                </div>
+                  <ag-grid-angular class="ag-theme-alpine pt-3" [rowData]="this.timesheetListData"
+                    [columnDefs]="viewColumns" [pagination]="true" [paginationPageSize]="10"  [suppressHorizontalScroll]="true"
+                    (gridReady)="onGridReady($event)"></ag-grid-angular>
+                    <div class="row pt-2" *ngIf="showComments">
+                        <div class="col-lg-6">
+                          <form [formGroup]="addcomments">
+                            <label class="form-label">Comments <span class="mandatory">*</span></label>
+                            <textarea class="form-control" rows="4" formControlName="comments" placeholder="Leave your comments" [ngClass]="{'is-invalid':addcomments.controls['comments']?.touched && addcomments.controls['comments'].errors?.required}" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning"></textarea>
+                            <span class="mandatory" *ngIf="addcomments.controls['comments']?.touched && addcomments.controls['comments'].errors?.required">Please enter comments</span>
+                           
+                        </form>
+                        </div>
+                        <div class="text-right pt-4">
+                            <button *ngIf="showApprove" class="timesheet-approve-btn" (click)="approve('Approve')"><i class="fa fa-check" aria-hidden="true"></i> Approve</button>
+                            <button *ngIf="showReject" class="timesheet-reject-btn ml-2" (click)="approve('Reject')"><i class="fa fa-times" aria-hidden="true"></i> Reject</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+  
+
+
+
+  

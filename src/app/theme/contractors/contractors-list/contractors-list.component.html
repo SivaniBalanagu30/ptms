@@ -1,0 +1,42 @@
+<h1 class="topHeader" style="color: #3F51B5; font-size: 20px;">Vendors</h1>
+<div class="card p-0" style="border-radius: 1rem; margin-top: -5px;">
+    <div class="card-body col-lg-12">
+        <div class="row">
+            <div class="col-lg-3">
+                <span type="submit" (click)="getContractorsList('All')">
+                    <b>Total Vendors</b><a class="box ml-1">{{this.contractorsList?.total_contractors_count}}</a>
+                </span>
+            </div>
+            <div class="col-lg-3">
+                <span type="submit" (click)="getContractorsList('Active')">
+                    <b>Active Vendors</b> <a class="box ml-1">{{this.contractorsList?.active_contractors_count}}</a>
+                </span>
+            </div>
+            <div class="col-lg-3">
+                <span type="submit" (click)="getContractorsList('Inactive')">
+                    <b>Inactive Vendors</b> <a class="box ml-1">{{this.contractorsList?.inactive_contractors_count}}</a>
+                </span>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-lg-3">
+                <div class="search-container">
+                    <input class="form-control form-control-sm search-input" type="text" [(ngModel)]="searchText" (keyup)="search()"  placeholder="Search Vendors">
+                    <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="col-lg-9 text-right">
+                <button type="button" [routerLink]="['/vendors-list','add-vendor']" class="add-button"
+                  >
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Vendor
+                </button>
+            </div>
+        </div>
+     
+            <ag-grid-angular class="ag-theme-alpine pt-3"[gridOptions]="gridOptions"
+            (paginationChanged)="onPaginationChanged($event)"
+                (gridReady)="onGridReady($event)"></ag-grid-angular>
+      
+
+    </div>
+</div>

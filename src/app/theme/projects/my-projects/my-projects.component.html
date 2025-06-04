@@ -1,0 +1,16 @@
+ 
+ 
+ <div *ngIf="role=='Resource' || role=='Approver'" style="border-radius: 1rem">
+    <div class="card-body col-lg-12">
+            <ag-grid-angular class="ag-theme-alpine pt-3"
+               [rowData]="this.myProjectsList" [columnDefs]="myProjectsColumnsDefs" [pagination]="true"
+               [paginationPageSize]="10" (gridReady)="onGridReady($event)"></ag-grid-angular>
+   </div>
+</div>
+<div *ngIf="role=='Admin'">
+   <div class="card-body col-lg-12">
+      <ag-grid-angular class="ag-theme-alpine pt-3"
+         [rowData]="this.myProjectsList" [columnDefs]="myProjectsColumnsDefs" [pagination]="true"
+         [paginationPageSize]="10" (gridReady)="onGridReady($event)"></ag-grid-angular>
+</div>
+</div>

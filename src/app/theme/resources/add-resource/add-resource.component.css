@@ -1,0 +1,11 @@
+.mandatory{
+    color: rgb(235, 53, 53);
+}
+.is-invalid {
+    border-color: #dc3545;
+  }
+
+  /* .ng-multiselect-dropdown .dropdown-list {
+    top: auto !important;
+    bottom: 100% !important;
+  } */

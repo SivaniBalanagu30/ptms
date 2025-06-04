@@ -1,0 +1,20 @@
+<div class="fomr-group">
+    <!-- <input list="timers" name="timer" id="timer" type="text" class="form-control" [placeholder]="placeholder"> -->
+      <!-- <select class="form-control" [(ngModel)]="timeInfo" (change)="setParentValue($event.target.value)" (focus)="setTimer()">
+        <option value="" disabled>{{placeholder}} </option>
+        <option *ngFor="let time of filteredHours;" [value]="time">{{time}}</option>
+      </select> -->
+      
+      <mat-form-field class="form-control" [ngClass]="{ 'my-disabled-class': disabled }"  appearance="none">
+        <mat-select  [(ngModel)]="timeInfo" name="timeInfo" [disabled]="disabled" (selectionChange)="setParentValue($event.value)" (focus)="setTimer()" [disableOptionCentering]="true" panelClass="myPanelClass">
+            <mat-option value="" selected disabled>{{placeholder}}</mat-option>
+            <mat-option  *ngFor="let time of filteredHours" [value]="time">
+                {{time}}
+            </mat-option>
+             <mat-option>
+            <ngx-mat-select-search hideClearSearchButton="true" [(ngModel)]="searchTime" (input)="filterTime()" placeholderLabel="Search time"></ngx-mat-select-search>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+</div>

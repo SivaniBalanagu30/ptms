@@ -1,0 +1,28 @@
+.table-bordered td,
+.table-bordered th {
+  border: none;
+}
+
+.modal-header .close{
+  padding: 1.5rem 0.5rem !important;
+}
+.modal-header{
+  padding:0 0 !important;
+}
+
+.disabled-icon {
+  opacity: 0.5; /* Reduce opacity to make the icon appear grayed out */
+  cursor: not-allowed; /* Set cursor to "not-allowed" to indicate disabled state */
+  pointer-events: none; /* Prevent interaction with the disabled icon */
+  /* Add any other styles to visually indicate the disabled state */
+}
+
+.truncate-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 6ch;
+}
+
+
+

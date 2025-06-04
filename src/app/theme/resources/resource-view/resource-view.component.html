@@ -1,0 +1,973 @@
+<p-toast></p-toast>
+<!-- ///////Contractor////// -->
+<div class="card pl-1" *ngIf="this.resourceDetails?.resource_details?.employement_type?.type == 'Contract'">
+    <!-- <div class="d-flex" style="margin: 35px 0 0 0;padding-left: 1rem;"> -->
+        <!-- <i class="fas fa-chevron-left mr-2" data-toggle="tooltip" data-placement="top" title="Back to  resources list"
+            [routerLink]="'/' + navigatePathOnBackClick" aria-hidden="true" style="font-size: 20px;cursor: pointer;margin-top: 0.4rem"></i>
+        <h1 style="font-size: 15px;">{{this.resourceDetails?.resource_details?.first_name +' ' + ' '+this.resourceDetails?.resource_details?.last_name}} ({{this.resourceDetails?.resource_details?.resource_number}})</h1> -->
+    <!-- </div> -->
+    <span class="material-icons mt-2 ml-1" data-toggle="tooltip" data-placement="bottom" title="Back" [routerLink]="'/' + navigatePathOnBackClick" style="color: #3F51B5; font-size:xx-large; cursor: pointer;"> arrow_circle_left </span>
+    <div class="pl-4">
+        <div class="card-body pt-1">
+            <h3>{{this.resourceDetails?.resource_details?.first_name +' ' + ' '+this.resourceDetails?.resource_details?.last_name}} ({{this.resourceDetails?.resource_details?.resource_number}})</h3>
+            <div class="row">
+                <div class="col-lg-10">
+                    <h5><strong style="color:#3F51B5">Personal Info</strong></h5>
+                </div>
+                <div class="col-lg-2" *ngIf="this.resourceMode == 'edit'">
+                    <i id="personal-details-edit-button" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit personal info" style="color: #3F51B5; cursor: pointer; font-size: 17px;" class="fas fa-file-pen" (click)="onResourcePersonalDetails(this.resourceDetails?.resource_details,this.resourceDetails)"></i>
+                    <!-- <img class='edit' width='20' height='20' style='cursor:pointer' src='https://img.icons8.com/ios/50/create-new.png' alt='create-new' data-toggle='tooltip' data-placement='top' title='Edit personal info' (click)="onResourcePersonalDetails(this.resourceDetails?.resource_details,this.resourceDetails)"/> -->
+                </div>
+            </div>
+            <hr style="margin-top: 0px;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>First Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.first_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Middle Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.middle_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Last Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.last_name}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Email Id</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.email_id}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Phone Number</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.primary_phone_number}}</p>
+                </div>
+                <div class="col-sm-4">
+                   
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Address Line1</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.addressline1
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Address Line2</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.addressline2
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>City</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.city
+                    }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>State</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.state
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Country</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.country
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Zip Code</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.zipcode
+                    }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>System Access Role</strong></span>
+                    <p>{{this.resourceDetails?.roles[0]?.role_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Time zone</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.time_zone.description+" "+"("+this.resourceDetails?.resource_details?.time_zone.relative_gmt+")"}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Allow upload timesheet</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.upload_signed_timesheet == false ? 'No' : 'Yes'}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10">
+                    <h5 class="pb-2 pt-4"><strong style="color:#3F51B5">Employment Info</strong></h5>
+                </div>
+                <div class="col-lg-2 pt-4" *ngIf="this.resourceMode == 'edit'">
+                    <i id="personal-details-edit-button"data-toggle="modal" data-toggle="tooltip" data-placement="top" title="Edit employment info" style="color: #3F51B5; cursor: pointer; font-size: 17px;" class="fas fa-file-pen" (click)="onContractorEmploymentDetails(this.resourceDetails?.resource_details,this.resourceDetails)"></i>
+                    <!-- <img class='edit' width='20' height='20' style='cursor:pointer' src='https://img.icons8.com/ios/50/create-new.png' alt='create-new' data-toggle='tooltip' data-placement='top' title='Edit employment info' (click)="onContractorEmploymentDetails(this.resourceDetails?.resource_details,this.resourceDetails)"/> -->
+                </div>
+            </div>
+            <hr style="margin-top: -8px;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Employment Type</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.employement_type?.type}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Vendor Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.company_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Resource  ID</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.resource_number}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Start Date</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.employment_start_date | customDate
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Signed NDA</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.signed_nda == true ? "Yes" : "No"
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Signed Security Policy</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.signed_security_policy == true ? "Yes" : "No"}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Subcontract Aggreement Executed</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.subcontracting_agreement_executed == true ? "Yes" : "No"
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Reporting Manager</strong></span>
+                    <p>{{this.resourceDetails?.reporting_manager_name + ' ' + '(' +this.resourceDetails?.resource_details.resource_number + ')'}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Status</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.status}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Hourly Pay Rate</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.hourly_pay_rate}} $</p>
+                </div>
+            </div>
+            <div class="row pt--2">
+                <div class="col-sm-12">
+                    <h5 class="pb-2 pt-4"><strong style="color:#3F51B5">Vendor Details</strong></h5>
+                    <hr style="margin-top: -10px;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Contact First Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.contact_first_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Contact Middle Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.contact_middle_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Contact Last Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.contact_last_name}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Contact Email Id</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.contact_email_id}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Contact Phone Number</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.contact_phone_number}}</p>
+                </div>
+                <div class="col-sm-4">
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Address Line1</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.addressline1}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Address Line2</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.addressline2}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>City</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.city}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>State</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.state}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Country</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.country}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Zip Code</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.contract_firm?.zipcode}}</p>
+                </div>
+            </div>
+            <h5 class="pb-2 pt-4"><strong style="color:#3F51B5">Projects</strong></h5>
+            <hr style="margin-top: -10px;">
+                <ag-grid-angular class="ag-theme-alpine pt-2"
+                [rowData]="this.resourceDetails?.resource_projects" [columnDefs]="resourcesColumnDefs" [pagination]="true"
+                [paginationPageSize]="10" style="width: 100%" (gridReady)="onGridReady($event)" ></ag-grid-angular>           
+        </div>
+    </div>
+    <!-- <div class="d-flex" style="margin: 35px 0 0 0;">
+        <i class="fa fa-arrow-left mr-2" data-toggle="tooltip" data-placement="top" title="Back to resources list" [routerLink]="'/resources-list'" aria-hidden="true" style="font-size: 25px;cursor: pointer;"></i><h3>{{this.resourceDetails?.resource_details?.first_name +' ' + ' '+this.resourceDetails?.resource_details?.last_name}} ({{this.resourceDetails?.resource_details?.resource_number}})</h3>
+    </div> -->
+ 
+</div>
+
+
+<!-- //////Salary/W2/////// -->
+<div class="card pl-1" *ngIf="this.resourceDetails?.resource_details?.employement_type?.type == 'W2-Salary' || this.resourceDetails?.resource_details?.employement_type?.type == 'W2-Hourly'">
+    <span class="material-icons mt-2 ml-1" data-toggle="tooltip" data-placement="bottom" title="Back to resources list" [routerLink]="'/' + navigatePathOnBackClick" style="color: #3F51B5; font-size:xx-large; cursor: pointer;"> arrow_circle_left </span>
+    <!-- <div class="d-flex" style="margin: 35px 0 0 0;">
+        <i class="fa fa-arrow-left mr-2" data-toggle="tooltip" data-placement="top" title="Back to resources list" [routerLink]="'/resources-list'" aria-hidden="true" style="font-size: 25px;cursor: pointer;"></i><h3>{{this.resourceDetails?.resource_details?.first_name +' ' + ' '+this.resourceDetails?.resource_details?.last_name}} ({{this.resourceDetails?.resource_details?.resource_number}})</h3>
+    </div> -->
+    <div class="pl-4">
+        <div class="card-body pt-1">
+            <h3>{{this.resourceDetails?.resource_details?.first_name +' ' + ' '+this.resourceDetails?.resource_details?.last_name}} ({{this.resourceDetails?.resource_details?.resource_number}})</h3>
+            <!-- <div class="row mb-3">
+                <div class="col-lg-12 d-flex">
+                    <i class="fa fa-arrow-left mr-2 mt-1" data-toggle="tooltip" data-placement="top" title="Back to resources list" [routerLink]="'/resources-list'" aria-hidden="true" style="font-size: 20px;cursor: pointer;"></i><h3>{{this.resourceDetails?.resource_details?.first_name +' ' + ' '+this.resourceDetails?.resource_details?.last_name}} ({{this.resourceDetails?.resource_details?.resource_number}})</h3>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-lg-10">
+                    <h5><strong style="color:#3F51B5">Personal Info</strong></h5>
+                </div>
+                <div class="col-lg-2" *ngIf="this.resourceMode == 'edit'">
+                    <i id="personal-details-edit-button" data-toggle="modal" class="fas fa-file-pen" data-toggle="tooltip" data-placement="top" title="Edit personal info" style="color: #3F51B5; cursor: pointer; font-size: 17px;" (click)="onResourcePersonalDetails(this.resourceDetails?.resource_details)"></i>
+                    <!-- <img class='edit' width='20' height='20' style='cursor:pointer' src='https://img.icons8.com/ios/50/create-new.png' alt='create-new' data-toggle='tooltip' data-placement='top' title='Edit resource' (click)="onResourcePersonalDetails(this.resourceDetails?.resource_details)"/> -->
+                </div>
+            </div>        
+            <hr style="margin-top: 0px;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>First Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.first_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Middle Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.middle_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Last Name</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.last_name}}</p>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-sm-4">
+                    <span><strong>Email Id</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.email_id}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Phone Number</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.primary_phone_number}}</p>
+                </div>
+                <div class="col-sm-4">
+                   
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-sm-4">
+                    <span><strong>Address Line1</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.addressline1
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Address Line2</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.addressline2
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>City</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.city}}</p>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-sm-4">
+                    <span><strong>State</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.state}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Country</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.country}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Zip Code</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.zipcode}}</p>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-sm-4">
+                    <span><strong>System Access Role</strong></span>
+                    <p>{{this.resourceDetails?.roles[0]?.role_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Time zone</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.time_zone.description+" "+"("+this.resourceDetails?.resource_details?.time_zone.relative_gmt+")"}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Allow upload timesheet</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.upload_signed_timesheet == false ? 'No' : 'Yes'}}</p>
+                </div>
+
+            </div>
+            <div class="row pt-2">
+                <div class="col-lg-10">
+                    <h5 class="pb-2"><strong style="color:#3F51B5">Employment Info</strong></h5>
+                </div>
+                <div class="col-lg-2" *ngIf="this.resourceMode == 'edit'">
+                    <!-- <img class='edit' width='20' height='20' style='cursor:pointer' src='https://img.icons8.com/ios/50/create-new.png' alt='create-new' data-toggle='tooltip' data-placement='top' title='Edit resource' (click)="onSalaryEmploymentDetails(this.resourceDetails?.resource_details,this.resourceDetails)"/> -->
+                    <i id="personal-details-edit-button" class="fas fa-file-pen" style="color: #3F51B5; cursor: pointer; font-size: 17px;" data-toggle="tooltip" data-placement="top" title="Edit employment info" data-toggle="modal" (click)="onSalaryEmploymentDetails(this.resourceDetails?.resource_details,this.resourceDetails)"></i>
+                </div>
+            </div>
+            <hr style="margin-top: 0px;">
+            <div class="row pt-2">
+                <div class="col-sm-4">
+                    <span><strong>Employment Type</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.employement_type?.type}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Reporting Manager</strong></span>
+                    <p>{{this.resourceDetails?.reporting_manager_name + ' ' + '(' +this.resourceDetails?.resource_details.resource_number + ')'}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Resource ID</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.resource_number
+                    }}</p>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-sm-4">
+                    <span><strong>Start Date</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.employment_start_date | customDate
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>End Date</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.employment_end_date | customDate
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Location</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.location}}</p>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <!-- <div class="col-sm-4">
+                    <span><strong>Role</strong></span>
+                    <p>{{this.resourceDetails?.roles[0]?.role_name}}</p>
+                </div> -->
+                <div class="col-sm-4">
+                    <span><strong>Signed NDA</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.signed_nda == true ? "Yes" : "No"
+                    }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Signed Security Policy</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.signed_security_policy == true ? "Yes" : "No"}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Sick Days</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.sick_days}}</p>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <!-- <div class="col-sm-4">
+                    <span><strong>Sick Days</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.sick_days}}</p>
+                </div> -->
+                <div class="col-sm-4">
+                    <span><strong>Vacation Days</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.vacation_days}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Status</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.status}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Hourly Pay Rate</strong></span>
+                    <p>{{this.resourceDetails?.resource_details?.hourly_pay_rate}} $</p>
+                </div>
+            </div>
+            <h5 class="pb-2 pt-4"><strong style="color:#3F51B5">Projects</strong></h5>
+            <hr style="margin-top: 0px;">
+            <ag-grid-angular class="ag-theme-alpine pt-2"
+            [rowData]="this.resourceDetails?.resource_projects" [columnDefs]="resourcesColumnDefs" [pagination]="true"
+            [paginationPageSize]="10" (gridReady)="onGridReady($event)" style="width: 100%"></ag-grid-angular>
+        </div>
+    </div>
+ 
+</div>
+
+
+
+<!---------Personal Info Modal------->
+<div  [config]="{backdrop: 'static'}" bsModal #personalDetailsData="bs-modal" class="modal fade" tabindex="-1" id="personalDetailsModal" role="dialog"
+[config]="{backdrop: 'static'}" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title ml-2 mt-3"><strong>Personal Details</strong></h5>
+      <span id="personal-details-cross-icon" type="button" class="close mr-2" (click)="closePersonalDetails()">&times;</span>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="personalDetailsUpdateForm">
+        <div class="row pt-2">
+            <div class="col-lg-4">
+                <label class="form-label">First Name <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="firstName" placeholder="Enter first name" [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('firstName').touched && personalDetailsUpdateForm.get('firstName').errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('firstName').touched && personalDetailsUpdateForm.get('firstName').errors?.required">Please enter first name</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Middle Name</label>
+                <input class="form-control form-control-sm" formControlName="middleName" placeholder="Enter middle name" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Last Name <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="lastName" placeholder="Enter last name" [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('lastName').touched && personalDetailsUpdateForm.get('lastName').errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('lastName').touched && personalDetailsUpdateForm.get('lastName').errors?.required">Please enter last name</span>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-4">
+                <label class="form-label">Email Id<span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="email" placeholder="Enter Email Id" disabled [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('email').touched && personalDetailsUpdateForm.get('email').errors?.required}" maxlength="150">
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('email').touched && personalDetailsUpdateForm.get('email').errors?.required">Please enter email id</span>
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('email').touched && personalDetailsUpdateForm.get('email').errors?.pattern">Please enter valid email id</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Phone Number <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="phoneNumber" placeholder="Enter phone number" [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('phoneNumber').touched && personalDetailsUpdateForm.get('phoneNumber')?.errors}" maxlength="20" usFormatPhoneNumber>
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('phoneNumber').touched && personalDetailsUpdateForm.get('phoneNumber').errors?.required">Please enter phone number</span>
+                <!-- <span class="mandatory" *ngIf="personalDetailsUpdateForm.controls['phoneNumber']?.touched && personalDetailsUpdateForm.controls['phoneNumber']?.hasError('minlength')">{{_stringResourceErrors.PHONE_NUMBER_VALIDATIONS2}}</span> -->
+                <!-- <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('phoneNumber').touched && personalDetailsUpdateForm.get('phoneNumber').errors?.pattern">Please enter valid phone number</span> -->
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-4">
+                <label class="form-label">Address Line1 <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="addressLine1" placeholder="Enter address line1" [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('addressLine1').touched && personalDetailsUpdateForm.get('addressLine1').errors?.required}" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('addressLine1').touched && personalDetailsUpdateForm.get('addressLine1').errors?.required">Please enter address line1</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Address Line2</label>
+                <input class="form-control form-control-sm" formControlName="addressLine2" placeholder="Enter address line2" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">City <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="city" placeholder="Enter city" [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('city').touched && personalDetailsUpdateForm.get('city').errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" inputType="noWhiteSpaceAtBeginning">
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('city').touched && personalDetailsUpdateForm.get('city').errors?.required">Please enter city</span>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-4">
+                <label class="form-label">State <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="state" placeholder="Enter state" [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('state').touched && personalDetailsUpdateForm.get('state').errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" inputType="noWhiteSpaceAtBeginning">
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('state').touched && personalDetailsUpdateForm.get('state').errors?.required">Please enter state</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Country <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="country" placeholder="Enter country" [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('country').touched && personalDetailsUpdateForm.get('country').errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" inputType="noWhiteSpaceAtBeginning">
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('country').touched && personalDetailsUpdateForm.get('country').errors?.required">Please enter country</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Zip Code <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="zipCode" placeholder="Enter zip code" [ngClass]="{'is-invalid':personalDetailsUpdateForm.get('zipCode').touched && personalDetailsUpdateForm.get('zipCode').errors?.required}"  minlength="5" maxlength="6" appAlphaWithSpace inputType="strictlyNumber">
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('zipCode').touched && personalDetailsUpdateForm.get('zipCode').errors?.required">Please enter zip code</span>
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.controls['zipCode']?.touched && personalDetailsUpdateForm.controls['zipCode']?.hasError('minlength')">{{_stringResourceErrors.ZIPCODE_VALIDATIONS2}}</span>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-4">
+                <label class="form-label">System Access Role<span class="mandatory">*</span></label>
+                <select class="form-control form-control-sm" formControlName="role" [ngClass]="personalDetailsUpdateForm.get('role').touched && personalDetailsUpdateForm.get('role').errors?.required">
+                    <option disabled value="">Select system access role</option>
+                    <option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}</option>
+                </select>
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('role').touched && personalDetailsUpdateForm.get('role').errors?.required">Please select system access role</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Timezone<span class="mandatory">*</span></label>
+                <select class="form-control form-control-sm" formControlName="timeZone" [ngClass]="personalDetailsUpdateForm.get('timeZone').touched && personalDetailsUpdateForm.get('timeZone').errors?.required">
+                    <option disabled value="">Select time zone</option>
+                    <option *ngFor="let zone of allTimezones" [value]="zone.id">{{zone.timezone_info}}</option>
+                </select>
+                <span class="mandatory" *ngIf="personalDetailsUpdateForm.get('timeZone').touched && personalDetailsUpdateForm.get('timeZone').errors?.required">Please select time zone</span>
+            </div>
+            <div class="col-lg-4">
+                <label  class="form-label">Allow upload timesheet<span class="mandatory">*</span></label>
+         <div class="d-flex">
+           <div class="form-check mr-3">
+            <input class="form-check-input" type="radio" value="yes" name="uploadTimesheet" formControlName="uploadTimesheet">
+            <label class="form-label">
+              Yes
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="no"  name="uploadTimesheet" formControlName="uploadTimesheet">
+            <label class="form-label">
+              No
+            </label>
+          </div>
+         </div>
+         <span class="mandatory" *ngIf="personalDetailsUpdateForm.controls['uploadTimesheet']?.touched && personalDetailsUpdateForm.controls['uploadTimesheet']?.errors?.required">Please select a allow upload timesheet</span>
+            </div>
+
+        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="cancel-button" (click)="closePersonalDetails()">Cancel</button>
+        <button class="save-button" (click)="updatePersonallDetails()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!---------Employment Info Modal for Contractor------->
+<div  [config]="{backdrop: 'static'}" bsModal #contractorEmploymentDetailsData="bs-modal" class="modal fade" tabindex="-1" id="contractorEmploymentDetails" role="dialog"
+[config]="{backdrop: 'static'}" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title ml-2 mt-3"><strong>Employment Details</strong></h5>
+      
+      <span type="button" class="close mr-2" (click)="closeContractorEmploymentDetails()">&times;</span>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="contractEmploymentDetailsForm">
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="form-label">Employment Type <span class="mandatory">*</span></label>
+                    <select class="form-control form-control-sm" formControlName="employmentInfo" [ngClass]="{'is-invalid':contractEmploymentDetailsForm.get('employmentInfo').touched && contractEmploymentDetailsForm.get('employmentInfo').errors?.required}" (change)="onChangeEmploymentType()">
+                        <option selected disabled>Select employment type</option>
+                        <option *ngFor="let type of allEmploymentTypes" [value]="type.id">{{type.type}}</option>
+                    </select>
+                    <span class="mandatory" *ngIf="contractEmploymentDetailsForm.get('employmentInfo').touched && contractEmploymentDetailsForm.get('employmentInfo').errors?.required">Please select employment type</span>
+                </div>
+            </div>
+            <!---Employment type contract---->
+            <div *ngIf="contractEmploymentDetailsForm.get('employmentInfo')?.value == 3">
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Resource ID <span class="mandatory">*</span></label>
+                        <input class="form-control form-control-sm" formControlName="resourceId" disabled placeholder="Enter resource id" [ngClass]="{'is-invalid':contractEmploymentDetailsForm.get('resourceId').touched && contractEmploymentDetailsForm.get('resourceId').errors?.required}">
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.get('resourceId').touched && contractEmploymentDetailsForm.get('resourceId').errors?.required">Please select resource id</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Vendor Name <span class="mandatory">*</span></label>
+                        <input disabled class="form-control form-control-sm" formControlName="contractingFirmName" [value]="this.resourceDetails?.resource_details?.contracting_firm_id" placeholder="Enter vendor name" [ngClass]="{'is-invalid':contractEmploymentDetailsForm.get('contractingFirmName').touched && contractEmploymentDetailsForm.get('contractingFirmName').errors?.required}">
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.get('contractingFirmName').touched && contractEmploymentDetailsForm.get('contractingFirmName').errors?.required">Please enter the vendor name</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Reporting Manager <span class="mandatory">*</span></label>
+                        <select class="form-control form-control-sm" formControlName="reportingManager" [ngClass]="{'is-invalid':contractEmploymentDetailsForm.get('reportingManager').touched && contractEmploymentDetailsForm.get('reportingManager').errors?.required}">
+                            <option disabled value="">Select reporting manager</option>
+                            <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name + ' ' + manager.middle_name + ' ' + manager.last_name + ' '+'(' + manager.resource_number + ')'}}</option>
+                        </select>
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.get('reportingManager').touched && contractEmploymentDetailsForm.get('reportingManager').errors?.required">Please select the reporting manager</span>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Hourly Pay Rate <span class="mandatory">*</span></label>
+                        <div class="input-group">
+                            <input class="form-control form-control-sm" formControlName="hourlyPayRate" placeholder="Enter hourly pay rate" [ngClass]="{'is-invalid' : (contractEmploymentDetailsForm.controls['hourlyPayRate']?.touched && contractEmploymentDetailsForm.controls['hourlyPayRate']?.errors)}" maxlength="6" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <i class="fa fa-usd" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.controls['hourlyPayRate']?.touched && contractEmploymentDetailsForm.controls['hourlyPayRate']?.errors?.required">Please enter the hourly pay rate</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Start Date</label>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='startDate' #dp="bsDatepicker" bsDatepicker placeholder="Select start date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)">
+                            <div class="input-group-append">
+                              <div class="input-group-text btn" (click)="dp.toggle()">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Signed NDA</label>
+                        <select class="form-control form-control-sm" formControlName="signedNDA">
+                            <option disabled value="">Select signed nda</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Signed Security Policy</label>
+                        <select class="form-control form-control-sm" formControlName="signedSecurityPolicy">
+                            <option disabled value="">Select signed security policy</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Subcontract Aggreement Executed</label>
+                        <select class="form-control form-control-sm" formControlName="subcontractAggreementExecuted">
+                            <option disabled value="">Select subcontract  aggreement executed</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Status <span class="mandatory">*</span></label>
+                        <select class="form-control form-control-sm" formControlName="status" [ngClass]="{'is-invalid':contractEmploymentDetailsForm.get('status').touched && contractEmploymentDetailsForm.get('status').errors?.required}">
+                            <option disabled value="">Select status</option>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.get('status').touched && contractEmploymentDetailsForm.get('status').errors?.required">Please select status</span>
+                    </div>
+                </div>
+            </div>
+            <!----Contract type salary/ w2---->
+            <div *ngIf="contractEmploymentDetailsForm.get('employmentInfo')?.value == 1 || contractEmploymentDetailsForm.get('employmentInfo')?.value == 2">
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Resource ID <span class="mandatory">*</span></label>
+                        <input class="form-control form-control-sm" formControlName="resourceId" placeholder="Enter resource id" disabled [ngClass]="{'is-invalid':contractEmploymentDetailsForm.get('resourceId').touched && contractEmploymentDetailsForm.get('resourceId').errors?.required}">
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.get('resourceId').touched && contractEmploymentDetailsForm.get('resourceId').errors?.required">Please select employment type</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Reporting Manager <span class="mandatory">*</span></label>
+                        <select class="form-control form-control-sm" formControlName="reportingManager" [ngClass]="{'is-invalid':contractEmploymentDetailsForm.get('reportingManager').touched && contractEmploymentDetailsForm.get('reportingManager').errors?.required}">
+                            <option disabled value="">Select reporting manager</option>
+                            <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name + ' ' + manager.middle_name + ' ' + manager.last_name + ' '+'(' + manager.resource_number + ')'}}</option>
+                        </select>
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.get('reportingManager').touched && contractEmploymentDetailsForm.get('reportingManager').errors?.required">Please select the reporting manager</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Hourly Pay Rate <span class="mandatory">*</span></label>
+                        <div class="input-group">
+                            <input class="form-control form-control-sm" formControlName="hourlyPayRate" placeholder="Enter hourly pay rate" appAlphaWithSpace inputType="strictlyNumber" [ngClass]="{'is-invalid' : (contractEmploymentDetailsForm.controls['hourlyPayRate']?.touched && contractEmploymentDetailsForm.controls['hourlyPayRate']?.errors)}" maxlength="6" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <i class="fa fa-usd" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                        </div>
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.controls['hourlyPayRate']?.touched && contractEmploymentDetailsForm.controls['hourlyPayRate']?.errors?.required">Please enter the hourly pay rate</span>
+        
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Start Date</label>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='startDate' #startDate="bsDatepicker" bsDatepicker placeholder="Select start date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)" [maxDate]="minEndDate(salaryEmploymentDetailsForm.value.endDate)">
+                            <div class="input-group-append">
+                              <div class="input-group-text btn" (click)="startDate.toggle()">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">End Date</label>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='endDate' #endDate="bsDatepicker" bsDatepicker placeholder="Select start date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)" [minDate]="minEndDate(salaryEmploymentDetailsForm.value.startDate)">
+                            <div class="input-group-append">
+                              <div class="input-group-text btn" (click)="endDate.toggle()">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-4">
+             <label class="form-label">Location</label>
+             <input class="form-control form-control-sm" formControlName="location" placeholder="Enter location" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+         </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Signed NDA</label>
+                        <select class="form-control form-control-sm" formControlName="signedNDA">
+                            <option disabled value="">Select signed nda</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Signed Security Policy</label>
+                        <select class="form-control form-control-sm" formControlName="signedSecurityPolicy">
+                            <option disabled value="">Select signed security policy</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Sick Days</label>
+                        <input class="form-control form-control-sm" formControlName="sickDays" placeholder="Enter sick days" appAlphaWithSpace inputType="strictlyNumber">
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Vacation Days</label>
+                        <input class="form-control form-control-sm" formControlName="vacationDays" placeholder="Enter vacation days" appAlphaWithSpace inputType="strictlyNumber">
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Status <span class="mandatory">*</span></label>
+                        <select class="form-control form-control-sm" formControlName="status" [ngClass]="{'is-invalid':contractEmploymentDetailsForm.get('status').touched && contractEmploymentDetailsForm.get('status').errors?.required}">
+                            <option disabled value="">Select status</option>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                        <span class="mandatory" *ngIf="contractEmploymentDetailsForm.get('status').touched && contractEmploymentDetailsForm.get('status').errors?.required">Please enter status</span>
+                    </div>
+                    </div>
+                    </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="cancel-button" (click)="closeContractorEmploymentDetails()">Cancel</button>
+        <button class="save-button" (click)="updateContractorEmploymentDetails()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---------Employment Info Modal for Salary------->
+<div  [config]="{backdrop: 'static'}" bsModal #salaryEmploymentDetailsData="bs-modal" class="modal fade" tabindex="-1" id="salaryEmploymentDetails" role="dialog"
+[config]="{backdrop: 'static'}" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title ml-2 mt-3"><strong>Employment Details</strong></h5>
+      <span type="button" class="close mr-2" (click)="closeSalaryEmploymentDetails()">&times;</span>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="salaryEmploymentDetailsForm">
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="form-label">Employment Type <span class="mandatory">*</span></label>
+                    <select class="form-control form-control-sm" formControlName="employmentInfo" [ngClass]="{'is-invalid':salaryEmploymentDetailsForm.get('employmentInfo').touched && salaryEmploymentDetailsForm.get('employmentInfo').errors?.required}" (change)="onChangeEmploymentType()">
+                        <option disabled value="">Select empoyment type</option>
+                        <option *ngFor="let type of allEmploymentTypes" [value]="type.id">{{type.type}}</option>
+                    </select>
+                    <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('employmentInfo').touched && salaryEmploymentDetailsForm.get('employmentInfo').errors?.required">Please select employment type</span>
+                </div>
+            </div>
+            <!---Employment Type Salary/ W2--->
+            <div *ngIf="salaryEmploymentDetailsForm.get('employmentInfo')?.value == 1 || salaryEmploymentDetailsForm.get('employmentInfo')?.value == 2">
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Resource ID <span class="mandatory">*</span></label>
+                        <input class="form-control form-control-sm" formControlName="resourceId" placeholder="Enter resource id" disabled [ngClass]="{'is-invalid':salaryEmploymentDetailsForm.get('resourceId').touched && salaryEmploymentDetailsForm.get('resourceId').errors?.required}">
+                        <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('resourceId').touched && salaryEmploymentDetailsForm.get('resourceId').errors?.required">Please select employment type</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Reporting Manager <span class="mandatory">*</span></label>
+                        <select class="form-control form-control-sm" formControlName="reportingManager" [ngClass]="{'is-invalid':salaryEmploymentDetailsForm.get('reportingManager').touched && salaryEmploymentDetailsForm.get('reportingManager').errors?.required}">
+                            <option disabled value="">Select reporting manager</option>
+                            <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name + ' ' + manager.middle_name + ' ' + manager.last_name  + ' '+'(' + manager.resource_number + ')'}}</option>
+                        </select>
+                        <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('reportingManager').touched && salaryEmploymentDetailsForm.get('reportingManager').errors?.required">Please select reporting manager</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Hourly Pay Rate <span class="mandatory">*</span></label>
+                        <div class="input-group">
+                            <input class="form-control form-control-sm" formControlName="hourlyPayRate" placeholder="Enter hourly pay rate" appAlphaWithSpace inputType="strictlyNumber" [ngClass]="{'is-invalid' : (salaryEmploymentDetailsForm.controls['hourlyPayRate']?.touched && salaryEmploymentDetailsForm.controls['hourlyPayRate']?.errors)}" maxlength="6" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <i class="fa fa-usd" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                        </div>
+                        <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.controls['hourlyPayRate']?.touched && salaryEmploymentDetailsForm.controls['hourlyPayRate']?.errors?.required">Please enter the hourly pay rate</span>
+        
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Start Date</label>
+                        <!-- <input class="form-control form-control-sm" formControlName="startDate"  bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" placeholder="Enter start date" (keypress)="stopManualEntry($event)"> -->
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='startDate' #startDate="bsDatepicker" bsDatepicker placeholder="Select start date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)" [maxDate]="minEndDate(salaryEmploymentDetailsForm.value.endDate)">
+                            <div class="input-group-append">
+                              <div class="input-group-text btn" (click)="startDate.toggle()">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                            </div>
+                          </div>
+                        <!-- <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('startDate').touched && salaryEmploymentDetailsForm.get('startDate').errors?.required">Please select start date</span> -->
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">End Date</label>
+                        <!-- <input class="form-control form-control-sm" formControlName="endDate"  bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" placeholder="Enter end date" [minDate]="newEndDate(salaryEmploymentDetailsForm.value.startDate)" (keypress)="stopManualEntry($event)"> -->
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='endDate' #endDate="bsDatepicker" bsDatepicker placeholder="Select start date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)" [minDate]="minEndDate(salaryEmploymentDetailsForm.value.startDate)">
+                            <div class="input-group-append">
+                              <div class="input-group-text btn" (click)="endDate.toggle()">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-4">
+             <label class="form-label">Location</label>
+             <input class="form-control form-control-sm" formControlName="location" placeholder="Enter location" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+             <!-- <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('location').touched && salaryEmploymentDetailsForm.get('location').errors?.required">Please select location</span> -->
+         </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Signed NDA</label>
+                        <select class="form-control form-control-sm" formControlName="signedNDA">
+                            <option disabled value="">Select signed nda</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                        <!-- <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('signedNDA').touched && salaryEmploymentDetailsForm.get('signedNDA').errors?.required">Please select signed nda</span> -->
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Signed Security Policy</label>
+                        <select class="form-control form-control-sm" formControlName="signedSecurityPolicy" [ngClass]="{'is-ivalid':salaryEmploymentDetailsForm.get('signedSecurityPolicy').touched && salaryEmploymentDetailsForm.get('signedSecurityPolicy').errors?.required}">
+                            <option disabled value="">Select signed security policy</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                        <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('signedSecurityPolicy').touched && salaryEmploymentDetailsForm.get('signedSecurityPolicy').errors?.required">Please select signed security policy</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Sick Days</label>
+                        <input class="form-control form-control-sm" formControlName="sickDays" placeholder="Enter sick days" appAlphaWithSpace inputType="strictlyNumber">
+                        <!-- <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('sickDays').touched && salaryEmploymentDetailsForm.get('sickDays').errors?.required">Please enter sick days</span> -->
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-lg-4">
+                        <label class="form-label">Vacation Days</label>
+                        <input class="form-control form-control-sm" formControlName="vacationDays" placeholder="Enter vacation days" appAlphaWithSpace inputType="strictlyNumber">
+                        <!-- <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('vacationDays').touched && salaryEmploymentDetailsForm.get('vacationDays').errors?.required">Please entervacation days</span> -->
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Status <span class="mandatory">*</span></label>
+                        <select class="form-control form-control-sm" formControlName="status" [ngClass]="{'is-invalid':salaryEmploymentDetailsForm.get('status').touched && salaryEmploymentDetailsForm.get('status').errors?.required}">
+                            <option disabled value="">Select status</option>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                        <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('status').touched && salaryEmploymentDetailsForm.get('status').errors?.required">Please enter status</span>
+                    </div>
+                </div>
+            </div>
+             <!----Employment Type contract---->
+        <div *ngIf="salaryEmploymentDetailsForm.get('employmentInfo')?.value == 3">
+            <div class="row pt-2">
+            <div class="col-lg-4">
+                <label class="form-label">Resource ID <span class="mandatory">*</span></label>
+                <input class="form-control form-control-sm" formControlName="resourceId" disabled placeholder="Enter resource id">
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Vendor Name <span class="mandatory">*</span></label>
+                <select class="form-control form-control-sm" formControlName="contractingFirmName" [ngClass]="{'is-invalid':salaryEmploymentDetailsForm.get('contractingFirmName').touched && salaryEmploymentDetailsForm.get('contractingFirmName').errors?.required}">
+                    <option disabled value=null>Select vendor</option>
+                    <option *ngFor="let contractor of allContractors" [value]="contractor.id">{{contractor.company_name}}</option>
+                </select>
+                <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.get('contractingFirmName').touched && salaryEmploymentDetailsForm.get('contractingFirmName').errors?.required">Please select the vendor name</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Reporting Manager <span class="mandatory">*</span></label>
+                <select class="form-control form-control-sm" formControlName="reportingManager">
+                    <option disabled value="">Select reporting manager</option>
+                    <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name + ' ' + manager.middle_name + ' ' + manager.last_name  + ' '+'(' + manager.resource_number + ')'}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-4">
+                <label class="form-label">Hourly Pay Rate <span class="mandatory">*</span></label>
+                <div class="input-group">
+                    <input class="form-control form-control-sm" formControlName="hourlyPayRate" placeholder="Enter hourly pay rate" [ngClass]="{'is-invalid':salaryEmploymentDetailsForm.get('hourlyPayRate').touched && salaryEmploymentDetailsForm.get('hourlyPayRate').errors?.required}" maxlength="6" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                          <i class="fa fa-usd" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <span class="mandatory" *ngIf="salaryEmploymentDetailsForm.controls['hourlyPayRate']?.touched && salaryEmploymentDetailsForm.controls['hourlyPayRate']?.errors?.required">Please enter the hourly pay rate</span>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Start Date</label>
+                <div class="input-group">
+                    <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='startDate' #dp="bsDatepicker" bsDatepicker placeholder="Select start date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)">
+                    <div class="input-group-append">
+                      <div class="input-group-text btn" (click)="dp.toggle()">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Signed NDA</label>
+                <select class="form-control form-control-sm" formControlName="signedNDA">
+                    <option disabled value="">Select signed nda</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-4">
+                <label class="form-label">Signed Security Policy</label>
+                <select class="form-control form-control-sm" formControlName="signedSecurityPolicy">
+                    <option disabled value="">Select signed security policy</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Subcontract Aggreement Executed</label>
+                <select class="form-control form-control-sm" formControlName="subcontractAggreementExecuted">
+                    <option disabled value="">Select subcontract  aggreement executed</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Status <span class="mandatory">*</span></label>
+                <select class="form-control form-control-sm" formControlName="status">
+                    <option disabled value="">Select status</option>
+                    <option>Active</option>
+                    <option>Inactive</option>
+                </select>
+            </div>
+        </div>
+        <div class="row pt-2">
+        </div>
+        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="cancel-button" (click)="closeSalaryEmploymentDetails()">Cancel</button>
+        <button class="save-button" (click)="updateSalaryEmploymentDetails()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

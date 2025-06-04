@@ -1,0 +1,11 @@
+.modal-header .close{
+    padding: 1.5rem 0.5rem !important;
+  }
+  .modal-header{
+    padding:0 0 !important;
+  }
+  .save-button:disabled{
+    cursor: not-allowed;
+    /* background-color: rgb(43, 147, 65,0.5); */
+    opacity: 0.5;
+  }

@@ -1,0 +1,513 @@
+<div class="card test">
+    <div class="card-header d-flex">
+        <ngx-avatar bgColor="#5865c7" fgColor="white" class="icon-style profile-img" [name]="userName" size="80"
+            [initialsSize]="2"></ngx-avatar>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-10">
+                    <h5 class="header-name">{{resourceDetails?.resource_details?.first_name}}
+                        {{resourceDetails?.resource_details?.middle_name}}
+                        {{resourceDetails?.resource_details?.last_name}} </h5>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-10">
+                    <p class="sub-heading valuebold">{{resourceDetails?.resource_details?.email_id}}</p>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-10">
+                    <p class=" valuebold" style="margin-top: -12px; margin-left: 12px;">
+                        {{resourceDetails?.resource_details?.primary_phone_number}}</p>
+                </div>
+            </div>
+            <!-- <h5 class="header-name">{{resourceDetails?.resource_details?.first_name}}
+                {{resourceDetails?.resource_details?.middle_name}}
+                {{resourceDetails?.resource_details?.last_name}} </h5> -->
+            <!-- <p class="sub-heading valuebold">{{resourceDetails?.resource_details?.email_id}}</p> -->
+            <!-- <p class=" valuebold" style="margin-top: -12px; margin-left: 12px;">
+                {{resourceDetails?.resource_details?.primary_phone_number}}</p> -->
+
+        </div>
+    </div>
+    <div class="">
+        <div class="d-flex" style="justify-content: space-between;">
+            <h5 class="heading">Personal Details </h5>
+            <!-- <button style="margin-right: 35px; margin-top: 10px;" id="personal-details-edit-button" type="submit"
+                (click)="onResourcePersonalDetails(this.resourceDetails?.resource_details)" data-toggle="modal"
+                class="edit-button"><i class="fa fa-pencil-square-o-square-o "></i>
+                Edit</button> -->
+            <i class="fas fa-file-pen edit-btn" data-toggle="tooltip" data-placement="top" title="Edit personal details" style="color: #3F51B5; font-size: 17px;"
+                (click)="onResourcePersonalDetails(this.resourceDetails?.resource_details)"></i>
+        </div>
+        <hr>
+        <form>
+            <div class="d-flex  col-sm-12 mt-1">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">First Name</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.first_name}}</span>
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Middle Name</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.middle_name}}</span>
+                </div>
+            </div>
+            <div class="d-flex  col-sm-12 mt-2">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Last Name</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.last_name}}</span>
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Email Id</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.email_id}}</span>
+                </div>
+            </div>
+
+            <div class="d-flex  col-sm-12 mt-2">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Phone Number</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.primary_phone_number}}</span>
+
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Address Line 1</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.addressline1}}</span>
+                </div>
+            </div>
+
+            <div class="d-flex  col-sm-12 mt-2">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Address Line 2</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.addressline2}}</span>
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">City</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.city}}</span>
+                </div>
+            </div>
+            <div class="d-flex  col-lg-12 mt-2">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">State</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.state}}</span>
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Country</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.country}}</span>
+                </div>
+            </div>
+            <div class="d-flex  col-lg-12 mt-2 mb-3">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4 bold">Zip Code</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.zipcode}}</span>
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4 bold">System Accesss Role</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.roles[0].role_name}}</span>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <!------------------- Salary & W2 ------------------->
+
+    <div> &nbsp; &nbsp;
+        <div
+            *ngIf="resourceDetails?.resource_details?.employement_type?.type == 'W2-Salary'  || resourceDetails?.resource_details?.employement_type?.type == 'W2-Hourly' ">
+            <div class="">
+                <h5 class="heading2">Employment details</h5>
+                <hr>
+                <form [formGroup]="salaryEmploymentDetailsForm">
+                    <div class="d-flex  col-lg-12 mt-4">
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4 bold">Employment Type</label>
+                            <span class="col-lg-1">:</span>
+                            <span
+                                class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.employement_type?.type}}</span>
+                        </div>
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Resource ID</label>
+                            <span class="col-lg-1">:</span>
+                            <span
+                                class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.resource_number}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex  col-lg-12 mt-3">
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Reporting Manager</label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-7 valuebold">{{resourceDetails?.reporting_manager_name}} </span>
+                        </div>
+
+                        <!-- <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Role
+                            </label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-6 valuebold">{{resourceDetails?.roles[0]?.role_name}}</span>
+                        </div> -->
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Start Date</label>
+                            <span class="col-lg-1">:</span>
+                            <span
+                                class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.employment_start_date | customDate}}</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="d-flex  col-lg-12 mt-3">
+                        <!-- <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Start Date</label>
+                            <span class="col-lg-1">:</span>
+                            <span
+                                class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.employment_start_date | customDate}}</span>
+                        </div> -->
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4 bold">End Date</label>
+                            <span class="col-lg-1">:</span>
+                            <span
+                                class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.employment_end_date | customDate}}</span>
+                        </div>
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4 bold">Location
+                            </label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.location}}</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex  col-lg-12 mt-3 ">
+                        <!-- <div class="d-flex col-lg-6">
+                            <label class="col-lg-4 bold">Location
+                            </label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.location}}</span>
+                        </div> -->
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Vacation Days</label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.vacation_days}}</span>
+                        </div>
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Sick Days
+                            </label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.sick_days}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex  col-lg-12 mt-3">
+
+                        <!-- <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Sick Days
+                            </label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.sick_days}}</span>
+                        </div> -->
+
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Signed NDA</label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.signed_nda ==
+                                true?'Yes' :
+                                'No'}}</span>
+                        </div>
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Signed Security Policy
+                            </label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.signed_security_policy
+                                ==
+                                true?'Yes' : 'No'}}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- <div class="d-flex  col-lg-12 mt-3" style="padding-bottom: 2%;">
+                        <div class="d-flex col-lg-6">
+                            <label class="col-lg-4  bold">Signed Security Policy
+                            </label>
+                            <span class="col-lg-1">:</span>
+                            <span class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.signed_security_policy
+                                ==
+                                true?'Yes' : 'No'}}
+                            </span>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- projects -->
+
+    <!-- <h5 class="heading">Projects</h5> -->
+
+    <!-- <div style="display: inline-block;">
+        <div class=" d-flex col-lg-12 mt-3">
+            <div class=" col-lg-6">
+                <label class="col-lg-5  bold">Project Name</label>
+                <span class="col-lg-6" *ngFor="let projectName of projectName"> {{projectName?.project_name}} <br></span>
+                <span class="col-lg-6 valuebold"> </span>
+            </div>
+            <div class=" col-lg-6">
+                <label class="col-lg-5  bold">Work hour Limit</label>
+                <span class="col-lg-1">
+                
+                </span>
+                <span class="col-lg-6 valuebold">{{projectName?.work_hour_limit}}</span>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <div style="max-width: 800px; margin:10%; margin-top: 0px;">
+        <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">Project Name</th>
+                <th scope="col" class="text-center">Work hour Limit</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let projectName of projectName">
+              <tr>
+                <td class="text-center">{{projectName?.project_name}}</td>
+                <td class="text-center">{{projectName?.work_hour_limit}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div> -->
+    <!-- <ag-grid-angular style="width: 100%; height: 250px;" class="ag-theme-alpine pt-2"
+    [rowData]="this.projectList?.resource_projects" [columnDefs]="resourcesColumnDefs" [pagination]="true"
+    [paginationPageSize]="10" (gridReady)="onGridReady($event)"></ag-grid-angular> -->
+
+    <!-- projects -->
+
+    <!------------------- Contract ------------------->
+
+    <div class="" *ngIf="resourceDetails?.resource_details?.employement_type?.type == 'Contract' ">
+        <h5 class="heading2">Employement details</h5>
+        <hr>
+        <form [formGroup]="contractEmploymentDetailsForm">
+            <div class="d-flex  col-lg-12 mt-3">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Employment Type</label>
+                    <span class="col-lg-1">:</span>
+                    <span
+                        class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.employement_type?.type}}</span>
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Contracting Firm Name</label>
+
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.
+                        contract_firm?.company_name}}</span>
+                </div>
+            </div>
+            <div class="d-flex  col-lg-12 mt-3">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Resource ID</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.resource_number}}</span>
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Start Date</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.employment_start_date | customDate}}</span>
+                </div>
+            </div>
+            
+            <div class="d-flex  col-lg-12 mt-3">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Reporting Manager </label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-6 valuebold">{{resourceDetails?.reporting_manager_name}} </span>
+                </div>
+                <!-- <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Role</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.roles[0]?.role_name}}</span>
+                </div> -->
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Signed NDA</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.signed_nda == true?'Yes' :
+                        'No'}}</span>
+                </div>
+            </div>
+            <div class="d-flex  col-lg-12 mt-3">
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Signed Security Policy</label>
+                    <span class="col-lg-1">:</span>
+                    <span class="col-lg-7 valuebold">{{resourceDetails?.resource_details?.signed_security_policy ==
+                        true?'Yes' : 'No'}}</span>
+                </div>
+                <div class="d-flex col-lg-6">
+                    <label class="col-lg-4  bold">Subcontract Agreement Executed </label>
+                    <span class="col-lg-1">:</span>
+                    <span
+                        class="col-lg-6 valuebold">{{resourceDetails?.resource_details?.subcontracting_agreement_executed
+                        == true?'Yes' : 'No'}}</span>
+                </div>
+            </div>
+            <!-- <div class="d-flex  col-lg-12 mt-3" style="padding-bottom: 2%;">
+                
+            </div> -->
+        </form>
+    </div>
+
+
+    <!-- <div> &nbsp; &nbsp;
+            <div class="">
+                <h5 class="heading2">Signature Upload</h5>
+                <hr>
+            </div>  
+    </div> -->
+    <!-- <div class="row">
+        <div class="col-lg-6">
+            <div class="card" style="width: 18rem;" *ngIf="hasImageUploaded">
+                <img [src]="signImagePath">
+              </div>
+              <div class="d-flex" style="margin-left: 130px;margin-bottom: 20px;font-size: 20px;">
+                <i class="fa fa-trash-o mr-2" aria-hidden="true" style="color: #e10a0a; cursor: pointer;"></i>
+              </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="container">
+                <div class="input-group">
+
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="inputGroupFile01" (change)="onSelectFile($event)">
+                      <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+                <p class="form-label">{{imageFileName}}</p>
+                <p class="form-label">Accepted format: JPEG and PNG, Max File size 2mb</p>
+                <button class="save-button mb-4" (click)="onUploadImage()">Upload</button>
+            </div>
+        </div>
+    </div> -->
+
+
+</div>
+
+<!------------------- Edit Model ------------------->
+
+<div  [config]="{backdrop: 'static'}" bsModal #profilePersonalDetailsData="bs-modal" class="modal fade" tabindex="-1" id="profilePersonalDetailsModal"
+    role="dialog" [config]="{backdrop: 'static'}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title ml-2 mt-3"><strong>Personal Details</strong></h5>
+                <span id="personal-details-cross-icon" type="button" class="close mr-2"
+                    (click)="closeProfileView()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="profilePersnoalDetailsForm">
+                    <div class="row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">First Name <span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="firstName" placeholder="Enter first name" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning" [ngClass]="{'is-invalid':profilePersnoalDetailsForm.controls['firstName'].touched && profilePersnoalDetailsForm.controls['firstName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                            <span class="mandatory" *ngIf="profilePersnoalDetailsForm.controls['firstName'].touched && profilePersnoalDetailsForm.controls['firstName'].errors?.required">Please enter first name</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Middle Name</label>
+                            <input class="form-control form-control-sm" formControlName="middleName" placeholder="Enter middle name" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Last Name <span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="lastName" placeholder="Enter last name" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" [ngClass]="{'is-invalid':profilePersnoalDetailsForm.get('lastName').touched && profilePersnoalDetailsForm.get('lastName').errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('lastName').touched && profilePersnoalDetailsForm.get('lastName').errors?.required">Please
+                                enter last name</span>
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">Email Id<span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="email" placeholder="Enter Email Id" disabled maxlength="150">
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('email').touched && profilePersnoalDetailsForm.get('email').errors?.required">Please
+                                enter email id</span>
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('email').touched && profilePersnoalDetailsForm.get('email').errors?.pattern">Please
+                                enter valid email id</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Phone Number <span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="phoneNumber" placeholder="Enter phone number" usFormatPhoneNumber [ngClass]="{'is-invalid':profilePersnoalDetailsForm.get('phoneNumber').touched && profilePersnoalDetailsForm.get('phoneNumber').errors}">
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('phoneNumber').touched && profilePersnoalDetailsForm.get('phoneNumber').errors">Please
+                                enter phone number</span>
+                                <!-- <span class="mandatory" *ngIf="profilePersnoalDetailsForm.controls['phoneNumber']?.touched && profilePersnoalDetailsForm.controls['phoneNumber']?.hasError('minlength')">{{_stringResourceErrors.PHONE_NUMBER_VALIDATIONS2}}</span> -->
+
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">Address Line1 <span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="addressLine1"
+                                placeholder="Enter address line1" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning" [ngClass]="{'is-invalid':profilePersnoalDetailsForm.get('addressLine1').touched && profilePersnoalDetailsForm.get('addressLine1').errors?.required}">
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('addressLine1').touched && profilePersnoalDetailsForm.get('addressLine1').errors?.required">Please
+                                enter address line1</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Address Line2</label>
+                            <input class="form-control form-control-sm" formControlName="addressLine2"
+                                placeholder="Enter address line2" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">City <span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="city" placeholder="Enter city" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" [ngClass]="{'is-invalid':profilePersnoalDetailsForm.get('city').touched && profilePersnoalDetailsForm.get('city').errors?.required}">
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('city').touched && profilePersnoalDetailsForm.get('city').errors?.required">Please
+                                enter city</span>
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">State <span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="state" placeholder="Enter state" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" [ngClass]="{'is-invalid':profilePersnoalDetailsForm.get('state').touched && profilePersnoalDetailsForm.get('state').errors?.required}">
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('state').touched && profilePersnoalDetailsForm.get('state').errors?.required">Please
+                                enter state</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Country <span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="country" placeholder="Enter country" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" [ngClass]="{'is-invalid':profilePersnoalDetailsForm.get('country').touched && profilePersnoalDetailsForm.get('country').errors?.required}">
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('country').touched && profilePersnoalDetailsForm.get('country').errors?.required">Please
+                                enter country</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Zip Code <span class="mandatory">*</span></label>
+                            <input class="form-control form-control-sm" formControlName="zipCode" placeholder="Enter zip code" minlength="5" maxlength="6" appAlphaWithSpace inputType="strictlyNumber" [ngClass]="{'is-invalid':profilePersnoalDetailsForm.get('zipCode').touched && profilePersnoalDetailsForm.get('zipCode').errors}">
+                            <span class="mandatory"
+                                *ngIf="profilePersnoalDetailsForm.get('zipCode').touched && profilePersnoalDetailsForm.get('zipCode').errors?.required">Please
+                                enter zip code</span>
+                                <span class="mandatory" *ngIf="profilePersnoalDetailsForm.controls['zipCode']?.touched && profilePersnoalDetailsForm.controls['zipCode']?.hasError('minlength')">{{_stringResourceErrors.ZIPCODE_VALIDATIONS2}}</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-button" (click)="closePersonalDetails()">Cancel</button>
+                <button class="save-button" (click)="updatePersonallDetails()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+

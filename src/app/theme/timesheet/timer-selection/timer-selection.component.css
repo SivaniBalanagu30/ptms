@@ -1,0 +1,17 @@
+select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    text-indent: 1px !important;
+    text-overflow: '' !important;
+}
+
+.my-disabled-class {
+    background-color: #f2f2f2; /* Example background color for disabled state */
+    /* color: #DBDEE1 !important; Example text color for disabled state */
+    /* Add any other styles you want for the disabled state */
+  }
+
+  .mat-select-disabled .mat-select-value:disabled{
+    color: black !important;
+  }
+

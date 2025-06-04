@@ -1,0 +1,153 @@
+<p-toast></p-toast>
+<h1 class="topHeader" style="color: #3F51B5; font-size: 20px;">Time Approver</h1>
+<div class="card p-0" style="border-radius: 1rem; margin-top: -5px;">
+<div class="card-body col-lg-12">
+    <form [formGroup]="approverForm">
+
+        <div class="pt-2">
+            <div class="row">
+                <div class="col-lg-2 mt-1">
+                    <label class="form-label">Select Month</label>
+                    <div class="input-group">
+                    <input type="text" class="form-control form-control-sm" placeholder="Select Month"  #searchText="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY',showWeekNumbers: false }"  (keypress)="stopManualEntry($event)"
+                        formControlName="searchText" [bsConfig]="datePickerConfig" placement="bottom left"
+                        (keydown)="false" (paste)="false" (cut)="false"  (ngModelChange)="selectMyTimesheet()">
+                        <div class="input-group-append">
+                            <div class="input-group-text btn">
+                                <i class="fa fa-calendar" (click)="searchText.toggle()"></i>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+                <div class="col-lg-4 pr-0 pl-1">
+                    <label class="form-label">Select Week</label>
+                    <!-- <select class="form-control" formControlName="dateRange">
+                        <option *ngFor="let dates of lastFourWeeksDates; let i = index" [value]="dates">
+                            {{dates}}
+                        </option>
+                    </select> -->
+                    <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-select formControlName="dateRange" (selectionChange)="weekSelectionChanged()">
+                          <mat-option *ngFor="let dates of lastFourWeeksDates; let i = index" [value]="dates">{{dates}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+                <div class="col-lg-2 mt-1">
+                    <label class="form-label">Select Project</label>
+                    <select class="form-control form-control-sm" formControlName="project"
+                        (change)="onProjectChange(this.approverForm.value.project)">
+                        <option disabled value=''>Select Project</option>
+                        <option *ngFor="let project of projectsList" [value]="project.id">{{project.project_name | titlecase}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-lg-2 mt-1 pl-1">
+                    <label class="form-label">Select Resource</label>
+                    <select class="form-control form-control-sm" (change)="onResourceChange()" formControlName="resource">
+                        <option disabled value=''>Select Resource</option>
+                        <option *ngFor="let project of resourcesList" [value]="project.resource_id">
+                            {{project.resource_name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-lg-1 pt-4 pl-0">
+                    <button class="save-button" [disabled]="disableButton===true" type="submit" (click)="submit()">Submit
+                    </button>&nbsp;
+                    <!-- <button class="cancel-button" type="submit" (click)="reset()">Reset
+                    </button> -->
+                </div>
+                <div class="col-lg-1 pt-4 pl-0 pr-0">
+                    <button class="save-button" (click)="reset()"><i class="fa fa-repeat" aria-hidden="true"></i> Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <!-- <div class="col-lg-2">
+            <label class="form-label">Select Month</label>
+            <input type="text" class="form-control form-control-sm" bsDatepicker placeholder="Select Month"
+            [(ngModel)]="searchText" [bsConfig]="{dateInputFormat: 'MM-YYYY', minMode: 'month', maxDate: maxMonthDate}"
+            (ngModelChange)="selectMyTimesheet()">
+        </div> -->
+    </div>
+    <ag-grid-angular class="ag-theme-alpine pt-3" [gridOptions]="gridOptions"
+        (paginationChanged)="onPaginationChanged($event)"
+        (gridReady)="onGridReady($event)"></ag-grid-angular>
+
+</div>
+</div>
+
+
+<div  [config]="{backdrop: 'static'}" bsModal #timesheetData="bs-modal" class="modal fade" tabindex="-1" id="timesheetDataModal" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <strong class="ml-2 mt-2">Timesheets</strong>
+                <span type="button" class="close mr-2" (click)="hideModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="row d-flex">
+                    <div class="col-lg-6">
+                        <!-- <b>Total Work hours : {{this.totalHours }}</b> -->
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Resource Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.resource_name}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Project Manager Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.project_manager_name}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Client Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.client_name}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Project Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.project_name}}</span>
+                        </div>
+                        <div class="row" *ngIf="timeSheetStatus == 'Rejected' || timeSheetStatus == 'Approved'">
+                            <span class="col-lg-5"><b class="form-label">Approver Comments</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.approver_comments}}</span>
+                        </div>
+                        <!-- <span class="col-lg-2"><b>Resource Name</b></span><span class="col-lg-1"><b>:</b></span> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- <b>Total Work hours : {{this.totalHours }}</b> -->
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Total Work Hours (All Projects)</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.total_work_hours_limit}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Project Work Hour Limit</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" class="form-label">{{timesheetResourceDetails?.project_work_hour_limit}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-lg-5"><b class="form-label">Project Work Hours Entered</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5" [ngStyle]="{'color':totalHours > timesheetResourceDetails?.project_work_hour_limit ? 'red' : ''}" class="form-label">{{totalHours}}</span>
+                        </div>
+                        <!-- <span class="col-lg-2"><b>Resource Name</b></span><span class="col-lg-1"><b>:</b></span> -->
+                    </div>
+                    <!-- <div class="col-lg-3">
+                        <button class="btn btn-success" (click)="approve('Approve')">Approve</button>&nbsp;
+                        <button class="btn btn-danger" (click)="approve('Reject')">Reject</button>
+
+                    </div> -->
+              
+
+                </div>
+                <ag-grid-angular class="ag-theme-alpine pt-3" [rowData]="this.timesheetDetails"
+                    [columnDefs]="viewColumnsDefs" [pagination]="true" [paginationPageSize]="10"  [suppressHorizontalScroll]="true"
+                    (gridReady)="onGridReadyView($event)"></ag-grid-angular>
+                    <div class="row pt-2" *ngIf="showComments">
+                        <div class="col-lg-6">
+                            <form [formGroup]="addCommentsForm">
+                                <label class="form-label">Comments <span class="mandatory">*</span></label>
+                                <textarea class="form-control" rows="4" formControlName="comments" placeholder="Leave your comments" [ngClass]="{'is-invalid':addCommentsForm.controls['comments']?.touched && addCommentsForm.controls['comments'].errors?.required}" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning"></textarea>
+                                <span class="mandatory" *ngIf="addCommentsForm.controls['comments']?.touched && addCommentsForm.controls['comments'].errors?.required">Please enter comments</span>
+                               
+                            </form>
+                        </div>
+                        <div class="text-right pt-4">
+                            <button *ngIf="showApprove" class="timesheet-approve-btn" (click)="approve('Approve')"><i class="fa fa-check" aria-hidden="true"></i> Approve</button>
+                            <button *ngIf="showReject" class="timesheet-reject-btn ml-2" (click)="approve('Reject')"><i class="fa fa-times" aria-hidden="true"></i> Reject</button>
+                    </div>
+                       
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

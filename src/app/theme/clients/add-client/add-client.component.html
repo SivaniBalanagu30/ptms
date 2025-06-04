@@ -1,0 +1,153 @@
+<p-toast></p-toast>
+<div class="card p-0" style="border-radius: 1rem">
+    <div class="card-body">
+      <h5 class="text-center"><strong style="color: #3F51B5;">Add Clients</strong></h5>
+        <form [formGroup]="addClientForm">
+            <div class="row d-flex col-lg-12">
+                <div class="col-lg-6">
+                    <label class="form-label">Client Name <span class="mandatory">*</span></label>
+                    <input id="firstName" type="text" class="form-control form-control-sm" formControlName='clientName' placeholder="Enter client name" [ngClass]="{'is-invalid':addClientForm.controls['clientName'].touched && addClientForm.controls['clientName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                    <span class="mandatory" *ngIf="addClientForm.controls['clientName'].touched && addClientForm.controls['clientName'].errors?.required">Please enter client name</span>
+                  </div>
+            </div>
+            <h6 class="mt-4"><strong style="color: #3F51B5;">Address</strong></h6>
+            <div class="row d-flx col-lg-12 pt-2">
+              <div class="col-lg-6">
+           <label class="form-label">Address Line1 <span class="mandatory">*</span></label>
+           <input type="text" class="form-control form-control-sm" formControlName='addressLine1' placeholder="Enter address line1"  [ngClass]="{'is-invalid':addClientForm.controls['addressLine1'].touched && addClientForm.controls['addressLine1'].errors?.required}" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+           <span class="mandatory" *ngIf="addClientForm.controls['addressLine1'].touched && addClientForm.controls['addressLine1'].errors?.required">Please enter address line1</span>
+         </div>
+         <div class="col-lg-6">
+           <label class="form-label">Address Line2</label>
+           <input type="text" class="form-control form-control-sm" formControlName='addressLine2' placeholder="Enter address line2" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+         </div>
+       </div>
+       <div class="row d-flex col-lg-12 pt-2">
+          <div class="col-sm-4">
+            <label class="form-label">City <span class="mandatory">*</span></label>
+            <input type="text" class="form-control form-control-sm" formControlName='city' placeholder="Enter city" [ngClass]="{'is-invalid':addClientForm.controls['city'].touched && addClientForm.controls['city'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+            <span class="mandatory" *ngIf="addClientForm.controls['city'].touched && addClientForm.controls['city'].errors?.required">Please enter city</span>
+          </div>
+          <div class="col-sm-4">
+            <label class="form-label">State <span class="mandatory">*</span></label>
+            <input type="text" class="form-control form-control-sm" formControlName='state' placeholder="Enter state" [ngClass]="{'is-invalid':addClientForm.controls['state'].touched && addClientForm.controls['state'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+            <span class="mandatory" *ngIf="addClientForm.controls['state'].touched && addClientForm.controls['state'].errors?.required">Please enter state</span>
+          </div>
+          <div class="col-sm-4">
+              <label class="form-label">Country <span class="mandatory">*</span></label>
+              <input type="text" class="form-control form-control-sm" formControlName='country' placeholder="Enter country" [ngClass]="{'is-invalid':addClientForm.controls['country'].touched && addClientForm.controls['country'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+              <span class="mandatory" *ngIf="addClientForm.controls['country'].touched && addClientForm.controls['country'].errors?.required">Please enter country</span>
+            </div>
+          </div>
+          <div class="row d-flex col-lg-12">
+            <div class="col-lg-4">
+              <label class="form-label">Zip Code <span class="mandatory">*</span></label>
+              <input type="text" class="form-control form-control-sm" formControlName='zipCode' placeholder="Enter zip code" [ngClass]="{'is-invalid':addClientForm.controls['zipCode'].touched && addClientForm.controls['zipCode'].errors?.required}" minlength="5" maxlength="6" appAlphaWithSpace inputType="strictlyNumber">
+              <span class="mandatory" *ngIf="addClientForm.controls['zipCode'].touched && addClientForm.controls['zipCode'].errors?.required">Please enter zip code</span>
+              <span class="mandatory" *ngIf="addClientForm.controls['zipCode']?.touched && addClientForm.controls['zipCode']?.hasError('minlength')">{{_stringResourceErrors.ZIPCODE_VALIDATIONS2}}</span>
+
+            </div>
+        </div>
+        <hr>
+        <h6 class="mt-4"><strong style="color: #3F51B5;">Primary Contact Info</strong></h6>
+            <div class="row d-flex col-lg-12 pt-2">
+              <div class="col-lg-4">
+                <label class="form-label">Contact First Name <span class="mandatory">*</span></label>
+                <input id="contact-first-name" type="text" class="form-control form-control-sm" formControlName='contactFirstName' placeholder="Enter contact first name" [ngClass]="{'is-invalid':addClientForm.controls['contactFirstName'].touched && addClientForm.controls['contactFirstName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace" >
+                <span class="mandatory" *ngIf="addClientForm.controls['contactFirstName'].touched && addClientForm.controls['contactFirstName'].errors?.required">Please enter contact first name</span>
+              </div>
+            
+              <div class="col-lg-4">
+                <label class="form-label">Contact Middle Name  </label>
+                <input id="contact-middle-number" type="text" class="form-control form-control-sm" formControlName='contactMiddleName' placeholder="Enter contact middle name" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+              </div>
+              <div class="col-lg-4">
+                <label class="form-label">Contact Last Name <span class="mandatory">*</span></label>
+                <input id="contact-last-name" type="text" class="form-control form-control-sm" formControlName='contactLastName' placeholder="Enter contact last name" [ngClass]="{'is-invalid':addClientForm.controls['contactLastName'].touched && addClientForm.controls['contactLastName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                <span class="mandatory" *ngIf="addClientForm.controls['contactLastName'].touched && addClientForm.controls['contactLastName'].errors?.required">Please enter contact last name</span>
+              </div>
+            </div>
+            <div class="row d-flex col-lg-12 pt-2">
+                <div class="col-lg-6">
+                  <label class="form-label">Contact Email Id<span class="mandatory">*</span></label>
+                  <input id="contact-email" type="text" class="form-control form-control-sm" formControlName='contactEmail' placeholder="Enter contact Email Id" [ngClass]="{'is-invalid':addClientForm.controls['contactEmail'].touched && addClientForm.controls['contactEmail'].errors?.required}" maxlength="150">
+                  <span class="mandatory" *ngIf="addClientForm.controls['contactEmail'].touched && addClientForm.controls['contactEmail'].errors?.required">Please enter contact email Id</span>
+                  <span class="mandatory" *ngIf="addClientForm.controls['contactEmail']?.touched && addClientForm.controls['contactEmail']?.errors?.pattern">Please enter valid contact email Id</span>
+                </div>
+                <div class="col-lg-6">
+                  <label class="form-label">Contact Phone Number</label>
+                  <input id="contact-phone-number" type="text" class="form-control form-control-sm" formControlName='contactPhoneNumber' placeholder="Enter contact phone number" [ngClass]="{'is-invalid':addClientForm.controls['contactPhoneNumber'].touched && addClientForm.controls['contactPhoneNumber'].errors}" maxlength="20" usFormatPhoneNumber>
+                  <!-- <span class="mandatory" *ngIf="addClientForm.controls['contactPhoneNumber'].touched && addClientForm.controls['contactPhoneNumber'].errors?.required">Please contact phone number</span> -->
+                  <!-- <span class="mandatory" *ngIf="addClientForm.controls['contactPhoneNumber']?.touched && addClientForm.controls['contactPhoneNumber']?.errors?.pattern">Please enter valid contact phone number</span> -->
+                  <!-- <span class="mandatory" *ngIf="addClientForm.controls['contactPhoneNumber']?.touched && addClientForm.controls['contactPhoneNumber']?.hasError('minlength')">{{_stringResourceErrors.PHONE_NUMBER_VALIDATIONS2}}</span> -->
+                </div>
+              </div>
+              <hr>
+          <h6 class="mt-4"><strong style="color: #3F51B5;">Contract Info</strong></h6>
+          <div class="row d-flex col-lg-12">
+            <div class="col-lg-4">
+              <label class="form-label">Executed <span class="mandatory">*</span></label>
+              <select class="form-control form-control-sm" formControlName='executed' (change)="changeContract(this.addClientForm.get('executed').value)" [ngClass]="{'is-invalid':addClientForm.controls['executed'].touched && addClientForm.controls['executed'].errors?.required}">
+                <option disabled value=''>Please select executed</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>        
+              <span class="mandatory" *ngIf="addClientForm.controls['executed'].touched && addClientForm.controls['executed'].errors?.required">Please select executed</span>
+            </div>
+            <div  *ngIf="showFields" class="col-sm-4">
+                <label class="form-label">Contract Number/ SOW <span class="mandatory">*</span></label>
+                <input type="text" class="form-control form-control-sm" formControlName='contactNumberSOW' placeholder="Enter contract number/ sow" [ngClass]="{'is-invalid':addClientForm.controls['contactNumberSOW'].touched && addClientForm.controls['contactNumberSOW'].errors?.required}" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                <span class="mandatory" *ngIf="addClientForm.controls['contactNumberSOW'].touched && addClientForm.controls['contactNumberSOW'].errors?.required">Please select contact number/ sow</span>
+              </div>
+              <div *ngIf="showFields" class="col-sm-4">
+                <label class="form-label">Executed Date <span class="mandatory">*</span></label>
+                <div class="input-group">
+                  <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='executedDate' [bsConfig]="{showWeekNumbers: false }" bsDatepicker placeholder="Select executed date" [ngClass]="{'is-invalid':addClientForm.controls['executedDate'].touched && addClientForm.controls['executedDate'].errors?.required}" (keypress)="stopManualEntry($event)">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                  </div>
+                </div>
+                <span class="mandatory" *ngIf="addClientForm.controls['executedDate'].touched && addClientForm.controls['executedDate'].errors?.required">Please select executed date</span>
+              </div>
+          </div>
+          <div *ngIf="showFields"class="row">
+            <div class="col-sm-4">
+                <label class="form-label">Term Start Date <span class="mandatory">*</span></label>
+                <div class="input-group">
+                  <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='termStartDate' #termStartDate="bsDatepicker" bsDatepicker placeholder="Enter term start date" [bsConfig]="{showWeekNumbers: false }" [ngClass]="{'is-invalid':addClientForm.controls['termStartDate'].touched && addClientForm.controls['termStartDate'].errors?.required}" (keypress)="stopManualEntry($event)" [maxDate]="newEndDate(addClientForm.value.termEndDate)">
+                  <div class="input-group-append">
+                    <div class="input-group-text btn" (click)="termStartDate.toggle()">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                  </div>
+                </div>
+                <span class="mandatory" *ngIf="addClientForm.controls['termStartDate'].touched && addClientForm.controls['termStartDate'].errors?.required">Please select term start date</span>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label">Term End Date <span class="mandatory">*</span></label>
+                <div class="input-group">
+                  <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='termEndDate' #termEndDate="bsDatepicker" [bsConfig]="{showWeekNumbers: false }" bsDatepicker placeholder="Enter term end date" [ngClass]="{'is-invalid':addClientForm.controls['termEndDate'].touched && addClientForm.controls['termEndDate'].errors?.required}" [minDate]="newEndDate(addClientForm.value.termStartDate)" (keypress)="stopManualEntry($event)">
+                  <div class="input-group-append">
+                    <div class="input-group-text btn" (click)="termEndDate.toggle()">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                  </div>
+                </div>
+                <span class="mandatory" *ngIf="addClientForm.controls['termEndDate'].touched && addClientForm.controls['termEndDate'].errors?.required">Please select term end date</span>
+
+              </div>
+          </div>
+          <div class="row d-flex col-lg-12 pt-2">
+            <div class="col-lg-8 form-group">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control form-control-sm"  formControlName='notes'  id="notes" rows="3" maxlength="255" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning"></textarea>
+              </div>
+          </div>
+          <div class="p-3 d-flex justify-content-end">
+            <button type="button" class="save-button" (click)="addClient()">Save</button>
+          </div>
+        </form>
+    </div>
+</div>

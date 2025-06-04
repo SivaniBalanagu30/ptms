@@ -1,0 +1,480 @@
+<p-toast></p-toast>
+<div class="timesheet-container">
+    <form [formGroup]="timesheetEntryForm">
+        <div class="row pl-4 d-flex col-lg-12 timesheet-filter-section">
+            <div class="row col-lg-5">
+                <!-- <input type="text" class="form-control" formControlName="dateRange"
+                    placeholder="Monday April 4th, 2023 - Wednesday April 6th 2023" #daterangepicker="bsDaterangepicker"
+                    bsDaterangepicker [maxDate]="todayDate"
+                    [bsConfig]="{ rangeInputFormat : 'dddd MMMM Do, YYYY', dateInputFormat: 'dddd MMMM Do, YYYY', selectWeekDateRange: true }"> -->
+                  <!-- <select class="form-control" formControlName="dateRange">
+                    <option *ngFor="let dates of lastFourWeeksDates; let i = index" [value]="dates">
+                      {{dates}}
+                    </option>
+                  </select> -->
+                  <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-select formControlName="dateRange" (selectionChange)="filterTimesheets()">
+                      <mat-option *ngFor="let dates of lastFourWeeksDates; let i = index" [value]="dates" [matTooltip]="dates" [matTooltipPosition]="'right'">{{dates}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  
+                  
+            </div>
+            <!-- <div class="col-lg-3">
+                <button type="submit" class="save-button mt-1" (click)="filterTimesheets()">View Past Timesheets</button>
+            </div> -->
+            <div class="col-lg-3 px-0  ml-3">
+                <label class="hours-label">
+                    <i class="fa fa-clock-o mt-1 mr-2" aria-hidden="true"></i>Total Weekly Hours : {{timesheetEntryForm.controls.totalWorkingHours.value}} hrs</label>
+            </div>
+            <div class="col-lg-4 px-0" *ngIf="timesheetStatus !== 'Submitted' && timesheetStatus !== 'Approved'">
+                <!-- <button type="submit" class="timesheet-save-button mr-3" (click)="saveTimesheets()" *ngIf="currentWeekNumber === selectedDateRangeWeek">Save</button>
+                <button type="submit" class="save-button" (click)="submitTimesheets()" *ngIf="currentWeekNumber !== selectedDateRangeWeek">Submit</button> -->
+                <button type="submit" class="timesheet-save-button mr-2" *ngIf="currentWeekNumber === selectedDateRangeWeek && timesheetStatus !== 'Rejected'" [disabled]="!enableSaveButton" (click)="saveTimesheets()">Save</button>
+                <button type="submit" class="timesheet-submit-button mr-2"  (click)="submitTimesheets()" >Submit</button> 
+            </div>
+        </div>
+    </form>
+    <div class="test-work">
+        <div class="card p-0" style="margin-left: 0 !important; margin-right: 0 !important;">
+            <div class="d-flex card-header" [ngClass]="{ 'sticky': isHeaderFrozen }">
+                <div class="col-lg-1 first-data"></div>
+                <div class="col-lg-2 ml-3"><label class="timesheet-header">Project <span class="mandatory">*</span></label></div>
+                <div class="col-lg-2 pl-2 milestone-width"><label class="timesheet-header">Milestone</label></div>
+                <div class="col-lg-1 px-0"> <label class="timesheet-header">Start Time <span class="mandatory">*</span></label></div>
+                <div class="col-lg-1 ml-3 max-field"> <label class="timesheet-header">Meal Start</label></div>
+                <div class="col-lg-1 px-0 max-field"> <label class="timesheet-header">Meal End</label></div>
+                <div class="col-lg-1 px-0 max-field"> <label class="timesheet-header">End Time <span class="mandatory">*</span></label></div>
+                <div class="col-lg-2 px-0"> <label class="timesheet-header">Activity</label></div>
+            </div>
+            <div class="card-body timesheet-body">
+                <form [formGroup]="timeForm">
+                    <div class="question-container" formArrayName="questions">
+                      <div [formGroupName]="j"
+                        *ngFor="let question of timeForm['controls'].questions['controls']; let j = index; let last= last">
+                        <div class="d-flex col-lg-12 category-text">
+                          <div class="col-lg-1  first-data"></div>
+                          <div class="col-lg-5 p-0 date-color">
+                            Date : {{question.controls.ts_date.value}}<span class="holiday-label" *ngIf="checkHoliday(question.controls.options.value)">({{getHolidayName(question.controls.options.value)}})</span>
+                          </div>
+                          <div class="col-lg-6 p-0 text-right fit-content">
+                            <label class="date-color">Total Hours: </label> {{question.controls.work.value}} 
+                            {{question.controls.work.value > 1 ? 'hrs' : question.controls.work.value === 1 ? 'hr' : ''}} 
+                          </div>
+                        </div>
+                        <!-- <hr> -->
+                          <mat-icon [ngClass]="{'disable':question.get('options')?.controls[rowIndex]?.get('ts_end_time')?.value === '12:00 AM (Next Day)'}" *ngIf="question.get('options')?.controls[0]?.get('status')?.value === 'Rejected' || question.get('options')?.controls[0]?.get('status')?.value === '' || question.get('options')?.controls[0]?.get('status')?.value === '' || question.get('options')?.controls[0]?.get('status')?.value === 'Saved'"
+                          (click)="add(j)" class="test">add_circle_outline</mat-icon>
+                          <!-- <mat-icon
+                            *ngIf="question.get('options')?.controls[0]?.get('status')?.value === 'Rejected' || question.get('options')?.controls[0]?.get('status')?.value === '' || question.get('options')?.controls[0]?.get('status')?.value === '' || question.get('options')?.controls[0]?.get('status')?.value === 'Saved'"
+                            [ngClass]="{'disabled-icon': !showAddButton, 'test': true}"
+                            (click)="add(j)"
+                          >
+                            add_circle_outline
+                          </mat-icon> -->
+                        <br>
+                        <div formArrayName="options">
+                          <div [formGroupName]="k" *ngFor="let option of getOptions(question); let k=index"
+                            class="row d-flex col-lg-12 mt-2">
+                            <div class="col-lg-1 first-data"></div>
+                            <div class="col-lg-2 mt-top">
+                              <select class="form-control" formControlName="project_name"
+                                      (change)="getMilstone(option.controls.project_name.value, option, j, k, mileStoneList); setTimeBasedOnProject(option.controls.project_name.value, option, question.controls.work);"
+                                      [attr.disabled]="((option.controls.timesheet_type.value === 'Holiday' && k === 0) || (option.controls.status.value?.includes('Approved')) || (option.controls.status.value?.includes('Submitted'))) ? true : null"
+                                      
+                              >
+                              <!-- [ngClass]="{ 'is-invalid': (submitted || option.controls.project_name.touched) && option.controls.project_name.errors }" -->
+                                <ng-container *ngIf="getOptions(question)[0].value.timesheet_type !== 'Holiday' && checkTimeOffTwice(question.controls.options.value);else holiday">
+                                  <option disabled value="">Select Project</option>
+                                  <ng-container *ngFor="let project of projectsList">
+                                    <ng-container *ngIf="isProjectValid(project, question.controls.ts_date.value)">
+                                      <option [ngValue]="project.project_id"
+                                              [disabled]="approvedProjectList.includes(project.project_id)">
+                                        {{ project.project_name }}
+                                      </option>                                
+                                    </ng-container>
+                                  </ng-container>
+                                </ng-container>
+                                <!-- <ng-template #holiday>
+                                  <option disabled value="">Select Project</option>
+                                  <ng-container *ngFor="let project of projectsList">
+                                    <ng-container *ngIf="project.project_name !== 'Time Off'">
+                                      <ng-container *ngIf="isProjectValid(project, question.controls.ts_date.value)">
+                                      <option [ngValue]="project.project_id" [disabled]="approvedProjectList.includes(project.project_id)">{{project.project_name}}</option>   
+                                      </ng-container>                         
+                                    </ng-container>
+                                  </ng-container>
+                                </ng-template> -->
+                                <ng-template #holiday>
+                                  <option disabled value="">Select Project</option>
+                                  <ng-container *ngFor="let project of projectsList">
+                                      <ng-container *ngIf="isProjectValid(project, question.controls.ts_date.value)">
+                                          <option [ngValue]="project.project_id" [disabled]="project.project_id === 'Timeoff' || approvedProjectList.includes(project.project_id)">
+                                              {{ project.project_name }}
+                                          </option>
+                                      </ng-container>
+                                  </ng-container>
+                              </ng-template>
+                                <option *ngIf="option.controls.timesheet_type.value === 'Holiday' && k === 0" [ngValue]="'Holiday'">Holiday</option>
+                                
+                              </select>
+                              <span class="mandatory" *ngIf="option.controls.project_name.errors?.required">
+                                Please select project
+                              </span>
+                            </div>
+                            
+                            <div class="col-lg-2 milestone-width mt-top">
+                              <select class="form-control" formControlName="milestone"
+                              [attr.disabled]="(option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted')) || option.controls.project_name.value?.includes('Timeoff') ? true : null"
+                              [ngClass]="{ 'is-invalid': (submitted || option.controls.milestone.touched) && option.controls.milestone.errors }">
+                              <option disabled value="">Select Milestone</option>
+                              <option *ngFor="let milestone of getMileStones(option.controls.project_name.value)" [ngValue]="milestone.id">{{milestone.milestone_name}}
+                              </option>
+                            </select>
+                          </div>
+                          
+                          <div class="col-lg-1 max-field mt-top">
+                            <!-- <input type="text" class="form-control" appDisableManualEntry 
+                              (keydown.enter)="setStartTimeToPicker(startTimePicker,option,option.controls.start_time.value, this.timeForm.value.questions[j].options[k].ts_start_time,'start_time'); setMinTime(k, this.timeForm.value.questions[j].options,option,option.controls.start_time.value); dateEntry(option, pop, 'ts_start_time'); updateWorkHours(option, question, j, 'time')"
+                              (keydown.tab)="setStartTimeToPicker(startTimePicker,option,option.controls.start_time.value, this.timeForm.value.questions[j].options[k].ts_start_time,'start_time'); setMinTime(k, this.timeForm.value.questions[j].options,option,option.controls.start_time.value); dateEntry(option, pop, 'ts_start_time'); updateWorkHours(option, question, j, 'time')"
+                              [popover]="popTemplate" #pop="bs-popover" (focusout)="setStartTimeToPicker(startTimePicker,option,option.controls.start_time.value, this.timeForm.value.questions[j].options[k].ts_start_time,'start_time'); setMinTime(k, this.timeForm.value.questions[j].options,option,option.controls.start_time.value); dateEntry(option, pop, 'ts_start_time'); updateWorkHours(option, question, j, 'time')"
+                              [attr.disabled]="((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) || (option.controls.status.value?.includes('Submitted')) || option.controls.project_name.value?.includes('Timeoff')) ? true : null"
+                              [ngClass]="{ 'is-invalid': (submitted || option.controls.ts_start_time.touched) && option.controls.ts_start_time.errors }"
+                              (focus)="setStartTimeToPicker(startTimePicker,option,option.controls.start_time.value, this.timeForm.value.questions[j].options[k].ts_start_time,'start_time'); setMinTime(k, this.timeForm.value.questions[j].options,option,option.controls.start_time.value); dateEntry(option, pop, 'ts_start_time'); updateWorkHours(option, question, j, 'time')"
+                              [outsideClick]="true" placement="bottom" formControlName="ts_start_time" placeholder="Start Time">
+                            <ng-template #popTemplate>
+                              <div class="timePicker">
+                                <timepicker #startTimePicker [showMeridian]="true" formControlName="start_time"
+                                  [min]="k===0 ? null : minStartTime"></timepicker>
+                              </div>
+                              <span class="ok-icon">
+                                <button class="save-button" style="margin: 0px 10px 10px 0;"
+                                  (click)="updateStartTime(startTimePicker, option, question, j,  'ts_start_time', pop); updateWorkHours(option, question, j, 'time')">OK</button>
+                              </span>
+                            </ng-template> -->
+                            
+
+                            <app-timer-selection class="timepicker" [max]="'11:45 PM'" [disabled]="((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted'))) ? true : null"  [placeholder]="'Start Time'"  [min]="k===0 ? null : setMinTimeCheck(k, this.timeForm.value.questions[j].options,option,option.controls.start_time.value)" (dropdownValue)="setValue($event, option, 'ts_start_time', question, j, 'time',k)" [timeInfo]="option.controls.ts_start_time.value" [row]="k" [selectedEndTime]="option.controls.ts_end_time.value"
+                            ></app-timer-selection>
+
+                            <span class="mandatory" *ngIf="option.controls.ts_start_time.errors?.required">
+                              Please select start time
+                            </span>
+                          
+                          </div>
+                          
+
+
+                            <div class="col-lg-1 max-field mt-top">
+                              <!-- <input type="text" class="form-control" appDisableManualEntry  (keyup.enter)="setStartTimeToPicker(startMealTimePicker,option,option.controls.meal_start_time.value,this.timeForm.value.questions[j].options[k].meal_start,'meal_start_time') ; setMinorMax(option.controls.start_time.value, option.controls.end_time.value,option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, popMealStart, 'meal_start')"
+                              (keydown.tab)="setStartTimeToPicker(startMealTimePicker,option,option.controls.meal_start_time.value,this.timeForm.value.questions[j].options[k].meal_start,'meal_start_time') ; setMinorMax(option.controls.start_time.value, option.controls.end_time.value,option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, popMealStart, 'meal_start')"  
+                              [popover]="popMealStartTemplate" #popMealStart="bs-popover" [attr.disabled]="((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted')) || option.controls.project_name.value?.includes('Timeoff')) ? true : null" 
+                              [outsideClick]="true" placement="bottom" formControlName="meal_start" placeholder="Meal Start Time" (focusout)="setStartTimeToPicker(startMealTimePicker,option,option.controls.meal_start_time.value, 
+                              this.timeForm.value.questions[j].options[k].meal_start,'meal_start_time') ; setMinorMax(option.controls.start_time.value, option.controls.end_time.value,option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, pop, 'meal_start')"
+                              (focus)="setStartTimeToPicker(startMealTimePicker,option,option.controls.meal_start_time.value, 
+                              this.timeForm.value.questions[j].options[k].meal_start,'meal_start_time') ; setMinorMax(option.controls.start_time.value, option.controls.end_time.value,option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, pop, 'meal_start')">
+                              <ng-template #popMealStartTemplate>
+                                <div class="timePicker">
+                                <timepicker #startMealTimePicker [showMeridian]="true" [min]="minMealstartTime"  [max]="maxMealStartTime"formControlName="meal_start_time"></timepicker>
+                                </div>
+                                <span class="ok-icon">
+                                  <button class="save-button" style="margin: 0px 10px 10px 0;"
+                                    (click)="updateStartTime(startMealTimePicker, option, question, j,  'meal_start', popMealStart); updateWorkHours(option, question, j, 'time')">OK</button>
+                                </span>
+                              </ng-template> -->
+
+                              <app-timer-selection class="timepicker" [max]="'11:45 PM'" [disabled]="!isMealStartTimeValid(option) || ((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted')) || option.controls.project_name.value?.includes('Timeoff')) ? true : null" [placeholder]="'Meal Start Time'" [min]="k===indexID ? nextTime : null" (dropdownValue)="setValue($event, option, 'meal_start_time', question, j, 'time',k)" [timeInfo]="option.controls.meal_start_time.value" [selectedStartTime]="option.controls.ts_start_time.value"></app-timer-selection>
+
+                              <!-- <input type="time" class="form-control" formControlName="ts_end_time" placeholder="Choose End Time">
+                              <input type="text" class="form-control"
+                                [attr.disabled]="(option.controls.status.value?.includes('Approved') || option.controls.status.value?.includes('Rejected')) ? true : null"
+                                formControlName="meal_start" placeholder="Choose End Time"> -->
+                            
+                            </div>
+                            <div class="col-lg-1 max-field mt-top">
+                              <!-- <input type="text" class="form-control"  appDisableManualEntry [popover]="popMealEndTemplate" #popMealEnd="bs-popover" (keyup.enter)="setStartTimeToPicker(endMealTimePicker,option,option.controls.meal_end_time.value, this.timeForm.value.questions[j].options[k].meal_end,'meal_end_time'); ; setMinorMax(option.controls.start_time.value, option.controls.end_time.value,option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, popMealEnd,  'meal_end');updateWorkHours(option, question, j, 'time') "
+                              (keydown.tab)="setStartTimeToPicker(endMealTimePicker,option,option.controls.meal_end_time.value, this.timeForm.value.questions[j].options[k].meal_end,'meal_end_time'); ; setMinorMax(option.controls.start_time.value, option.controls.end_time.value,option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, pop,  'meal_end');updateWorkHours(option, question, j, 'time') "  
+                              [attr.disabled]="((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted')) || option.controls.project_name.value?.includes('Timeoff')) ? true : null" 
+                              [outsideClick]="true" placement="bottom" formControlName="meal_end" placeholder="Meal End Time" (focusout)="setStartTimeToPicker(endMealTimePicker,option,option.controls.meal_end_time.value, this.timeForm.value.questions[j].options[k].meal_end,'meal_end_time'); ; setMinorMax(option.controls.start_time.value, option.controls.end_time.value,option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, popMealEnd,  'meal_end');updateWorkHours(option, question, j, 'time') "
+                              (focus)="setStartTimeToPicker(endMealTimePicker,option,option.controls.meal_end_time.value, this.timeForm.value.questions[j].options[k].meal_end,'meal_end_time'); ; setMinorMax(option.controls.start_time.value, option.controls.end_time.value,option.controls.meal_start.value,option.controls.meal_end.value, option,k); dateEntry(option, pop,  'meal_end');updateWorkHours(option, question, j, 'time') ">
+                              <ng-template #popMealEndTemplate>
+                                <div class="timePicker">
+                                <timepicker #endMealTimePicker [showMeridian]="true"  [min]="minMealEndTime" [max]="maxMealEndTime" formControlName="meal_end_time" ></timepicker>
+                                </div>
+                                <span class="ok-icon">
+                                  <button class="save-button" style="margin: 0px 10px 10px 0;"
+                                    (click)="updateStartTime(endMealTimePicker, option, question, j,  'meal_end', popMealEnd); updateWorkHours(option, question, j, 'time')">OK</button>
+                                </span>
+                              </ng-template> -->
+
+                              <app-timer-selection class="timepicker" [max]="'11:45 PM'" [disabled]="!isSecondFieldFilled(option) || ((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted')) || option.controls.project_name.value?.includes('Timeoff')) ? true : null" [placeholder]="'Meal End Time'" [min]="k===indexID ? mealNextTime : null" (dropdownValue)="setValue($event, option, 'meal_end_time', question, j, 'time',k)" [timeInfo]="option.controls.meal_end_time.value" [selectedStartTime]="option.controls.meal_start_time.value"></app-timer-selection>
+                              <span class="mandatory" *ngIf="option.controls.meal_start_time?.value && !option.controls.meal_end_time.value">
+                                Please select meal end time
+                              </span>
+                              <!-- <input type="time" class="form-control" formControlName="ts_end_time" placeholder="Choose End Time">
+                              <input type="text" class="form-control"
+                                [attr.disabled]="(option.controls.status.value?.includes('Approved') || option.controls.status.value?.includes('Rejected')) ? true : null"
+                                formControlName="ts_end_time" placeholder="Choose End Time"> -->
+                            
+                            </div>
+
+                            <div class="col-lg-1 max-field mt-top">
+                              <!-- <input type="text" class="form-control" appDisableManualEntry  [popover]="popEndTemplate" #popEnd="bs-popover" (keyup.enter)="setStartTimeToPicker(endTimePicker,option,option.controls.end_time.value, this.timeForm.value.questions[j].options[k].ts_end_time,'end_time');getMealEndDate(k, this.timeForm.value.questions[j].options,option,option.controls.end_time.value); setMinorMax(option.controls.start_time.value, option.controls.end_time.value, option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, popEnd, 'ts_end_time'); updateWorkHours(option, question, j, 'time')"
+                              (keydown.tab)="setStartTimeToPicker(endTimePicker,option,option.controls.end_time.value, this.timeForm.value.questions[j].options[k].ts_end_time,'end_time');getMealEndDate(k, this.timeForm.value.questions[j].options,option,option.controls.end_time.value); setMinorMax(option.controls.start_time.value, option.controls.end_time.value, option.controls.meal_start.value,option.controls.meal_end.value, option); dateEntry(option, popEnd, 'ts_end_time'); updateWorkHours(option, question, j, 'time')" 
+                              [attr.disabled]="((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted')) || option.controls.project_name.value?.includes('Timeoff')) ? true : null" (focusout)="setStartTimeToPicker(endTimePicker,option,option.controls.end_time.value, this.timeForm.value.questions[j].options[k].ts_end_time,'end_time'); setMinorMax(option.controls.start_time.value, option.controls.end_time.value, option.controls.meal_start.value,option.controls.meal_end.value, option);dateEntry(option, popEnd, 'ts_end_time'); updateWorkHours(option, question, j, 'time')"
+                              (focus)="setStartTimeToPicker(endTimePicker,option,option.controls.end_time.value, this.timeForm.value.questions[j].options[k].ts_end_time,'end_time'); getMealEndDate(k, this.timeForm.value.questions[j].options,option,option.controls.end_time.value);setMinorMax(option.controls.start_time.value, option.controls.end_time.value, option.controls.meal_start.value,option.controls.meal_end.value, option,k,this.timeForm.value.questions[j].options);dateEntry(option, popEnd, 'ts_end_time');
+                                updateWorkHours(option, question, j, 'time')"
+                              [ngClass]="{ 'is-invalid': (submitted || option.controls.ts_end_time.touched) && option.controls.ts_end_time.errors }" [outsideClick]="true" placement="bottom" formControlName="ts_end_time" placeholder="End Time">
+                              <ng-template #popEndTemplate>
+                                <div class="timePicker">
+                                  <timepicker #endTimePicker [showMeridian]="true"  [min]="minEndTime"  formControlName="end_time"></timepicker>
+                                </div>
+                                <span class="ok-icon">
+                                  <button class="save-button" style="margin: 0px 10px 10px 0;"
+                                    (click)="updateStartTime(endTimePicker, option, question, j,  'ts_end_time', popEnd); updateWorkHours(option, question, j, 'time')">OK</button>
+                                </span>
+                              </ng-template>
+                              <mat-error
+                              *ngIf="option.controls['ts_end_time'].hasError('min') && option.controls['ts_end_time'].touched">
+                              
+                            </mat-error> -->
+ 
+                            <app-timer-selection class="timepicker" [disabled]="!isEndTimeValid(option) || ((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted'))) ? true : null" [placeholder]="'End Time'" [min]="k===indexID ? getMinValue() : null" (dropdownValue)="setValue($event, option, 'ts_end_time', question, j, 'time',k)" [timeInfo]="option.controls.ts_end_time.value" [selectedStartTime]="option.controls.ts_start_time.value" [selectedMealEndTime]="option.controls.meal_end_time.value"></app-timer-selection>
+
+                            <span class="mandatory" *ngIf="option.controls.ts_start_time.value !='' && option.controls.ts_end_time.errors?.required">
+                              Please select end time
+                            </span>
+
+                              <!-- <input type="time" class="form-control" formControlName="ts_end_time" placeholder="Choose End Time">
+                              <input type="text" class="form-control"
+                                [attr.disabled]="(option.controls.status.value?.includes('Approved') || option.controls.status.value?.includes('Rejected')) ? true : null"
+                                formControlName="ts_end_time" placeholder="Choose End Time"> -->
+                            
+                            </div>
+                            <div class="col-lg-2 mt-top">
+                                <textarea type="text" class="form-control"  [attr.disabled]="((option.controls.timesheet_type.value === 'Holiday' && k===0) || (option.controls.status.value?.includes('Approved')) ||  (option.controls.status.value?.includes('Submitted')) || option.controls.project_name.value?.includes('Timeoff')) ? true : null" 
+                                formControlName="comments" placeholder="Activity"></textarea>
+                            </div>
+                            
+                            <div class="mt-top test"
+                            *ngIf="timesheetStatus !== 'Submitted' && timesheetStatus !== 'Approved'">
+                              <mat-icon *ngIf="question.controls.options.controls.length > 1 && option.controls.timesheet_type.value !== 'Holiday' && option.controls.status.value !== 'Submitted' && option.controls.status.value !== 'Approved' " style="color: #e10a0a;"
+                                (click)="deleteTimesheet(option, question, j, k, 'type'); updateWorkHours(option, question, j, 'time')" title="Delete">delete</mat-icon>
+                            </div>
+                          </div>
+                        </div>
+                        <hr class="m-0" *ngIf="!last">
+                        <br>
+        
+                      </div><br>
+                    </div>
+                  </form>
+                  <div class="col-lg-11 px-0 ml-3 text-right">
+                    <button type="button" *ngIf="isAllowUploadTimesheet == true && timesheetStatus !='Submitted' && timesheetStatus !='Approved' && timesheetStatus !='Rejected'" style="cursor: pointer;" class="mr-3 btn btn-outline-primary btn-sm" (click)="uploadTimesheets()">Upload Timesheets Data</button>
+                    <button type="button" *ngIf="isAllowUploadTimesheet == true" style="cursor: pointer;" class="btn btn-outline-primary btn-sm" (click)="uploadApprovedTimesheets()">Upload Approved Timesheets</button>
+                    <!-- <i data-toggle="tooltip" class="fa-solid fa-file-signature" style="cursor: pointer; margin-left: 10px; font-size:17px; color: #FFBF00;"></i> -->
+                  </div>
+            </div>
+        </div>
+        
+      </div>
+</div>
+
+
+
+<div [config]="{backdrop: false}" bsModal #showData="bs-modal" class="modal fade" tabindex="-1" id="showDataModal" role="dialog"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title ml-2 mt-2"><strong>Timesheet Submission</strong></h5>
+        <span type="button" class="close mr-2" (click)="hideModal()">&times;</span>
+      </div>
+
+      <div class="modal-body">
+        <div class="col-lg-12">
+          <div class="text-center">
+            <h3>Timesheet Certification of Accuracy</h3>
+
+          </div>
+          <p>Upon submitting this timesheet, my electronic signature will be added to this document to confirm that all the information entered is accurate and complete. I understand that falsifying my timesheet is a criminal act punishable by federal and state laws and may be subject to termination, civil liability, and other criminal charges. By selecting "Acceptance" below, I certify that I have not misrepresented, falsified, or omitted any of the data or information in this timesheet.</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="cancel-button" (click)="hideModal()">Close</button>
+        <button type="button" class="save-button" (click)="submitTimesheetAPI()">Acceptance</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div [config]="{backdrop: false}" bsModal #projectDataSave="bs-modal" class="modal fade" tabindex="-1" id="projectSaveModal" role="dialog"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title ml-2 mt-2"><strong>Timesheet</strong></h5>
+        <span type="button"  class="close mr-2" (click)="hideProjectSave()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12">
+          <div *ngFor="let project of projectsListExccedingWorkHoursSave">
+            <p>The {{this.project?.project_name}} project should not exceed {{project?.work_hour_limit}} work hours.
+              Are you sure you want to save?
+              </p>        
+            </div>
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="cancel-button" (click)="hideProjectSave()">Close</button>
+        <button type="button" class="save-button" (click)="saveTimesheetAPI()">Save</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div [config]="{backdrop: false}" bsModal #projectDataSubmit="bs-modal" class="modal fade" tabindex="-1" id="projectSubmitModal" role="dialog"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title ml-2 mt-2"><strong>Timesheet</strong></h5>
+        <span type="button"  class="close mr-2" (click)="hideProjectSubmit()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12">
+          <div *ngFor="let project of projectsListExccedingWorkHoursSubmit">
+            <p>The {{this.project?.project_name}} project should not exceed {{project?.work_hour_limit}} work hours.
+              Are you sure you want to submit?
+              </p>        
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="cancel-button" (click)="hideProjectSubmit()">Close</button>
+        <button type="button" class="save-button" (click)="projectHoursSubmit()">Submit</button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<div [config]="{backdrop: false}" bsModal #uploadTimesheetsData="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="margin-top: 70px !important;">
+      <div  class="modal-header" style="margin: 0px !important;">
+        <h4  class="modal-title pl-2 pt-2">Upload Timesheets Data</h4>
+        <button type="button" class="close mr-2" (click)="closeInactiveForm()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="uploadFile">
+          Timesheet Template 
+         <a href="assets\sample_ptms_file(new file).xlsx" 
+            target="_blank" download="sample-file.xlsx"> Download <i class="fa fa-download" aria-hidden="true"></i></a>
+          <div class="pt-3">
+            <!-- <input type="file" class="custom-file-input" formControlName="fileUpload"
+              (change)="onFileChange($event)" /> -->
+              <div class="input-group">
+
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" [title]="selectedFileName" id="customFile" accept=".xlsx"  formControlName="fileUpload" (change)="onFileChange($event)">
+                  <label class="custom-file-label" for="customFile">{{selectedFileName ? selectedFileName : 'Choose file'}}</label>
+                </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div  class="modal-footer">
+        <button type="button" class="cancel-button" (click)="closeInactiveForm()">Cancel</button>
+        <button type="button" class="submit-button" [disabled]="!uploaded"
+        (click)="submitTimsheetFile()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div [config]="{backdrop: false}" bsModal #uploadApprovedTimesheetsData="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="margin-top: 70px !important;">
+      <div  class="modal-header" style="margin: 0px !important;">
+        <h4  class="modal-title pl-2 pt-2">Upload Approved Timesheets</h4>
+        <button type="button" class="close mr-2" (click)="closeApprovedTimesheet()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="uploadApprovedFile">
+          
+         <!-- <a href="assets\sample_ptms_file(new file).xlsx" 
+            target="_blank" download="sample-file.xlsx"> Download <i class="fa fa-download" aria-hidden="true"></i></a> -->
+            <div class="row">
+              <div class="col-lg-6">
+                <label  class="form-label">Project Name<span class="mandatory">*</span></label>
+                <select class="form-control form-control-sm" formControlName='projectName'>
+                  <option disabled value=''>Select project</option>
+                  <option *ngFor="let project1 of myActiveProjects" [value]="project1.project_id">{{project1.project_name}}</option>
+                </select>
+                <span class="mandatory" *ngIf="uploadApprovedFile.controls['projectName'].touched && uploadApprovedFile.controls['projectName'].errors?.required">Please select project name</span>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-lg-12">
+                <div class="input-group">
+  
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" [title]="apprvedSelectedFileName" id="customFile" accept=".pdf, .jpg, .jpeg, .png"  formControlName="fileUpload" (change)="onApprvoedFileChange($event)">
+                    <label class="custom-file-label" for="customFile">{{apprvedSelectedFileName ? apprvedSelectedFileName : 'Choose file'}}</label>
+                  </div>
+              </div>
+              <label class="form-label" style="color: #5f5e5e; font-size: 11px;">Files Supported: PDF, JPG, JPEG, PNG</label>
+              </div>
+            </div>
+        </form>
+      </div>
+      <div  class="modal-footer">
+        <button type="button" class="cancel-button" (click)="closeApprovedTimesheet()">Cancel</button>
+        <button type="button" class="submit-button" [disabled]="!uploadApprovedFileDoc" 
+        (click)="submitApprovedTimsheetFile()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----Upload Acceptance------>
+<div [config]="{backdrop: false}" bsModal #uploadAcceptance="bs-modal" class="modal fade" tabindex="-1" id="showDataModal" role="dialog"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title ml-2 mt-2"><strong>Timesheet Submission</strong></h5>
+        <span type="button" class="close mr-2" (click)="hideAcceptanceModal()">&times;</span>
+      </div>
+
+      <div class="modal-body">
+        <div class="col-lg-12">
+          <div class="text-center">
+            <h3>Timesheet Certification of Accuracy</h3>
+
+          </div>
+          <p>Upon submitting this timesheet, my electronic signature will be added to this document to confirm that all the information entered is accurate and complete. I understand that falsifying my timesheet is a criminal act punishable by federal and state laws and may be subject to termination, civil liability, and other criminal charges. By selecting "Acceptance" below, I certify that I have not misrepresented, falsified, or omitted any of the data or information in this timesheet.</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="cancel-button" (click)="hideAcceptanceModal()">Close</button>
+        <button type="button" class="save-button" (click)="submitUploadTimesheetAPI()">Acceptance</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,127 @@
+<p-toast></p-toast>
+<div class="card p-0" style="border-radius: 1rem">
+    <div class="card-body">
+        <h5 class="text-center"><strong style="color: #3F51B5;">Add Vendor</strong></h5>
+        <hr>
+        <form [formGroup]="addConractorForm" autocomplete="false">
+            <div class="row d-flex col-lg-12 p-3">
+                <div class="col-lg-6">
+                    <label class="form-label">Vendor Name <span class="mandatory">*</span></label>
+                    <input type="text" class="form-control form-control-sm" formControlName="firmName" placeholder="Enter Vendor Name" style="width: 100%;"
+                    [ngClass]="{ 'is-invalid': (submitted || addConractorForm.controls['firmName'].touched) && addConractorForm.controls['firmName'].errors }" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                    <div *ngIf="(submitted || addConractorForm.controls['firmName'].touched)&& addConractorForm.controls['firmName'].errors" class="invalid-input">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['firmName'].errors.required">Please enter vendor name</div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                        <label class="form-label">Business Email Id<span class="mandatory">*</span></label>
+                        <input id="businessEmail" type="text" class="form-control form-control-sm" formControlName='businessEmail' placeholder="Enter business Email Id" [ngClass]="{'is-invalid':addConractorForm.controls['businessEmail'].touched && addConractorForm.controls['businessEmail']?.errors}" maxlength="150">
+                        <span class="mandatory" *ngIf="addConractorForm.controls['businessEmail']?.touched && addConractorForm.controls['businessEmail']?.errors?.pattern">Please enter valid vendor business email Id</span>
+                        <span class="mandatory" *ngIf="addConractorForm.controls['businessEmail']?.touched && addConractorForm.controls['businessEmail']?.errors?.required">Please enter business email Id</span>
+                </div>
+            </div>
+                <h6 class="mt-4"><strong style="color: #3F51B5;">Address</strong></h6>
+                <div class="row d-flx col-lg-12 pt-2">
+                    <div class="col-lg-6">
+                    <label class="form-label">Address Line 1 <span class="mandatory">*</span></label>
+                    <input type="text" class="form-control form-control-sm" formControlName="line1" placeholder="Enter address line1" style="width:100%; "
+                    [ngClass]="{ 'is-invalid': (submitted || addConractorForm.controls['line1'].touched) && addConractorForm.controls['line1'].errors }" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['line1'].touched && addConractorForm.controls['line1'].errors?.required">Please enter address line1</div>
+                </div>
+                <div class="col-lg-6">
+                    <label class="form-label">Address Line 2</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="line2" placeholder="Enter address line2" style="width:100%;" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                    <!-- <div *ngIf="(submitted || addConractorForm.controls['line2'].touched)&& addConractorForm.controls['line2'].errors" class="invalid-input">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['line2'].errors.required">Please Enter Address Line 2</div>
+                    </div> -->
+                </div>
+                </div>
+                <div class="row d-flex col-lg-12">
+                <div class="col-lg-4 pt-2">
+                    <label class="form-label">City<span class="mandatory">*</span></label>
+                    <input type="text" class="form-control form-control-sm" formControlName="city" placeholder="Enter city" style="width:100%; "
+                    [ngClass]="{ 'is-invalid': (submitted || addConractorForm.controls['city'].touched) && addConractorForm.controls['city'].errors }" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                    <div *ngIf="(submitted || addConractorForm.controls['city'].touched) && addConractorForm.controls['city'].errors">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['city'].errors?.required">Please enter city</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 pt-2">
+                    <label class="form-label">State <span class="mandatory">*</span></label>
+                    <input type="text" class="form-control form-control-sm" formControlName="state" placeholder="Enter state" style="width:100%; "
+                    [ngClass]="{ 'is-invalid': (submitted || addConractorForm.controls['state'].touched) && addConractorForm.controls['state'].errors }" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                    <div *ngIf="(submitted || addConractorForm.controls['state'].touched)&& addConractorForm.controls['state'].errors" class="invalid-input">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['state'].errors?.required">Please enter state</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 pt-2">
+                    <label class="form-label">Country <span class="mandatory">*</span></label>
+                    <input type="text" class="form-control form-control-sm" formControlName="country" placeholder="Enter country" style="width:100%; "
+                    [ngClass]="{ 'is-invalid': (submitted || addConractorForm.controls['country'].touched) && addConractorForm.controls['country'].errors }" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                    <div *ngIf="(submitted || addConractorForm.controls['country'].touched)&& addConractorForm.controls['country'].errors" class="invalid-input">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['country'].errors?.required">Please enter country</div>
+                    </div>
+                </div>
+                </div>
+                <div class="row d-flex col-lg-12">
+                <div class="col-lg-4 pt-2">
+                    <label class="form-label">Zip Code <span class="mandatory">*</span></label>
+                    <input type="text" class="form-control form-control-sm" formControlName="zipcode" placeholder="Enter zip code" style="width:100%;" [ngClass]="{'is-invalid':(submitted || addConractorForm.controls['zipcode'].touched)&& addConractorForm.controls['zipcode'].errors}" minlength="5" maxlength="6" appAlphaWithSpace inputType="strictlyNumber">
+                    <div *ngIf="(submitted || addConractorForm.controls['zipcode'].touched)&& addConractorForm.controls['zipcode'].errors" class="invalid-input">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['zipcode'].errors?.required">Please enter zip code</div>
+                        <span class="mandatory" *ngIf="addConractorForm.controls['zipcode']?.touched && addConractorForm.controls['zipcode']?.hasError('minlength')">{{_stringResourceErrors.ZIPCODE_VALIDATIONS2}}</span>
+                    </div>
+                </div>
+                </div>
+                <hr>
+                    <h6 class="mt-4"><strong style="color: #3F51B5;">Primary Contact Info</strong></h6>
+                <div class="row d-flex col-lg-12 p-3">
+                    <div class="col-lg-4">
+                    <label class="form-label">Contact First Name</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="firstName" placeholder="Enter contact first name" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                    <!-- <div *ngIf="(submitted || addConractorForm.controls['firstName'].touched)&& addConractorForm.controls['firstName'].errors" class="invalid-input">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['firstName'].errors.required">Please enter contact first name</div>
+                    </div> -->
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Contact Middle Name</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="middleName" placeholder="Enter contact middle name" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                    <!-- <div *ngIf="(submitted || addConractorForm.controls['middleName'].touched)&& addConractorForm.controls['middleName'].errors" class="invalid-input">
+                        <div *ngIf="addConractorForm.controls['middleName'].errors.required">Please Enter Contact Middle Name</div>
+                    </div> -->
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Contact Last Name</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="lastName" placeholder="Enter contact last name" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                    <!-- <div *ngIf="(submitted || addConractorForm.controls['lastName'].touched)&& addConractorForm.controls['lastName'].errors" class="invalid-input">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['lastName'].errors.required">Please enter contact last name</div>
+                    </div> -->
+                </div>
+                </div>
+                <div class="row d-flex col-lg-12 pt-2 p-3">
+                <div class="col-lg-6">
+                    <label class="form-label">Contact Email Id</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="email" placeholder="Enter contact Email Id" style="width:100%; " [ngClass]="{'is-invalid':addConractorForm.controls['email'].touched && addConractorForm.controls['email'].errors}" maxlength="150">
+                    <div *ngIf="(submitted || addConractorForm.controls['email'].touched)&& addConractorForm.controls['email'].errors" class="invalid-input">
+                        <!-- <div class="mandatory" *ngIf="addConractorForm.controls['email'].errors?.required">Please enter contact email</div> -->
+                        <span class="mandatory" *ngIf="addConractorForm.controls['email']?.errors?.pattern">Please enter valid email id</span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <label class="form-label">Contact Phone Number</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="mobileNumber" placeholder="Enter contact phone number" style="width:100%;" maxlength="20" usFormatPhoneNumber>
+                    <!-- <span class="mandatory" *ngIf="addConractorForm.controls['mobileNumber']?.touched && addConractorForm.controls['mobileNumber']?.errors?.required">Please enter phone number</span> -->
+                    <!-- <span class="mandatory" *ngIf="addConractorForm.controls['mobileNumber']?.touched && addConractorForm.controls['mobileNumber']?.errors?.pattern">Please enter valid contact phone number</span> -->
+                    <!-- <div *ngIf="(submitted || addConractorForm.controls['mobileNumber'].touched)&& addConractorForm.controls['mobileNumber']?.errors">
+                        <div class="mandatory" *ngIf="addConractorForm.controls['mobileNumber'].errors?.required">Please enter contact phone number</div>
+                    </div> -->
+                </div>
+                </div>
+                <div class="col-lg-12 text-right pt-2">
+                    <button  (click)="addContractor()" class="save-button"  type="submit">Save</button>
+                </div>
+        </form>
+    
+
+    </div>
+  
+</div>

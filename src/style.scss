@@ -1,0 +1,589 @@
+@import '~@ag-grid-community/core/dist/styles/ag-grid.scss';
+@import '~@ag-grid-community/core/dist/styles/ag-theme-alpine/sass/ag-theme-alpine.scss';
+ @import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+ /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+ .box {
+    display: inline-block;
+    padding: 5px 20px; /* Adjust the top and bottom padding to reduce the height */
+    border-radius: 20px;
+    background-color: rgb(118, 117, 117);
+    color: white !important;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 2; /* Set line-height to 1 to remove extra vertical space */
+    font-size: 14px;
+  }
+  .ag-center-cols-container {
+    min-width: 100% !important;
+}
+.topHeader{
+      padding-left: 25px;
+      padding-top: 15px;
+      font-weight: 600
+
+}
+.modal-header .close {
+  padding: 1.5rem 0.5rem !important;
+  color: white !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+
+}
+.timePicker .btn-default {
+  background-color: rgb(79, 80, 80) !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 9px 13px !important;
+  font-size: 12px !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  position: relative; /* Add relative positioning */
+}
+
+.timePicker .btn-default::after {
+  content: "\f077";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 10px;
+  position: absolute;
+  right: 5px;
+  top: 20%;
+  transform: translateY(-50%);
+  margin-right: 11px;
+}
+
+.timePicker .btn-default::before {
+  content: "\f078";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 10px;
+  position: absolute;
+  right: 5px;
+  top: 80%;
+  transform: translateY(-50%);
+  margin-right: 11px;
+}
+
+
+  
+
+  .mandatory{
+    color: #dc3545 !important;
+    font-size: 12px;
+  }
+  .form-label .mandatory, .timesheet-header .mandatory{
+    font-size: 18px;
+  }
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    // right: 10px;
+    transform: translateY(-50%);
+    color: #525252;
+    padding-left: 15px;
+  }
+  .search-container {
+    position: relative;
+  }
+  
+  .search-input {
+    padding-left: 30px !important; /* Adjust the padding to create space for the icon */
+  }
+
+
+  .card {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding-top: 0px
+  }
+
+  .save-button {
+    background-color:#004c99 ;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    // font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .timesheet-save-button {
+    background-color:#0a9900 ;
+    color: #fff;
+    border: none;
+    padding: 7px 10px;
+    font-size: 14px;
+    // font-weight: bold;
+    border-radius: 4px;
+    min-width: 75px;
+    cursor: pointer;
+  }
+  .timesheet-submit-button {
+    background-color:#004c99 ;
+    color: #fff;
+    border: none;
+    padding: 7px 10px;
+    font-size: 14px;
+    // font-weight: bold;
+    border-radius: 4px;
+    min-width: 75px;
+    cursor: pointer;
+  }
+  .submit-button {
+    background-color:#004c99 ;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    // font-weight: bold;
+    border-radius: 4px;
+    // cursor: pointer;
+  }
+  .submit-button:disabled {
+    opacity: 0.65;
+  }
+  .submit-button:hover{
+   background-color: #032e58;
+  }
+  .cancel-button {
+    border-radius: 2px;
+    background-color: #868e96;
+    border: none;
+    color: #fff !important;
+      padding: 7px 15px;
+  }
+  .cancel-button:focus{
+    outline: none  !important;
+    box-shadow: 0 0 5px rgb(144, 146, 146);
+      border: 1px solid rgb(227, 229, 230);
+  }
+  .timesheet-upload-button {
+    background-color:#004c99 ;
+    color: #fff;
+    border: none;
+    padding: 7px 10px;
+    font-size: 14px;
+    // font-weight: bold;
+    border-radius: 4px;
+    min-width: 75px;
+    cursor: pointer;
+  }
+  .edit-button {
+    background-color:#004c99 ;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .add-button {
+    background-color:#FFC700 ;
+    color: Black;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .modal-header .close {
+    color: #fff !important;
+    outline: none !important;
+    font-weight: 400 !important;
+  }
+  .popup-close {
+    color: #333333 !important;
+    right: 3px;
+    font-size: 28px;
+    bottom: 10px;
+    cursor: pointer !important;
+    float: right;
+    position: relative;
+    height: 10px;
+  }
+  .save-button:hover {
+    background-color:  #001f3f;
+  }
+  
+  .save-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 76, 153, 0.3);
+  }
+
+  .cancel-button {
+    background-color: #767677;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    // font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .cancel-button:hover {
+    background-color: #4f4f50;
+  }
+  
+  .cancel-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(84, 85, 85, 0.3);
+  }
+
+  .is-invalid {
+    border-color: #dc3545 !important;
+  }
+
+  b, strong {
+    font-weight: bolder;
+    font-size: 14px;
+}
+span,strong{
+  font-size: 14px;
+}
+p{
+  font-size: 14px;
+}
+.ag-theme-alpine [class^=ag-], .ag-theme-alpine [class^=ag-]:focus, .ag-theme-alpine [class^=ag-]:after, .ag-theme-alpine [class^=ag-]:before {
+  box-sizing: border-box;
+  outline: none;
+  font-size: 12px;
+}
+
+element.style {
+}
+.ag-theme-alpine [class^=ag-], .ag-theme-alpine [class^=ag-]:focus, .ag-theme-alpine [class^=ag-]:after, .ag-theme-alpine [class^=ag-]:before {
+    box-sizing: border-box;
+    outline: none;
+    /* font-size: 12px; */
+}
+.ag-theme-alpine .ag-paging-panel > * {
+    margin: 0 18px;
+    /* font-size: 14px; */
+}
+.ag-theme-alpine [class^=ag-], .ag-theme-alpine [class^=ag-]:focus, .ag-theme-alpine [class^=ag-]:after, .ag-theme-alpine [class^=ag-]:before {
+    box-sizing: border-box;
+    outline: none;
+}
+.ag-paging-page-summary-panel {
+    display: flex;
+    align-items: center;
+}
+span, strong {
+    font-size: 14px;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+.ag-theme-alpine .ag-paging-panel {
+    border-top: 1px solid;
+    border-top-color: #babfc7;
+    border-top-color: var(--ag-border-color, #babfc7);
+    color: #181d1f;
+    color: var(--ag-secondary-foreground-color, var(--ag-foreground-color, #181d1f));
+    height: 48px;
+    font-size: 12px;
+}
+.ag-unselectable {
+    -webkit-user-select: none;
+    user-select: none;
+}
+.ag-ltr {
+    direction: ltr;
+}
+.ag-root-wrapper {
+    cursor: default;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.ag-theme-alpine {
+    -webkit-font-smoothing: antialiased;
+    color: #181d1f;
+    color: var(--ag-foreground-color, #181d1f);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 13px;
+    line-height: normal;
+    font-size: 10px;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+:host, :root {
+    --fa-style-family-classic: "Font Awesome 6 Free";
+    --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
+}
+:host, :root {
+    --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free";
+}
+:host, :root {
+    --fa-style-family-brands: "Font Awesome 6 Brands";
+    --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+}
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.ag-theme-alpine [class^=ag-], .ag-theme-alpine [class^=ag-]:focus, .ag-theme-alpine [class^=ag-]:after, .ag-theme-alpine [class^=ag-]:before {
+    box-sizing: border-box;
+    outline: none;
+}
+.ag-theme-alpine [class^=ag-], .ag-theme-alpine [class^=ag-]:focus, .ag-theme-alpine [class^=ag-]:after, .ag-theme-alpine [class^=ag-]:before {
+    box-sizing: border-box;
+    outline: none;
+    font-size: 13px;
+}
+input::placeholder {
+  font-size: 12px; /* Set the desired font size */
+}
+select {
+  font-size: 12px !important; /* Set the font size for the select element */
+}
+
+select option {
+  font-size: 14px; /* Set the font size for the dropdown options */
+}
+.form-label{
+  display: block; 
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+.form-control.is-invalid {
+  background-image: none!important;
+}
+.form-control {
+  font-size: 12px !important;
+}
+.ag-theme-alpine {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+.fa-calendar{
+  color: #3F51B5;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+  color: #007bff !important;
+}
+
+.nav-item a.nav-link {
+  color: #181d1f !important;
+}
+
+
+.timesheet-approve-btn{
+  background-color:#0bc957;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  // font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.timesheet-reject-btn{
+  background-color:#e0142f;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  // font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bs-datepicker-head, .bs-datepicker-body table td span.selected {
+  background-color: #3F51B5 !important;
+}
+.theme-green .bs-datepicker-body table td.week span{
+  color: #3F51B5 !important;
+}
+
+.mat-form-field-infix{
+  border-top: 0 !important;
+}
+
+.modal-header{
+  background-color: #5865C7;
+  color: white;
+}
+.modal-title {
+	font-size: 16px !important;
+  font-weight: 300 !important;
+	margin: 0px !important;
+}
+
+.mat-form-field-flex{
+  height: 35px;
+}
+
+.mat-form-field{
+  line-height: 0.9 !important;
+}
+
+.view-timesheets .ag-paging-row-summary-panel {
+  display: none !important;
+}
+
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick{
+  color:rgba(0,0,0,0.1) !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color:rgba(0,0,0,0.1) !important;
+}
+
+//Scrollbar 
+:root {
+  --code-color: darkred;
+  --code-bg-color: #aaaaaa;
+  --code-font-size: 14px;
+  --code-line-height: 1.4;
+  --scroll-bar-color: #c5c5c5;
+  --scroll-bar-bg-color: #f6f6f6;
+}
+
+pre {
+  color: var(--code-color);
+  font-size: var(--code-font-size);
+  line-height: var(--code-line-height);
+  background-color: var(--code-bg-color);
+}
+
+.code-block {
+  max-height: 100px;
+  overflow: auto;
+  padding: 8px 7px 5px 15px;
+  margin: 0px 0px 0px 0px;
+  border-radius: 7px;
+}
+
+::-webkit-scrollbar-corner { background: rgba(0,0,0,0.5); }
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-bar-color) var(--scroll-bar-bg-color);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scroll-bar-bg-color);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-bar-color);
+  border-radius: 20px;
+  border: 3px solid var(--scroll-bar-bg-color);
+}
+
+.close{
+  color: white !important;
+}
+
+
+.fa-file-pen{
+  color: green !important;
+}
+
+.fa-file-lines{
+  color: grey !important;
+}
+
+.mat-select-search-input, .mat-input-element, .mat-select-panel{
+  width: 100px !important; /* Adjust the width as needed */
+
+}
+.mat-select-search-input{
+  padding: 16px 10px 16px 16px !important;
+}
+
+option, .multiselect-item-checkbox, .dropdown-btn span{
+  font-size: 12px !important;
+}
+
+.dropdown-btn{
+  padding-left: 8px !important;
+}
+
+select{
+  padding-left: 4px !important;
+}
+
+.form-control-sm {
+  height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+
+.p-toast {
+  position: fixed !important;
+  width: 29rem !important;
+}
+
+.p-toast-message-text {
+  flex: 5 5 auto !important;
+}

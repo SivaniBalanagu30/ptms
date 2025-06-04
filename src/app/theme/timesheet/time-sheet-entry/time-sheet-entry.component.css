@@ -1,0 +1,129 @@
+.timesheet-filter-section {
+    padding: 25px 10px;
+    display: none;
+}
+.fit-content {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  
+.hours-label {
+   /* // border: 1px solid #ddd; */
+    padding: 6px 20px;
+    border-radius: 10px;
+    /* box-shadow: 2px 4px 8px rgba(0.2, 0.2, 0.2, 0.2); */
+    font-size: 13px;
+}
+.first-data {
+    max-width: 3%;
+}
+.test {
+    margin-top: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.mt-top {
+    margin-top: -35px;
+    margin-bottom: 40px;
+    padding-right: 0px;
+    margin-left: 0px;
+}
+.date-color {
+    color: #583aa8;
+    font-size: 13px;
+    font-weight: 550;
+}
+.timesheet-header {
+    margin: 0px !important;
+    font-weight: 600;
+}
+.card-header{
+    background-color: white !important;
+    padding: 12px 0px !important;
+}
+.card-header.sticky {
+    position: fixed;
+    top: 10%;
+    width: 81%;
+    z-index: 1;
+}
+.ok-icon {
+    padding: 10px 0px 0px 0px;
+    display: grid;
+    width: 30px;
+    margin: auto;
+}
+.holiday-label {
+    color: #2b9341;
+    padding: 0px 10px;
+}
+:host::ng-deep.mat-form-field-wrapper {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+:host::ng-deep.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding-top: 16px !important;
+    padding-bottom: 10px !important;
+}
+:host::ng-deep.mat-select-arrow-wrapper {
+    vertical-align: inherit !important;
+}
+:host::ng-deep.mat-select-min-line {
+    font-size: 13px !important;
+}
+.max-field {
+    min-width: 12% !important;
+}
+.milestone-width {
+    max-width: 12%;
+}
+
+.modal-header {
+    z-index: 9999;
+  }
+  
+.modal {
+    background: rgba(0, 0, 0, 0.5); 
+  }
+  /* .modal-backdrop {
+    z-index: -5;
+  } */
+  .modal-header .close{
+    padding: 1.5rem 0.5rem !important;
+  }
+  .modal-header{
+    padding:0 0 !important;
+  }
+
+  .modal-content{
+    margin-top: 100px;
+  }
+
+  .timesheet-save-button:disabled{
+    cursor: not-allowed;
+    background-color: rgb(43, 147, 65,0.5);
+  }
+
+  .truncate-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 6ch;
+  }
+  .disable:hover{
+    cursor: not-allowed;
+    }
+    .disable:active{
+    pointer-events: none;
+    }
+    .input-text {
+        border: 0px !important;
+        color: darkblue;
+        font-weight: 500;
+        outline: none;
+        background-color: transparent;
+        font-size: 14px;
+    }
+  .timesheet-body::-webkit-scrollbar {
+      display: none;
+  }

@@ -1,0 +1,450 @@
+<p-toast></p-toast>
+<div class="card p-0" style="border-radius: 1rem;">
+  <div class="card-body">
+    <h5 class="text-center"><strong style="color: #3F51B5;">Add Resource</strong></h5>
+    <hr>
+    <h6><strong style="color: #3F51B5;">Personal Info</strong></h6>
+    <form [formGroup]="addResourceForm">
+      <div class="row d-flex col-lg-12 p-2">
+        <div class="col-lg-12">
+          <label  class="form-label">First Name <span class="mandatory">*</span></label>
+          <input id="first-name" type="text" class="form-control form-control-sm" formControlName='firstName' maxlength="75" appAlphaWithSpace inputType="alphaWithSpace"
+            placeholder="Enter first name" [ngClass]="{'is-invalid' : (addResourceForm.controls['firstName']?.touched && addResourceForm.controls['firstName']?.errors)}">
+            <span class="mandatory" *ngIf="addResourceForm.controls['firstName']?.touched && addResourceForm.controls['firstName']?.errors?.required">Please enter first name</span>
+      </div>
+      </div>
+        <div class="row d-flex col-lg-12 p-2 pt-2">
+        <div class="col-lg-6">
+          <label  class="form-label">Middle Name</label>
+          <input id="middle-name" type="text" class="form-control form-control-sm" formControlName='middleName' maxlength="75" appAlphaWithSpace inputType="alphaWithSpace"
+            placeholder="Enter middle name">
+        </div>
+        <div class="col-lg-6">
+          <label  class="form-label">Last Name <span class="mandatory">*</span></label>
+          <input id="last-name" type="text" class="form-control form-control-sm" formControlName='lastName'  maxlength="75" appAlphaWithSpace inputType="alphaWithSpace"
+            placeholder="Enter last name"  [ngClass]="{'is-invalid' : (addResourceForm.controls['lastName']?.touched && addResourceForm.controls['lastName']?.errors)}">
+            <span class="mandatory" *ngIf="addResourceForm.controls['lastName']?.touched && addResourceForm.controls['lastName']?.errors?.required">Please enter last name</span>
+        </div>
+      </div>
+      <div class="row d-flex col-lg-12 pt-2  p-2">
+        <div class="col-lg-6">
+          <label  class="form-label">Email Id <span class="mandatory">*</span></label>
+          <input type="email" class="form-control form-control-sm" formControlName='email' placeholder="Enter Email Id" [ngClass]="{'is-invalid' : (addResourceForm.controls['email']?.touched && addResourceForm.controls['email']?.errors)}" maxlength="150">
+          <span class="mandatory" *ngIf="addResourceForm.controls['email']?.touched && addResourceForm.controls['email']?.errors?.required">Please enter mail Id</span>
+          <span class="mandatory" *ngIf="addResourceForm.controls['email']?.touched && addResourceForm.controls['email']?.errors?.pattern">Please enter valid email Id</span>
+        </div>
+        <div class="col-lg-6">
+          <label  class="form-label">Phone Number <span class="mandatory">*</span>
+          </label>
+          <input type="text" class="form-control form-control-sm" formControlName='phoneNumber' placeholder="Enter phone number" [ngClass]="{'is-invalid' : (addResourceForm.controls['phoneNumber']?.touched && addResourceForm.controls['phoneNumber']?.errors)}" maxlength="20" usFormatPhoneNumber>
+          <span class="mandatory" *ngIf="addResourceForm.controls['phoneNumber']?.touched && addResourceForm.controls['phoneNumber']?.errors?.required">Please enter phone number</span>
+          <!-- <span class="mandatory" *ngIf="addResourceForm.controls['phoneNumber']?.touched && addResourceForm.controls['phoneNumber']?.hasError('minlength')">{{_stringResourceErrors.PHONE_NUMBER_VALIDATIONS2}}</span> -->
+          <!-- <span class="mandatory" *ngIf="addResourceForm.controls['phoneNumber']?.touched && addResourceForm.controls['phoneNumber']?.errors?.pattern">Please enter valid phone number</span> -->
+        </div>
+        <!-- <div class="col-lg-4">
+          <label  class="form-label">System Access Role<span class="mandatory">*</span></label>
+          <select class="form-control form-control-sm" formControlName='role' [ngClass]="{'is-invalid' : (addResourceForm.controls['role']?.touched && addResourceForm.controls['role']?.errors)}">
+            <option disabled value=''>Select system access role</option>
+            <option *ngFor="let role of allRoles" [value]="role.id">{{role.role_name}}</option>
+          </select>
+          <span class="mandatory" *ngIf="addResourceForm.controls['role']?.touched && addResourceForm.controls['role']?.errors?.required">Please select a system access role</span>
+        </div> -->
+      </div>
+      <div class="row d-flex col-lg-12 pt-2 p-2">
+        <div class="col-lg-6">
+          <label  class="form-label">Address Line1 <span class="mandatory">*</span></label>
+          <input type="text" class="form-control form-control-sm" formControlName='addressLine1' placeholder="Enter adress line1" [ngClass]="{'is-invalid' : (addResourceForm.controls['addressLine1']?.touched && addResourceForm.controls['addressLine1']?.errors)}" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+          <span class="mandatory" *ngIf="addResourceForm.controls['addressLine1']?.touched && addResourceForm.controls['addressLine1']?.errors?.required">Please enter address line1</span>
+        </div>
+        <div class="col-lg-6">
+          <label  class="form-label">Address Line2</label>
+          <input type="text" class="form-control form-control-sm" formControlName='addressLine2' placeholder="Enter address line2" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+        </div>
+      </div>
+      <div id="contact" class="row d-flex col-lg-12 pt-2 p-2">
+        <div class="col-lg-6">
+          <label  class="form-label">City <span class="mandatory">*</span></label>
+          <input type="text" class="form-control form-control-sm" formControlName='city' placeholder="Enter city" [ngClass]="{'is-invalid' : (addResourceForm.controls['city']?.touched && addResourceForm.controls['city']?.errors)}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+          <span class="mandatory" *ngIf="addResourceForm.controls['city']?.touched && addResourceForm.controls['city']?.errors?.required">Please enter city</span>
+        </div>
+        <div class="col-lg-6">
+          <label  class="form-label">State <span class="mandatory">*</span></label>
+          <input type="text" class="form-control form-control-sm" formControlName='state' placeholder="Enter state" [ngClass]="{'is-invalid' : (addResourceForm.controls['state']?.touched && addResourceForm.controls['state']?.errors)}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+          <span class="mandatory" *ngIf="addResourceForm.controls['state']?.touched && addResourceForm.controls['state']?.errors?.required">Please enter state</span>
+        </div>
+      </div>
+      <div class="row d-flex col-lg-12 pt-2 p-2">
+        <div class="col-lg-6">
+          <label  class="form-label">Zip Code <span class="mandatory">*</span></label>
+          <input type="text" class="form-control form-control-sm" formControlName='zipCode' placeholder="Enter zip code" [ngClass]="{'is-invalid' : (addResourceForm.controls['zipCode']?.touched && addResourceForm.controls['zipCode']?.errors)}" minlength="5" maxlength="6" appAlphaWithSpace inputType="strictlyNumber">
+          <span class="mandatory" *ngIf="addResourceForm.controls['zipCode']?.touched && addResourceForm.controls['zipCode']?.errors?.required">Please enter zip code</span>
+          <span class="mandatory" *ngIf="addResourceForm.controls['zipCode']?.touched && addResourceForm.controls['zipCode']?.hasError('minlength')">{{_stringResourceErrors.ZIPCODE_VALIDATIONS2}}</span>
+        </div>
+             <div class="col-lg-6">
+          <label  class="form-label">Country <span class="mandatory">*</span></label>
+          <input type="text" class="form-control form-control-sm" formControlName='country' placeholder="Enter country" [ngClass]="{'is-invalid' : (addResourceForm.controls['country']?.touched && addResourceForm.controls['country']?.errors)}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+          <span class="mandatory" *ngIf="addResourceForm.controls['country']?.touched && addResourceForm.controls['country']?.errors?.required">Please enter country</span>
+        </div>
+      </div>
+      <div class="row d-flex col-lg-12 pt-2 p-2">
+         <div class="col-lg-6">
+          <label  class="form-label">System Access Role<span class="mandatory">*</span></label>
+          <select class="form-control form-control-sm" formControlName='role' [ngClass]="{'is-invalid' : (addResourceForm.controls['role']?.touched && addResourceForm.controls['role']?.errors)}">
+            <option disabled value=''>Select system access role</option>
+            <option *ngFor="let role of allRoles" [value]="role.id">{{role.role_name}}</option>
+          </select>
+          <span class="mandatory" *ngIf="addResourceForm.controls['role']?.touched && addResourceForm.controls['role']?.errors?.required">Please select a system access role</span>
+        </div>
+        <div class="col-md-6">
+          <label  class="form-label">Time Zone<span class="mandatory">*</span></label>
+          <select class="form-control form-control-sm" formControlName='timeZone' [ngClass]="{'is-invalid':addResourceForm.controls['timeZone']?.touched && addResourceForm.controls['timeZone']?.errors}">
+            <option disabled value=''>Select time zone</option>
+            <option *ngFor="let zone of allTimezones" [value]="zone.id">{{zone.timezone_info}}</option>
+          </select>
+          <span class="mandatory" *ngIf="addResourceForm.controls['timeZone']?.touched && addResourceForm.controls['timeZone']?.errors?.required">Please select a time zone</span>
+        </div>
+      </div>
+      <div class="row d-flex col-lg-12 pt-2 p-2">
+        <div class="col-lg-6">
+         <label  class="form-label">Allow upload timesheet<span class="mandatory">*</span></label>
+         <div class="d-flex">
+           <div class="form-check mr-3">
+            <input class="form-check-input" type="radio" value="yes" name="uploadTimesheet" formControlName="uploadTimesheet">
+            <label class="form-label">
+              Yes
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="no"  name="uploadTimesheet" formControlName="uploadTimesheet">
+            <label class="form-label">
+              No
+            </label>
+          </div>
+         </div>
+         <span class="mandatory" *ngIf="addResourceForm.controls['uploadTimesheet']?.touched && addResourceForm.controls['uploadTimesheet']?.errors?.required">Please select a allow upload timesheet</span>
+       </div>
+     </div>
+       <hr>
+      <h6 class="pb-2 pt-3"><strong style="color: #3F51B5;">Employment Info</strong></h6>
+      <div class="row pt-2 p-2">
+        <div class="col-sm-4">
+          <label  class="form-label">Employment Type <span class="mandatory">*</span></label>
+          <select class="form-control form-control-sm" formControlName='employmentType' name="employmentType" (change)="onChangeEmploymentType(this.addResourceForm.get('employmentType').value)" [ngClass]="{'is-invalid' : (addResourceForm.controls['employmentType']?.touched && addResourceForm.controls['employmentType']?.errors)}">
+            <option disabled value=''>Select employment type</option>
+            <option *ngFor="let employmentType of employmentTypes" [value]="employmentType.id">{{employmentType.type}}
+            </option>
+          </select>
+          <span class="mandatory" *ngIf="addResourceForm.controls['employmentType']?.touched && addResourceForm.controls['employmentType']?.errors?.required">Please select the employment type</span>
+        </div>
+        </div>
+        <div class="row pt-2" *ngIf="addResourceForm.get('employmentType')?.value==3">
+          <div class="col-sm-3">
+            <label  class="form-label">Resource ID <span class="mandatory">*</span></label>
+            <input type="text" class="form-control form-control-sm" formControlName='resourceId' placeholder="Enter resource id" disabled [ngClass]="{'is-invalid' : (addResourceForm.controls['resourceId']?.touched && addResourceForm.controls['resourceId']?.errors)}">
+            <span class="mandatory" *ngIf="addResourceForm.controls['resourceId']?.touched && addResourceForm.controls['resourceId']?.errors?.required">Please enter resource id</span>
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Reporting Manager <span class="mandatory">*</span></label>
+            <select class="form-control form-control-sm" formControlName='reportingManager' [ngClass]="{'is-invalid' : (addResourceForm.controls['reportingManager']?.touched && addResourceForm.controls['reportingManager']?.errors)}">
+              <option disabled value=''>Select reporting manager</option>
+              <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name +' ' +' '+ manager.last_name + ' '+'(' + manager.resource_number + ')'}}</option>
+            </select>
+            <span class="mandatory" *ngIf="addResourceForm.controls['reportingManager']?.touched && addResourceForm.controls['reportingManager']?.errors?.required">Please select the reporting manager</span>
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Vendor Name<span class="mandatory">*</span></label>
+            <select class="form-control form-control-sm" formControlName='contractingFirmName' [ngClass]="{'is-invalid' : (addResourceForm.controls['contractingFirmName']?.touched && addResourceForm.controls['contractingFirmName']?.errors)}">
+              <option disabled value=''>Select Vendor Name</option>
+              <option *ngFor="let contractor of allContractors" [value]="contractor.id">{{contractor.company_name}}</option>
+            </select>
+            <span class="mandatory" *ngIf="addResourceForm.controls['contractingFirmName']?.touched && addResourceForm.controls['contractingFirmName']?.errors?.required">Please select the vendor name</span>
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Start Date</label>
+            <div class="input-group">
+              <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='startDate' #dp="bsDatepicker" bsDatepicker placeholder="Select start date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)">
+              <div class="input-group-append">
+                <div class="input-group-text btn" (click)="dp.toggle()">
+                  <i class="fa fa-calendar"></i>
+                </div>
+              </div>
+            </div>
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['startDate']?.touched && addResourceForm.controls['startDate']?.errors?.required">Please select start date</span> -->
+          </div>
+          <!-- <div class="col-sm-3">
+            <label  class="form-label">Role <span class="mandatory">*</span></label>
+            <select class="form-control form-control-sm" formControlName='role' [ngClass]="{'is-invalid' : (addResourceForm.controls['role']?.touched && addResourceForm.controls['role']?.errors)}">
+              <option disabled value=''>Select role</option>
+              <option *ngFor="let role of allRoles" [value]="role.id">{{role.role_name}}</option>
+            </select>
+            <span class="mandatory" *ngIf="addResourceForm.controls['role']?.touched && addResourceForm.controls['role']?.errors?.required">Please select roles</span>
+          </div> -->
+        </div>
+        <div class="row pt-2" *ngIf="addResourceForm.get('employmentType')?.value==3">
+          <!-- <div class="col-sm-3">
+            <label  class="form-label">Start Date <span class="mandatory">*</span></label>
+            <input type="text" class="form-control form-control-sm" formControlName='startDate' bsDatepicker placeholder="Select start date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' }" [ngClass]="{'is-invalid' : (addResourceForm.controls['startDate']?.touched && addResourceForm.controls['startDate']?.errors)}">
+            <span class="mandatory" *ngIf="addResourceForm.controls['startDate']?.touched && addResourceForm.controls['startDate']?.errors?.required">Please select start date</span>
+          </div> -->
+          <div class="col-sm-3">
+            <label  class="form-label">Signed NDA</label>
+            <select class="form-control form-control-sm" formControlName='signedNDA'>
+              <option disabled value=''>Select signed nda</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['signedNDA']?.touched && addResourceForm.controls['signedNDA']?.errors?.required">Please select signed nda</span> -->
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Signed Security Policy</label>
+            <select class="form-control form-control-sm" formControlName='signedSecurityPolicy'>
+              <option disabled value=''>Select signed security policy</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['signedSecurityPolicy']?.touched && addResourceForm.controls['signedSecurityPolicy']?.errors?.required">Please select signed security policy</span> -->
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Subcontract Agreement Executed</label>
+            <select class="form-control form-control-sm" formControlName='subcontractAgreementExecuted'>
+              <option disabled value=''>Select subcontract agreement executed</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select> 
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['subcontractAgreementExecuted']?.touched && addResourceForm.controls['subcontractAgreementExecuted']?.errors?.required">Please select subcontract aggreement executed</span> -->
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Hourly Pay Rate <span class="mandatory">*</span></label>
+            <div class="input-group">
+              <input type="text" class="form-control form-control-sm" formControlName='hourlyPayRate' placeholder="Enter Hourly Pay Rate" appAlphaWithSpace inputType="strictlyNumber" [ngClass]="{'is-invalid' : (addResourceForm.controls['hourlyPayRate']?.touched && addResourceForm.controls['hourlyPayRate']?.errors)}" maxlength="6" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <i class="fa fa-usd" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            <span class="mandatory" *ngIf="addResourceForm.controls['hourlyPayRate']?.touched && addResourceForm.controls['hourlyPayRate']?.errors?.required">Please enter the hourly pay rate</span>
+
+          </div>
+        </div>
+        <div class="row pt-2" *ngIf="addResourceForm.get('employmentType')?.value==1 || addResourceForm.get('employmentType')?.value==2">
+          <div class="col-sm-3">
+            <label  class="form-label">Resource ID <span class="mandatory">*</span></label>
+            <input type="text" class="form-control form-control-sm" formControlName='resourceId' placeholder="Enter resource id" disabled [ngClass]="{'is-invalid' : (addResourceForm.controls['resourceId']?.touched && addResourceForm.controls['resourceId']?.errors)}">
+            <span class="mandatory" *ngIf="addResourceForm.controls['resourceId']?.touched && addResourceForm.controls['resourceId']?.errors?.required">Please enter  resource id</span>
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Reporting Manager <span class="mandatory">*</span></label>
+            <select class="form-control form-control-sm" formControlName='reportingManager' [ngClass]="{'is-invalid' : (addResourceForm.controls['reportingManager']?.touched && addResourceForm.controls['reportingManager']?.errors)}">
+              <option disabled value=''>Select reporting manager</option>
+              <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name +' ' +' '+ manager.last_name + ' '+'(' + manager.resource_number + ')'}}</option>
+            </select>
+            <span class="mandatory" *ngIf="addResourceForm.controls['reportingManager']?.touched && addResourceForm.controls['reportingManager']?.errors?.required">Please select the reporting manager</span>
+          </div>
+          <!-- <div class="col-sm-3">
+            <label  class="form-label">Role <span class="mandatory">*</span></label>
+            <select class="form-control form-control-sm" formControlName='role' [ngClass]="{'is-invalid' : (addResourceForm.controls['role']?.touched && addResourceForm.controls['role']?.errors)}">
+              <option disabled value=''>Select role</option>
+              <option *ngFor="let role of allRoles" [value]="role.id">{{role.role_name}}</option>
+            </select>
+            <span class="mandatory" *ngIf="addResourceForm.controls['role']?.touched && addResourceForm.controls['role']?.errors?.required">Please select role</span>
+          </div> -->
+          <div class="col-sm-3">
+            <label  class="form-label">Signed Security Policy</label>
+            <select class="form-control form-control-sm" formControlName='signedSecurityPolicy'>
+              <option disabled value=''>Select signed security policy</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['signedSecurityPolicy']?.touched && addResourceForm.controls['signedSecurityPolicy']?.errors?.required">Please select signed security policy</span> -->
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Signed NDA</label>
+            <select class="form-control form-control-sm" formControlName='signedNDA'>
+              <option disabled value=''>Select signed nda</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['signedNDA']?.touched && addResourceForm.controls['signedNDA']?.errors?.required">Please select signed nda</span> -->
+          </div>
+        </div>
+        <div class="row pt-2" *ngIf="addResourceForm.get('employmentType')?.value==1 || addResourceForm.get('employmentType')?.value==2">
+          <!-- <div class="col-sm-3">
+            <label  class="form-label">Signed Security Policy <span class="mandatory">*</span></label>
+            <select class="form-control form-control-sm" formControlName='signedSecurityPolicy' [ngClass]="{'is-invalid' : (addResourceForm.controls['signedSecurityPolicy']?.touched && addResourceForm.controls['signedSecurityPolicy']?.errors)}">
+              <option disabled value=''>Select signed security policy</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <span class="mandatory" *ngIf="addResourceForm.controls['signedSecurityPolicy']?.touched && addResourceForm.controls['signedSecurityPolicy']?.errors?.required">Please select signed security policy</span>
+          </div> -->
+          <div class="col-sm-3">
+            <label  class="form-label">Location</label>
+            <input type="text" class="form-control form-control-sm" formControlName='location' placeholder="Enter location" appAlphaWithSpace inputType="alphaWithSpace">
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['location']?.touched && addResourceForm.controls['location']?.errors?.required">Please enter location</span> -->
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Start Date</label>
+            <div class="input-group">
+              <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName='startDate' placeholder="Select start date"  #startDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" (keypress)="stopManualEntry($event)" [maxDate]="minEndDate(addResourceForm.value.endDate)">
+              <div class="input-group-append">
+                <div class="input-group-text btn" (click)="startDate.toggle()">
+                  <i class="fa fa-calendar"></i>
+                </div>
+              </div>
+            </div>
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['startDate']?.touched && addResourceForm.controls['startDate']?.errors?.required">Please select start date</span> -->
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">End Date</label>
+            <div class="input-group">
+              <input autocomplete="off" type="text" class="form-control  form-control-sm" formControlName='endDate' #endDate="bsDatepicker" bsDatepicker placeholder="Select end date" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" [minDate]="minEndDate(addResourceForm.value.startDate)" (keypress)="stopManualEntry($event)">
+              <div class="input-group-append">
+                <div class="input-group-text btn" (click)="endDate.toggle()">
+                  <i class="fa fa-calendar"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Vacation Days</label>
+            <input type="text" class="form-control form-control-sm" formControlName='vacationDays' placeholder="Enter vacation days" appAlphaWithSpace inputType="strictlyNumber">
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['vacationDays']?.touched && addResourceForm.controls['vacationDays']?.errors?.required">Please enter vacation days</span> -->
+          </div>
+        </div>
+        <div class="row pt-2" *ngIf="addResourceForm.get('employmentType')?.value==1 || addResourceForm.get('employmentType')?.value==2">
+          <!-- <div class="col-sm-3">
+            <label  class="form-label">Vacation Days <span class="mandatory">*</span></label>
+            <input type="text" class="form-control form-control-sm" formControlName='vacationDays' placeholder="Enter vacation days" [ngClass]="{'is-invalid' : (addResourceForm.controls['vacationDays']?.touched && addResourceForm.controls['vacationDays']?.errors)}">
+            <span class="mandatory" *ngIf="addResourceForm.controls['vacationDays']?.touched && addResourceForm.controls['vacationDays']?.errors?.required">Please enter vacation days</span>
+          </div> -->
+          <div class="col-sm-3">
+            <label  class="form-label">Sick Days</label>
+            <input type="text" class="form-control form-control-sm" formControlName='sickDays' placeholder="Enter sick days" appAlphaWithSpace inputType="strictlyNumber">
+            <!-- <span class="mandatory" *ngIf="addResourceForm.controls['sickDays']?.touched && addResourceForm.controls['sickDays']?.errors?.required">Please enter sick days</span> -->
+          </div>
+          <div class="col-sm-3">
+            <label  class="form-label">Hourly Pay Rate <span class="mandatory">*</span></label>
+            <div class="input-group">
+              <input type="text" class="form-control form-control-sm" formControlName='hourlyPayRate' placeholder="Enter Hourly Pay Rate" appAlphaWithSpace inputType="strictlyNumber" [ngClass]="{'is-invalid' : (addResourceForm.controls['hourlyPayRate']?.touched && addResourceForm.controls['hourlyPayRate']?.errors)}" maxlength="6" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <i class="fa fa-usd" aria-hidden="true"></i>
+                </div>
+                </div>
+            </div>
+            <span class="mandatory" *ngIf="addResourceForm.controls['hourlyPayRate']?.touched && addResourceForm.controls['hourlyPayRate']?.errors?.required">Please enter the hourly pay rate</span>
+          </div>
+        </div>
+        <hr>
+      <h6 class="pb-2 pt-4"><strong style="color: #3F51B5;">Assign Projects</strong></h6>
+      <div class="row pt-2">
+        <div class="col-sm-5">
+          <div class="row p-2" style="margin-bottom: 190px;">
+            <div class="col-md-6 form-group">
+              <label class="form-label" for="addressLine2">Clients</label>
+              <select class="form-control form-control-lg" formControlName='clients'
+                (change)="onSelectClient($event.target.value)">
+                <option disabled value=''>Select client</option>
+                <option *ngFor="let client of allClients">{{client.client_name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Projects <span class="mandatory">*</span></label>
+              <ng-multiselect-dropdown [placeholder]="'Select project'" [settings]="dropdownSettings" [data]="projects"
+                name="multiselectProject" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)" 
+                formControlName='project'>
+              </ng-multiselect-dropdown>
+              <span class="mandatory"
+                *ngIf="addResourceForm.controls['project']?.touched && addResourceForm.controls['project']?.errors?.required">Please
+                select a project</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-7 mt-3" formArrayName="weeklyWorkHoursLimit">
+            <div class="card resource-card p-3 mb-3" *ngFor="let ele of selectedProjects; let i = index" [formGroupName]="i">
+              <div class="row pt-2">
+                <div class="col-sm-5">
+                  <span class="form-label">Client Name</span>
+                </div> :
+                <span class="col-sm-1"></span>
+                <div class="col-sm-5">
+                  <span class="form-label">{{ele.client.client_name}}</span>
+                </div>
+              </div>
+              <div class="row pt-2">
+                <div class="form-label" class="col-sm-5">
+                  <span class="form-label">Project Name</span>
+                </div> :
+                <span class="col-sm-1"></span>
+                <div class="col-sm-5">
+                  <span class="form-label">{{ele.project_name}}</span>
+                </div>
+              </div>
+              <div class="row pt-2">
+                <div class="form-label" class="col-sm-5">
+                  <span class="form-label">Project Id</span>
+                </div> :
+                <span class="col-sm-1"></span>
+                <div class="col-sm-5">
+                  <span class="form-label">{{ele.project_id == null ? 'N/A' : ele.project_id}}</span>
+                </div>
+              </div>
+              <div class="row pt-2">
+                <div class="col-sm-5">
+                  <span class="form-label">Weekly Work Hours Limit <span class="mandatory">*</span></span>
+                </div> :
+                <span class="col-sm-1"></span>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control form-control-sm" placeholder="Please enter weekly work hours limmit" [formControl]="getWeeklyWorkHoursLimitControl(i)" [ngClass]="{'is-invalid':getWeeklyWorkHoursLimitControl(i).touched && getWeeklyWorkHoursLimitControl(i).errors?.required}" appAlphaWithSpace inputType="strictlyNumber" maxlength="2">
+                  <span class="mandatory" *ngIf="getWeeklyWorkHoursLimitControl(i).touched && getWeeklyWorkHoursLimitControl(i).errors?.required">Please enter weekly work hours limit</span>
+                </div>
+              </div>
+              <div class="row pt-2">
+                <div class="col-sm-5">
+                  <span class="form-label">Project Assigned Date <span class="mandatory">*</span></span>
+                </div> :
+                <span class="col-sm-1"></span>
+                <div class="col-sm-5">
+                  <div class="input-group">
+                    <input autocomplete="off" type="text" [formControl]="getProjectAssignedDateControl(i)" class="form-control form-control-sm" placeholder="Select project assigned date"  #projectAssignedDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" [ngClass]="{'is-invalid':getProjectAssignedDateControl(i).touched && getProjectAssignedDateControl(i).errors?.required}" (keypress)="stopManualEntry($event)" [minDate]="projectAssignStartandEndDate(ele.start_date)" [maxDate]="projectAssignStartandEndDate(ele.end_date)">               
+                    <div class="input-group-append">
+                      <div class="input-group-text btn" (click)="projectAssignedDate.toggle()">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                    </div> 
+                  </div>
+                  <span class="mandatory" *ngIf="getProjectAssignedDateControl(i).touched && getProjectAssignedDateControl(i).errors?.required">Please enter project assigned date</span>
+                </div>
+              </div>
+              <div class="row pt-2">
+                <div class="col-sm-5">
+                  <span class="form-label">Start Date</span>
+                </div> :
+                <span class="col-sm-1"></span>
+                <div class="col-sm-5">
+                  <span class="form-label">{{ele.start_date | customDate }}</span>
+                </div>
+              </div>
+              <div class="row pt-2">
+                <div class="col-sm-5">
+                  <span class="form-label">End Date</span>
+                </div> :
+                <span class="col-sm-1"></span>
+                <div class="col-sm-4">
+                  <span class="form-label">{{ele.end_date | customDate }}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- <hr style="margin-bottom: 0rem !important"> -->
+      <div style="background-color: #F0F0F0"> 
+      <footer class="p-4 d-flex justify-content-center">
+        <button type="button" class="cancel-button" (click)="onCancel()">Clear</button>&nbsp;
+        <button type="button" class="save-button" (click)="onSubmit()">Save</button>
+      </footer>
+      </div>
+    </form>
+  </div>
+</div>

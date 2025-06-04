@@ -1,0 +1,58 @@
+.profile-img {
+  margin: 10px;
+  margin-top: 22px;
+}
+
+.header-name {
+  margin-top: 28px;
+  margin-left: 10px;
+  font-size:x-large
+}
+
+.sub-heading {
+  margin-left: 11px !important;
+  margin-top: -6px !important;
+}
+
+.bold {
+  font-weight: 650 !important;
+  font-size: small !important 
+}
+
+.valuebold {
+  font-size: small !important;
+  font-weight: 500 !important;
+  color: black !important;
+}
+
+.edit-btn {
+  margin-top: 16px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.card {
+  padding: 0px;
+}
+
+.heading {
+  margin-left: 2%;
+  margin-top: 1.2%;
+  margin-bottom: -1%;
+  font-size: large !important
+}
+
+.heading2 {
+  margin-left: 2%;
+  font-size: large !important
+  
+}
+
+.modal-header .close{
+  padding: 1.5rem 0.5rem !important;
+}
+.modal-header{
+  padding:0 0 !important;
+}
+
+

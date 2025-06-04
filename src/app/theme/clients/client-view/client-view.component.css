@@ -1,0 +1,37 @@
+
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
+  
+  .grid-item {
+    /* Add your grid item styles here */
+  }
+ 
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .form-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
+
+  .modal-header .close{
+    padding: 1.5rem 0.5rem !important;
+  }
+  .modal-header{
+    padding:0 0 !important;
+  }
+  
+  
+  

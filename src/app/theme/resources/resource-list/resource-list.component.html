@@ -1,0 +1,46 @@
+<h1 class="topHeader" style="color: #3F51B5; font-size: 20px;">Resources</h1>
+<div class="card" style="border-radius:1rem; margin-top: -5px;">
+    <div class="card-body">
+    <div class="row">
+        <div class="col-lg-3">
+            <span type="submit" (click)="getResourceList('All')">
+                <b>Total Resources</b><a class="box ml-1">{{this.resourceList?.total_resource_count}}</a>
+            </span>
+        </div>
+        <div class="col-lg-3">
+            <span type="submit" (click)="getResourceList('Active')">
+                <b>Active Resources</b> <a class="box ml-1" (click)="getResourceList('Active')">{{this.resourceList?.active_resource_count}}</a>
+            </span>
+        </div>
+        <div class="col-lg-3">
+            <span type="submit" (click)="getResourceList('Inactive')">
+                <b>Inactive Resources</b> <a class="box ml-1" (click)="getResourceList('Inactive')">{{this.resourceList?.inactive_resource_count}}</a>
+            </span>
+        </div>
+
+    </div>
+    <div class="row pt-3">
+        <div class="col-lg-3">
+            <div class="search-container">
+                <input class="form-control form-control-sm search-input" type="text"   [(ngModel)]="searchText" (keyup)="search()"
+                placeholder="Search Resources">
+                <i class="fa fa-search search-icon" aria-hidden="true"  ></i>
+               
+            </div>
+        </div>
+        <div class="col-lg-9 text-right">
+            <button type="button"[routerLink]="['/resources-list', 'add-resource']" class="add-button"
+                >
+                <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Resource
+            </button>
+        </div>
+    </div>
+    
+    <ag-grid-angular  class="ag-theme-alpine pt-4"
+    [gridOptions]="gridOptions" 
+        (gridReady)="onGridReady($event)"
+        (paginationChanged)="onPaginationChanged($event)">
+    </ag-grid-angular>
+    </div>
+
+</div>

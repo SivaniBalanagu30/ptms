@@ -1,0 +1,198 @@
+<p-toast></p-toast>
+<div class="card p-0" style="border-radius: 1rem">
+  <h5 class="text-center pt-2"><strong style="color: #3F51B5;">Add Project</strong></h5>
+  <div class="card-body pt-2">
+    <form [formGroup]="addProjectForm">
+      <div class="row d-flex col-lg-12 p-2">
+        <div class="col-lg-4">
+          <label class="form-label">Client <span class="mandatory">*</span></label>
+          <select class="form-control form-control-sm" formControlName="clientName" [ngClass]="{'is-invalid':addProjectForm.controls['clientName'].touched && addProjectForm.controls['clientName'].errors?.required}">
+            <option disabled value="">Select Client</option>
+            <option *ngFor="let client of clientList" [ngValue]="client.id">{{client.client_name}}</option>
+          </select>
+          <span class="mandatory" *ngIf="addProjectForm.controls['clientName'].touched && addProjectForm.controls['clientName'].errors?.required">Please select a client</span>
+        </div>
+        <div class="col-lg-4">
+            <label class="form-label">Project Name <span class="mandatory">*</span></label>
+            <input id="projectName" type="text" class="form-control form-control-sm" formControlName="projectName" placeholder="Enter project name" [ngClass]="{'is-invalid':addProjectForm.controls['projectName'].touched && addProjectForm.controls['projectName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+            <span class="mandatory" *ngIf="addProjectForm.controls['projectName'].touched && addProjectForm.controls['projectName'].errors?.required">Please enter the project name</span>
+          </div>
+          <div class="col-lg-4">
+            <label class="form-label">Project Manager <span class="mandatory">*</span></label>
+            <select id="projectManager" class="form-control form-control-sm" formControlName="projectManager"  [ngClass]="{'is-invalid':addProjectForm.controls['projectManager'].touched && addProjectForm.controls['projectManager'].errors?.required}">
+              <option disabled value="">Select project manager</option>
+              <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name + ' ' + '' +manager.last_name +' '+'('+manager.resource_number+')'}}</option>
+            </select>
+            <span class="mandatory" *ngIf="addProjectForm.controls['projectManager'].touched && addProjectForm.controls['projectManager'].errors?.required">Please select a project manager</span>
+          </div>
+          
+      </div>
+      <div class="row d-flex col-lg-12 p-2 pt-2">
+     <div class="col-lg-4">
+            <label class="form-label">Time Approver <span class="mandatory">*</span></label>
+            <select id="timeApprover" class="form-control form-control-sm" formControlName="timeApprover" [ngClass]="{'is-invalid':addProjectForm.controls['timeApprover'].touched && addProjectForm.controls['timeApprover'].errors?.required}">
+              <option disabled value="">Please select time approver</option>
+              <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name +' '+ ' '+manager.last_name +' '+'('+manager.resource_number+')'}}</option>
+            </select>
+            <span class="mandatory" *ngIf="addProjectForm.controls['timeApprover'].touched && addProjectForm.controls['timeApprover'].errors?.required">Please select a time approver</span>
+          </div>
+        <div class="col-lg-4">
+            <label class="form-label">Start Date <span class="mandatory">*</span></label>
+            <div class="input-group">
+              <input id="startDate" autocomplete="off" (keydown)="false" (paste)="false" (cut)="false" type="text" class="form-control form-control-sm" #startDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" formControlName="startDate" placeholder="Select start date" [ngClass]="{'is-invalid':addProjectForm.controls['startDate'].touched && addProjectForm.controls['startDate'].errors?.required}" [maxDate]="newEndDate(addProjectForm.value.endDate)" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)">
+              <div class="input-group-append">
+                <div class="input-group-text btn" (click)="startDate.toggle()">
+                  <i class="fa fa-calendar"></i>
+                </div>
+              </div>
+            </div>
+            <span class="mandatory" *ngIf="addProjectForm.controls['startDate'].touched && addProjectForm.controls['startDate'].errors?.required">Please select start date</span>
+          </div>
+        <div class="col-md-4">
+            <label class="form-label">End Date <span class="mandatory">*</span></label>
+            <div class="input-group">
+              <input id="endDate" autocomplete="off" (keydown)="false" (paste)="false" (cut)="false" type="text" class="form-control form-control-sm" #endDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" formControlName="endDate" placeholder="Select end date" [ngClass]="{'is-invalid':addProjectForm.controls['endDate'].touched && addProjectForm.controls['endDate'].errors?.required}" [minDate]="newEndDate(addProjectForm.value.startDate)" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }" (keypress)="stopManualEntry($event)">
+              <div class="input-group-append">
+                <div class="input-group-text btn" (click)="endDate.toggle()">
+                  <i class="fa fa-calendar"></i>
+                </div>
+              </div>
+            </div>
+            <span class="mandatory" *ngIf="addProjectForm.controls['endDate'].touched && addProjectForm.controls['endDate'].errors?.required">Please select end date</span>
+          </div>
+          </div>
+      <div class="row d-flex col-lg-12 p-2 pt-2">
+        <div class="col-lg-4">
+          <label class="form-label">SOW/Task Order Executed <span class="mandatory">*</span></label>
+          <select class="form-control form-control-sm" formControlName='sow'
+            [ngClass]="{'is-invalid':addProjectForm.controls['sow'].touched && addProjectForm.controls['sow'].errors?.required}">
+            <option disabled value=''>Select yes/ no</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+          <span class="mandatory"
+            *ngIf="addProjectForm.controls['sow'].touched && addProjectForm.controls['sow'].errors?.required">Please select yes/
+            no</span>
+        </div>
+        <div class="col-lg-4">
+          <label class="form-label">Project Id</label>
+          <input type="text" class="form-control form-control-sm" formControlName="projectId" placeholder="Enter project id" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+        </div>
+      </div>
+      <hr>
+      <h6 class="pb-2 pt-4"><strong style="color:#3F51B5">Project Milestones</strong></h6>
+      <div  formArrayName="milestones">
+        <div *ngFor="let milestone of addProjectForm['controls'].milestones['controls']; let i=index"
+        [formGroupName]="i">
+          <div>
+            <div class="row">
+              <div class="col-md-4">
+                  <label class="form-label" >Milestone Name <span class="mandatory">*</span></label>
+                  <input  type="text" class="form-control form-control-sm" formControlName="milestoneName" placeholder="Enter milestone name" [ngClass]="{'is-invalid':milestone.controls['milestoneName'].touched && milestone.controls['milestoneName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                  <span class="mandatory" *ngIf="milestone.controls['milestoneName'].touched && milestone.controls['milestoneName'].errors?.required">Pleaase enter milestone name</span>
+                </div>
+              <div class="col-md-4">
+                  <label class="form-label" >Milestone Start Date </label>
+                  <div class="input-group">
+                    <input  type="text" (keydown)="false" (paste)="false" (cut)="false" class="form-control form-control-sm"  #milestoneStartDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" formControlName="milestoneStartDate" placeholder="Select milestone start date" [ngClass]="{'is-invalid':milestone.controls['milestoneStartDate'].touched && milestone.controls['milestoneStartDate'].errors?.required}" (keypress)="stopManualEntry($event)" [maxDate]="newMilestoneEndDate(milestone.value.milestoneEndDate)">
+                    <div class="input-group-append">
+                      <div class="input-group-text btn" (click)="milestoneStartDate.toggle()">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              <div class="col-md-4">
+                  <label  class="form-label">Milestone End Date </label>
+                  <div class="input-group">
+                    <input  type="text" (keydown)="false" (paste)="false" (cut)="false" class="form-control form-control-sm"  #milestoneEndDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" formControlName="milestoneEndDate" placeholder="Select milestone end date" [ngClass]="{'is-invalid':milestone.controls['milestoneEndDate'].touched && milestone.controls['milestoneEndDate'].errors?.required}" [minDate]="newMilestoneEndDate(milestone.value.milestoneStartDate)" (keypress)="stopManualEntry($event)">       
+                    <div class="input-group-append">
+                      <div class="input-group-text btn" (click)="milestoneEndDate.toggle()">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                    </div>
+                  </div>
+         
+                </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-md-4">
+                  <label class="form-label" >Estimated Hours <span class="mandatory">*</span></label>
+                  <input type="text" class="form-control form-control-sm" formControlName="estimatedHours" placeholder="Enter estimated hours" [ngClass]="{'is-invalid':milestone.controls['estimatedHours'].touched && milestone.controls['estimatedHours'].errors?.required}" appAlphaWithSpace inputType="strictlyNumber">
+                  <span class="mandatory" *ngIf="milestone.controls['estimatedHours'].touched && milestone.controls['estimatedHours'].errors?.required">Please enter estimated hours</span>
+              </div>
+              <div class="col-md-8">
+                    <i *ngIf="milestones().controls.length>=1" style="float:right;font-size: 20px;color: red;" class="fa fa-trash" type="submit" (click)="removeMilestone(i)"></i> 
+              </div>
+            </div>
+            <hr *ngIf="milestones().controls.length>1">
+          </div>
+        </div>
+        <div class="text-right">
+          <button class="add-button" type="submit" (click)="addMilestone()"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Add Milestone</button>
+        </div>
+      </div>
+      
+      
+      
+<hr>
+      <h6 class="pb-4"><strong style="color: #3F51B5;">Assign Resources</strong></h6>
+     
+      <div class="row">
+        <div class="col-md-4 text-right" style="margin: 1rem;" >
+          <ng-multiselect-dropdown [placeholder]="'Select Resources'" [settings]="dropdownSettings" [data]="resources"
+            name="multiselectResource" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)">
+          </ng-multiselect-dropdown>
+        
+        </div>
+        <div class="col-md-6" formArrayName="weeklyWorkHoursLimit">
+          <div class="card resource-card p-3 mb-3" *ngFor="let ele of selectedResources; let i = index">
+            <div class="row">
+              <div class="col-sm-5">
+                <span class="form-label">Name</span>
+              </div>:
+              <div class="col-sm-1"></div>
+              <div class="col-sm-5">
+                <span class="form-label">{{ele.first_name + ' ' + ' ' + ele.last_name}}</span>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-5">
+              <span class="form-label">Resource ID</span>
+            </div>:
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+              <span class="form-label">{{ele.resource_number}}</span>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-5">
+            <span class="form-label">Email</span>
+          </div>:
+          <div class="col-sm-1"></div>
+          <div class="col-sm-5">
+            <span class="form-label">{{ele.email_id}}</span>
+          </div>
+      </div>
+        <div class="row">
+          <div class="col-sm-5">
+            <span class="form-label">Weekly Work Hours Limit <span class="mandatory">*</span></span>
+          </div>:
+          <div class="col-sm-1"></div>
+          <div class="col-sm-5">
+            <!-- <input type="text" class="form-control form-control-sm" [formControlName]="'weeklyWorkHours_' + ele.id"> -->
+            <input type="text" class="form-control form-control-sm" [formControlName]="i" (change)="onWorkHoursLimitChange($event.target.value, ele.id)" [ngClass]="{'is-invalid':weeklyWorkHoursLimit.controls[i].touched && weeklyWorkHoursLimit.controls[i].errors?.required}" appAlphaWithSpace inputType="strictlyNumber" maxlength="2">
+            <span class="mandatory" *ngIf="weeklyWorkHoursLimit.controls[i].touched && weeklyWorkHoursLimit.controls[i].errors?.required">Please enter work hours limit</span>
+          </div>
+      </div>
+      </div>
+        </div>
+      </div>
+
+      <div class="p-3 d-flex justify-content-end">
+        <button type="button" class="save-button" (click)="addProject()" style="margin-top: 200px;">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,356 @@
+<p-toast></p-toast>
+<div class="card pl-1">
+    <span class="material-icons mt-2 ml-1" data-toggle="tooltip" data-placement="bottom" title="Back" [routerLink]="'/clients-list'" style="color: #3F51B5; font-size:xx-large; cursor: pointer;"> arrow_circle_left </span>
+    <!-- <div class="d-flex" style="margin: 35px 0 0 0;">
+        <i class="fa fa-arrow-left mr-2" data-toggle="tooltip" data-placement="top" title="Back to client list" [routerLink]="'/clients-list'" aria-hidden="true" style="font-size: 25px;cursor: pointer;"></i><strong class="mt-1 mr-2">Client Name:</strong><h3 style="color: red;">{{this.clientDetails?.client_details?.client_name}}</h3>
+    </div> -->
+    <!-- <div class="d-flex" style="margin: 35px 0 0 0;padding-left: 1rem;">
+        <i class="fas fa-chevron-left mr-2" data-toggle="tooltip" data-placement="top" title="Back to clients list" [routerLink]="'/clients-list'" aria-hidden="true" style="font-size: 20px;cursor: pointer;"></i>
+    </div> -->
+    <div class="pl-4">
+        <div class="card-body">
+            <div class="row" *ngIf="clientMode == 'edit'">
+                <div class="col-sm-6 d-flex">
+                    <!-- <i class="fa fa-arrow-left mr-2 mt-1" data-toggle="tooltip" data-placement="top" title="Back to client list" [routerLink]="'/clients-list'" aria-hidden="true" style="font-size: 20px;cursor: pointer;"></i><strong class="mt-1 mr-2">Client Name:</strong><h3 style="color: red;">{{this.clientDetails?.client_details?.client_name}}</h3> -->
+                    <!-- <span><strong>Client Name</strong></span>
+                    <p>{{this.clientDetails?.client_details?.client_name}}</p> -->
+                </div>
+                <div class="col-sm-6 text-right">
+            <i class="fas fa-file-pen text-right" data-toggle="tooltip" data-placement="top" title="Edit client" style="color: #3F51B5; cursor: pointer; font-size: 17px;" (click)="showModal(this.clientDetails)"></i>
+    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <strong class="mt-1 mr-2">Client Name</strong><h3 style="color: red;">{{this.clientDetails?.client_details?.client_name}}</h3>
+                </div>
+                <div class="col-sm-4">
+                    <span class="mr-2"><strong>Status</strong></span>
+                    <p>{{this.clientDetails?.client_details?.status}}</p>
+                </div>
+            </div>
+            <h5 class="pb-2"><strong style="color:#3F51B5">Address</strong></h5>
+            <hr style="margin-top: -0.5rem;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Address Line1</strong></span>
+                    <p>{{this.clientDetails?.client_details?.addressline1}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Address Line2</strong></span>
+                    <p>{{this.clientDetails?.client_details?.addressline2}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>City</strong></span>
+                    <p>{{this.clientDetails?.client_details?.city}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>State</strong></span>
+                    <p>{{this.clientDetails?.client_details?.state}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Country</strong></span>
+                    <p>{{this.clientDetails?.client_details?.country}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Zip Code</strong></span>
+                    <p>{{this.clientDetails?.client_details?.zipcode}}</p>
+                </div>
+            </div>
+            <h5 class="pb-2"><strong style="color:#3F51B5">Primary Contact Info</strong></h5>
+            <hr style="margin-top: -0.5rem;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>First Name</strong></span>
+                    <p>{{this.clientDetails?.client_details?.contact_first_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Middle Name</strong></span>
+                    <p>{{this.clientDetails?.client_details?.contact_middle_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Last Name</strong></span>
+                    <p>{{this.clientDetails?.client_details?.contact_last_name}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Contact Email Id</strong></span>
+                    <p>{{this.clientDetails?.client_details?.email_id}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Contact Phone Number</strong></span>
+                    <p>{{this.clientDetails?.client_details?.primary_phone_number}}</p>
+                </div>
+                <div class="col-sm-4">
+                    
+                </div>
+            </div>
+            <h5 class="pb-2 pt-2"><strong style="color:#3F51B5">Contract Info</strong></h5>
+            <hr style="margin-top: -0.5rem;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Executed</strong></span>
+                    <p *ngIf="this.clientDetails?.client_details?.contract_agreement_executed === true">Yes</p>
+                    <p *ngIf="this.clientDetails?.client_details?.contract_agreement_executed === false">No</p>
+                </div>
+                <div class="col-sm-4" *ngIf="this.clientDetails?.client_details?.contract_agreement_executed === true">
+                    <span><strong>Contract Number/SOW</strong></span>
+                    <p>{{this.clientDetails?.client_details?.contract_number}}</p>
+                </div>
+                <div class="col-sm-4" *ngIf="this.clientDetails?.client_details?.contract_agreement_executed === true">
+                    <span><strong>Executed Date</strong></span>
+                    <p>{{this.clientDetails?.client_details?.contract_executed_date | customDate }}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="this.clientDetails?.client_details?.contract_agreement_executed === true">
+                <div class="col-sm-4">
+                    <span><strong>Term Start Date</strong></span>
+                    <p>{{this.clientDetails?.client_details?.term_start_date | customDate }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Term End Date</strong></span>
+                    <p>{{this.clientDetails?.client_details?.term_end_date | customDate }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Status</strong></span>
+                    <p>{{this.clientDetails?.client_details?.status}}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="this.clientDetails?.client_details?.contract_agreement_executed === true">
+                <div class="col-sm-6">
+                    <span><strong>Notes</strong></span>
+                    <p>{{this.clientDetails?.client_details?.comments}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                  <h5 class="pb-2 pt-2">
+                    <strong style="color:#3F51B5">Projects</strong>
+                  </h5>
+                </div>
+                </div>
+                <hr style="margin-top: -0.5rem;">
+                <div class="row">
+                    <div class="col-lg-6"></div>
+                    <div class="col-md-6 text-md-right">
+                        <button type="button" (click)="addProject()" class="add-button">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Project
+                        </button>
+                    </div>
+                </div>
+              
+              
+       
+    
+            <ag-grid-angular class="ag-theme-alpine pt-2"
+            [rowData]="this.clientDetails?.client_projects" [columnDefs]="projectsColumnDefs" [pagination]="true"
+            [paginationPageSize]="10" (gridReady)="onGridReady($event)"></ag-grid-angular>
+         
+        </div>
+    </div>
+</div>
+
+
+<div [config]="{backdrop: 'static'}" bsModal #clientData="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}"
+    id="certificationDetailsModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="ml-2 mt-2">CLIENT DETAILS</strong>
+                <span type="button" class="close mr-2" (click)="hideModal()">&times;</span>
+            </div>
+            <div class="modal-body col-lg-12">
+                <form [formGroup]="clientForm">
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-12">
+                            <label class="form-label">Client Name <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter client name"
+                                formControlName="clientName" [ngClass]="{'is-invalid':clientForm.controls['clientName'].touched && clientForm.controls['clientName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                                <span class="mandatory" *ngIf="clientForm.controls['clientName'].touched && clientForm.controls['clientName'].errors?.required">Please enter client name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 row pt-2">
+                        <div class="col-lg-12">
+                        <label class="form-label">Status <span class="mandatory">*</span></label>
+                        <select class="form-control form-control-sm" formControlName="status" [ngClass]="{'is-invalid':clientForm.controls['status'].touched && clientForm.controls['status']?.errors?.required}">
+                            <option disabled value>Select status</option>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                        <span class="mandatory" *ngIf="clientForm.controls['status'].touched && clientForm.controls['status']?.errors?.required">Please select status</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-12">
+                            <h6 class="mt-4"><strong style="color: #3F51B5;">Address</strong></h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">Address Line1 <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter address line1"
+                                formControlName="addLine1" [ngClass]="{'is-invalid':clientForm.controls['addLine1'].touched && clientForm.controls['addLine1'].errors?.required}" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                                <span class="mandatory" *ngIf="clientForm.controls['addLine1'].touched && clientForm.controls['addLine1'].errors?.required">Please enter address line1</span>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Address Line2</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter address line2"
+                                formControlName="addLine2" maxlength="150" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">City <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter city" formControlName="city" [ngClass]="{'is-invalid':clientForm.controls['city'].touched && clientForm.controls['city'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                            <span class="mandatory" *ngIf="clientForm.controls['city'].touched && clientForm.controls['city'].errors?.required">Please enter city</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">State <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter state" formControlName="state" [ngClass]="{'is-invalid':clientForm.controls['state'].touched && clientForm.controls['state'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                            <span class="mandatory" *ngIf="clientForm.controls['state'].touched && clientForm.controls['state'].errors?.required">Please enter state</span>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Country <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Country" formControlName="country" [ngClass]="{'is-invalid':clientForm.controls['country'].touched && clientForm.controls['country'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                            <span class="mandatory" *ngIf="clientForm.controls['country'].touched && clientForm.controls['country'].errors?.required">Please enter country</span>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Zipcode <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Zipcode" formControlName="zipcode" [ngClass]="{'is-invalid':clientForm.controls['zipcode'].touched && clientForm.controls['zipcode'].errors}" minlength="5" maxlength="6" appAlphaWithSpace inputType="strictlyNumber">
+                            <span class="mandatory" *ngIf="clientForm.controls['zipcode'].touched && clientForm.controls['zipcode'].errors?.required">Please enter zip code</span>
+                            <span class="mandatory" *ngIf="clientForm.controls['zipcode']?.touched && clientForm.controls['zipcode']?.hasError('minlength')">{{_stringResourceErrors.ZIPCODE_VALIDATIONS2}}</span>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-12">
+                            <h6 class="mt-4"><strong style="color: #3F51B5;">Primary Contact Info</strong></h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row">
+                        <div class="col-lg-4">
+                            <label class="form-label">First Name <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter first name"
+                                formControlName="contactFirstName" [ngClass]="{'is-invalid':clientForm.controls['contactFirstName'].touched && clientForm.controls['contactFirstName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                                <span class="mandatory" *ngIf="clientForm.controls['contactFirstName'].touched && clientForm.controls['contactFirstName'].errors?.required">Please enter fist name</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Middle Name</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter middle name"
+                                formControlName="contactMiddleName" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Last Name <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter last name"
+                                formControlName="contactLastName" [ngClass]="{'is-invalid':clientForm.controls['contactLastName'].touched && clientForm.controls['contactLastName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="alphaWithSpace">
+                                <span class="mandatory" *ngIf="clientForm.controls['contactLastName'].touched && clientForm.controls['contactLastName'].errors?.required">Please enter last name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-6">
+                            <label class="form-label">Email Id<span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter Email Id"
+                                formControlName="contactEmail" [ngClass]="clientForm.controls['contactEmail'].touched && clientForm.controls['contactEmail'].errors?.required" maxlength="150">
+                                <span class="mandatory" *ngIf="clientForm.controls['contactEmail'].touched && clientForm.controls['contactEmail'].errors?.required">Please enter email Id</span>
+                                <span class="mandatory" *ngIf="clientForm.controls['contactEmail']?.touched && clientForm.controls['contactEmail']?.errors?.pattern">Please enter valid email Id</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter phone Number"
+                                formControlName="contactPh" [ngClass]="{'is-invalid':clientForm.controls['contactPh'].touched && clientForm.controls['contactPh'].errors}" maxlength="20" usFormatPhoneNumber>
+                                <!-- <span class="mandatory" *ngIf="clientForm.controls['contactPh'].touched && clientForm.controls['contactPh'].errors?.required">Please enter phone number</span> -->
+                                <!-- <span class="mandatory" *ngIf="clientForm.controls['contactPh']?.touched && clientForm.controls['contactPh']?.errors?.pattern">Please enter valid contact phone number</span> -->
+                                <!-- <span class="mandatory" *ngIf="clientForm.controls['contactPh']?.touched && clientForm.controls['contactPh']?.hasError('minlength')">{{_stringResourceErrors.PHONE_NUMBER_VALIDATIONS2}}</span> -->
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-12">
+                            <h6 class="mt-4"><strong style="color: #3F51B5;">Contract Info</strong></h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row">
+                        <div class="col-lg-4">
+                            <label class="form-label">Executed <span class="mandatory">*</span></label>
+                            <select #executed class="form-control form-control-sm" formControlName='executed' (change)="changeContract(this.clientForm.get('executed').value)"[ngClass]="{'is-invalid':clientForm.controls['executed'].touched && clientForm.controls['executed'].errors?.required}">
+                                <option disabled value=''>Select executed</option>
+                                <option>Yes</option>
+                                <option>No</option>
+                              </select>  
+                              <span class="mandatory" *ngIf="clientForm.controls['executed'].touched && clientForm.controls['executed'].errors?.required">Please select executed</span>
+
+                        </div>
+                        <div class="col-lg-4" *ngIf="this.clientForm.get('executed').value == 'Yes'">
+                            <label class="form-label">Contract Number/SOW <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter contract number/sow"
+                                formControlName="contractNumber" [ngClass]="{'is-invalid':clientForm.controls['contractNumber'].touched && clientForm.controls['contractNumber'].errors?.required}" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                                <span class="mandatory" *ngIf="clientForm.controls['contractNumber'].touched && clientForm.controls['contractNumber'].errors?.required">Please enter contract number/sow</span>
+
+                        </div>
+                        <div class="col-lg-4" *ngIf="this.clientForm.get('executed').value == 'Yes'">
+                            <label class="form-label">Executed Date <span class="mandatory">*</span></label>
+                            <div class="input-group">
+                                    <input autocomplete="off" type="text" class="form-control form-control-sm" placeholder="Select executed date" #executedDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }"
+                                        formControlName="executedDate" [ngClass]="{'is-invalid':clientForm.controls['executedDate'].touched && clientForm.controls['executedDate'].errors?.required}" (keypress)="stopManualEntry($event)">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text btn" (click)="executedDate.toggle()">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="mandatory" *ngIf="clientForm.controls['executedDate'].touched && clientForm.controls['executedDate'].errors?.required">Please select executed date</span>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-4" *ngIf="this.clientForm.get('executed').value == 'Yes'">
+                            <label class="form-label">Term Start Date<span class="mandatory">*</span></label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" class="form-control form-control-sm" placeholder="Select term start date" #termStartDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }"
+                                    formControlName="termStartDate" [ngClass]="{'is-invalid':clientForm.controls['termStartDate'].touched && clientForm.controls['termStartDate'].errors?.required}" (keypress)="stopManualEntry($event)" [maxDate]="newEndDate(clientForm.value.termEndDate)">
+                                <div class="input-group-append">
+                                    <div class="input-group-text btn" (click)="termStartDate.toggle()">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                                <span class="mandatory" *ngIf="clientForm.controls['termStartDate'].touched && clientForm.controls['termStartDate'].errors?.required">Please select term start date</span>
+                        </div>
+                        <div class="col-lg-4" *ngIf="this.clientForm.get('executed').value == 'Yes'">
+                            <label class="form-label">Term End Date <span class="mandatory">*</span></label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" class="form-control form-control-sm" placeholder="Select term end date" #termEndDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY', showWeekNumbers: false }"
+                                    formControlName="termEndDate" [ngClass]="{'is-invalid':clientForm.controls['termEndDate'].touched && clientForm.controls['termEndDate'].errors?.required}" [minDate]="newEndDate(clientForm.value.termStartDate)" (keypress)="stopManualEntry($event)">
+                                <div class="input-group-append">
+                                    <div class="input-group-text btn" (click)="termEndDate.toggle()">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                                <span class="mandatory" *ngIf="clientForm.controls['termEndDate'].touched && clientForm.controls['termEndDate'].errors?.required">Please select term end date</span>
+                        </div>
+                      
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <label class="form-label" for="notes">Notes</label>
+                        <textarea class="form-control form-control-sm"  formControlName='notes'  id="notes" rows="3" maxlength="255" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning"></textarea>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-button" (click)="hideModal()">Cancel</button>
+                <button class="save-button" (click)="updateClient()">Update</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

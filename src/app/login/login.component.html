@@ -1,0 +1,119 @@
+<p-toast></p-toast>
+<!-- <div class="login-container">
+    <section class="login-block">
+        <div class="container">
+            <div class="row login-card">
+                <div class="col-md-5 login-sec">
+                  <div *ngIf="isShowResetPassword == false">
+                    <h2 class="text-center">Login</h2>
+                    <form class="login-form" [formGroup]="loginForm">
+                        <div class="form-group">
+                            <label >Email</label>
+                            <input type="text" class="form-control" placeholder="Enter email id" formControlName="username">
+      
+                        </div>
+                        <div class="form-group">
+                          <label>Password</label>
+                          <div class="password-input">
+                            <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" placeholder="Enter password" formControlName="password">
+                            <span class="password-toggle" (click)="togglePasswordVisibility()">
+                              <i class="fa" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+                            </span>
+                          </div>
+                          <div class="d-flex">
+                            <p class="mt-2 form-label">Forgot password?</p><a class="ml-2 mt-2 forgot-password" style="color: #0d6e87;cursor: pointer;" (click)="onClickReset()">Reset Now</a>
+                          </div>
+                        </div>
+                        
+                        
+      
+      
+                        <div class="form-check">
+                            <button type="submit" class="btn btn-login float-right mt-4" (click)="submit()">Login</button>
+                        </div>
+      
+                    </form>
+                  </div>
+                  <div *ngIf="isShowResetPassword == true">
+                    <h2 class="text-center">Reset Password</h2>
+                    <p>Enter your verified email address and we'll send you a link to reset your password.</p>
+                    <form [formGroup]="forgotPasswordForm">
+                      <div class="form-group">
+                        <label >Email</label>
+                        <input type="text" class="form-control" placeholder="Enter email id" formControlName="emailForgotPassword" [ngClass]="{'is-invalid':forgotPasswordForm.controls['emailForgotPassword'].touched && forgotPasswordForm.controls['emailForgotPassword'].errors?.required}">
+                        <span class="mandatory" *ngIf="forgotPasswordForm.controls['emailForgotPassword'].touched && forgotPasswordForm.controls['emailForgotPassword'].errors?.required">Please enter email</span>
+                        <span class="mandatory" *ngIf="forgotPasswordForm.controls['emailForgotPassword'].touched && forgotPasswordForm.controls['emailForgotPassword'].errors?.pattern">Please enter valid email</span>
+                    </div>
+                    <div class="form-check float-right">
+                      <button type="button" class="btn btn-secondary mt-4" (click)="onBackResetPassword()">Back</button>
+                      <button type="submit" class="btn btn-login ml-2 mt-4" (click)="onSubmitResetPassword()">Submit</button>
+                  </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-7 banner-sec p-0">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                      <div class="banner-image">
+                        <img style="width: 100%; height: 575px;border-radius: 0px 12px 12px 0px;"  src="../../assets/images/login.jpeg">
+                        <div class="overlay-text">
+                          <h2 class="name">Welcome To PruTech Time Management System</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+      </section>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-9">
+      <img src="../../assets/images/BG.png" class="img-fluid">
+      <div class="overlay-text">
+        <h1 class="name"><b style="font-size: 2rem;">Welcome to PruTech Time Management System</b></h1>
+      </div>
+    </div>
+    <div class="col-lg-3 login-card card">
+      <div *ngIf="isShowResetPassword == false">
+        <div class="card-header text-center">
+          PruTech
+        </div>
+        <h2 class="card-heading mb-3 mt-4">Login</h2>
+        <form class="login-form" [formGroup]="loginForm">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Enter Email Id" formControlName="username" [ngClass]="{'is-invalid':loginForm.controls['username']?.touched && loginForm.controls['username']?.errors?.required}" noLeadingSpace >
+              <span class="mandatory" *ngIf="loginForm.controls['username']?.touched && loginForm.controls['username']?.errors?.required">Please enter email Id</span>
+            </div>
+            <div  class="form-group">
+              <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" placeholder="Enter password" formControlName="password" [ngClass]="{'is-invalid':loginForm.controls['password']?.touched && loginForm.controls['password']?.errors?.required}"  noLeadingSpace>
+              <div class="password-toggle" (click)="togglePasswordVisibility()">
+                <i class="fa" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+              </div>
+              <span class="mandatory" *ngIf="loginForm.controls['password']?.touched && loginForm.controls['password']?.errors?.required">Please enter password</span>
+          </div>
+            <div class="text-right">
+              <p class="form-label forgot-password" (click)="onClickReset()" style="color: #3F51B5;cursor: pointer;">Forgot password?</p>
+            </div>
+          <button type="submit" class="btn btn-primary" (click)="submit()">Login</button>
+        </form>
+      </div>
+      <div *ngIf="isShowResetPassword == true">
+        <h2 class="text-center card-heading mt-3">Forgot Password</h2>
+        <p>Enter your verified email address and we'll send you a link to reset your password.</p>
+        <form [formGroup]="forgotPasswordForm">
+          <div>
+            <span class="input-group-addon"></span>
+            <input type="text" class="form-control" placeholder="Enter Email Id" formControlName="emailForgotPassword"  [ngClass]="{'is-invalid':forgotPasswordForm.controls['emailForgotPassword'].touched && forgotPasswordForm.controls['emailForgotPassword'].errors?.required}">
+            <span class="mandatory" *ngIf="forgotPasswordForm.controls['emailForgotPassword'].touched && forgotPasswordForm.controls['emailForgotPassword'].errors?.required">Please enter email Id</span>
+            <span class="mandatory" *ngIf="forgotPasswordForm.controls['emailForgotPassword'].touched && forgotPasswordForm.controls['emailForgotPassword'].errors?.pattern">Please enter valid email Id</span>
+          </div>
+        <div class="form-check float-right">
+          <button type="button" class="cancel-button" (click)="onBackResetPassword()">Back</button>
+          <button type="submit" class="edit-button ml-2 mt-4" (click)="onSubmitResetPassword()">Submit</button>
+      </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

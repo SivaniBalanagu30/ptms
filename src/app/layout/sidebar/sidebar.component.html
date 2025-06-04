@@ -1,0 +1,41 @@
+<div class="wrapper">
+  <div class="sidebar">
+ 
+
+
+ 
+    <ul class="menu" *ngIf="this.role === 'Admin' &&  !this.roleStatus">
+      <li *ngFor="let data of menuListForAdmin">
+        <a class="btn" [routerLink]="['/'+ data.path]" routerLinkActive="selected">
+          <i class="fas {{data.icon}}" aria-hidden="true"></i>
+          <span>{{data.name}}</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="menu" *ngIf="this.role === 'Admin' && this.roleStatus">
+      <li *ngFor="let data of menuList">
+        <a class="btn" [routerLink]="['/'+ data.path]" routerLinkActive="selected">
+          <i class="fas {{data.icon}}" aria-hidden="true"></i>
+          <span>{{data.name}}</span>
+        </a>
+      </li>
+    </ul>
+    
+    <ul class="menu" *ngIf="this.role === 'Resource'">
+      <li *ngFor="let data of menuListforResources">
+        <a class="btn" [routerLink]="['/'+ data.path]" routerLinkActive="selected">
+          <i class="fas {{data.icon}}" aria-hidden="true"></i>
+          <span>{{data.name}}</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="menu" *ngIf="this.role === 'Approver'">
+      <li *ngFor="let data of menuListforApprovers">
+        <a class="btn" [routerLink]="['/'+ data.path]" routerLinkActive="selected">
+          <i class="fas {{data.icon}}" aria-hidden="true"></i>
+          <span>{{data.name}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

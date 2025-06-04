@@ -1,0 +1,398 @@
+<p-toast></p-toast>
+<div class="card pl-1">
+    <span class="material-icons mt-2 ml-1" data-toggle="tooltip" data-placement="bottom" title="Back" [routerLink]="'/' + navigatePathOnBackClick" style="color: #3F51B5; font-size:xx-large; cursor: pointer;"> arrow_circle_left </span>
+    <!-- <div class="d-flex" style="margin: 35px 0 0 0;padding-left: 1rem;">
+        <i class="fas fa-chevron-left mr-2" data-toggle="tooltip" data-placement="top" title="Back to project list" [routerLink]="'/project-list'" aria-hidden="true" style="font-size: 20px;cursor: pointer;"></i>
+    </div> -->
+    <!-- <hr> -->
+    <div class="pl-4">
+        <div class="card-body">
+            <div class="row" *ngIf="projectMode == 'edit'">
+                <div class="col-sm-6 d-flex">
+                    <!-- <i class="fa fa-arrow-left mr-2 mt-1" data-toggle="tooltip" data-placement="top" title="Back to project list" [routerLink]="'/project-list'" aria-hidden="true" style="font-size: 20px;cursor: pointer;"></i><strong class="mt-1 mr-2">Project Name:</strong><h3 style="color: red;">{{this.projectDetails?.project_details?.project_name}}</h3> -->
+                    <!-- <span><strong>Project Name</strong></span>
+                    <p>{{this.projectDetails?.project_details?.project_name}}</p> -->
+                </div>
+                <div class="col-sm-6 text-right">
+                    <!-- <i data-toggle='tooltip' data-placement='top' title='Edit project' style='color: #3F51B5; cursor: pointer; font-size: 22px;'' class='edit fa fa-pencil-square-o'></i> -->
+                    <i class="edit fas fa-file-pen" (click)="showModal(this.projectDetails)" data-toggle="tooltip" data-placement="top" title="Edit Project" style="color: #3F51B5; cursor: pointer; font-size: 17px;"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <strong class="mt-1 mr-2">Project Name</strong><h3 style="color: red;">{{this.projectDetails?.project_details?.project_name}}</h3>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Project Id</strong></span>
+                    <p>{{this.projectDetails?.project_details?.project_id}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Status</strong></span>
+                    <p>{{this.projectDetails?.project_details?.status}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>Client Name</strong></span>
+                    <p>{{this.projectDetails?.project_details?.client?.client_name}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Project Manager</strong></span>
+                    <p>{{this.projectDetails?.project_details?.project_manager?.first_name + ' ' +
+                        this.projectDetails?.project_details?.project_manager?.last_name +' '+'('+this.projectDetails?.project_details?.project_manager?.resource_number+')'}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Time Approver</strong></span>
+                    <p>{{this.projectDetails?.project_details?.time_approver?.first_name + ' ' +
+                        this.projectDetails?.project_details?.time_approver?.last_name +' '+'('+ this.projectDetails?.project_details?.time_approver?.resource_number+')'}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <span><strong>SOW/Task Order Executed</strong></span>
+                    <p *ngIf="this.projectDetails?.project_details?.task_order_executed === true">Yes</p>
+                    <p *ngIf="this.projectDetails?.project_details?.task_order_executed === false">No</p>
+    
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>Start Date</strong></span>
+                    <p>{{this.projectDetails?.project_details?.start_date  | customDate}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <span><strong>End Date</strong></span>
+                    <p>{{this.projectDetails?.project_details?.end_date | customDate}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h5 class="pb-1 pt-2"><strong style="color:#3F51B5">Project Milestone Details</strong></h5>
+                </div>
+            </div>
+            <hr style="margin-top: -0.5rem;">
+            <div class="row">
+                <div class="col-lg-6"></div>
+                <div class="col-lg-6 text-right">
+                    <button type="button" class="add-button" (click)="showMilestoneModal('', 'add')"
+                       >
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Milestone
+                    </button>
+                </div>
+    
+            </div>
+    
+            <ag-grid-angular s class="ag-theme-alpine pt-2"
+                [rowData]="this.projectDetails?.milestones" [columnDefs]="milestonesColumnDefs" [pagination]="true"
+                [paginationPageSize]="10" (gridReady)="onGridReady($event)"></ag-grid-angular>
+    
+           <div class="col-lg-12 row">
+                <div class="col-lg-8">
+                    <h5 class="pb-1 pt-4"><strong style="color:#3F51B5">Resources</strong></h5>
+                </div>
+            </div>
+                <hr style="margin-top: -0.5rem;">
+                <div class="col-lg-12 row">
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-4 text-right">
+                        <div class="form-group">
+                            <select class="form-control" (change)="changeResource($event)" [(ngModel)]="selectResource">
+                                <option value=''>Select Resource</option>
+                                <option *ngFor="let resource of allResources" [value]="resource.id">{{resource.first_name + ' ' +
+                                    resource.last_name +' '+'('+resource.resource_number+')'}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+    
+            <ag-grid-angular class="ag-theme-alpine pt-2"
+                [rowData]="this.projectDetails?.resources" [columnDefs]="resourcesColumnDefs" [pagination]="true"
+                [paginationPageSize]="10" (gridReady)="onGridReady($event)"></ag-grid-angular>
+    
+        </div>
+    </div>
+</div>
+
+
+
+<div bsModal #projectData="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}"
+    id="certificationDetailsModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="ml-2 mt-2">PROJECT DETAILS</strong>
+                <span type="button" class="close mr-2" (click)="hideModal()">&times;</span>
+            </div>
+            <div class="modal-body col-lg-12">
+                <form [formGroup]="projectForm">
+                    <!-- <div class="col-lg-12 row">
+                        <div class="col-lg-12">
+                            <label>Client Name <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control" placeholder="Client Name"
+                                formControlName="clientName">
+                        </div>
+                    </div> -->
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">Project Name <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Project Name"
+                                formControlName="projectName" [ngClass]="{'is-invalid':projectForm.controls['projectName'].touched && projectForm.controls['projectName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                                <span class="mandatory" *ngIf="projectForm.controls['projectName'].touched && projectForm.controls['projectName'].errors?.required">Please enter the project name</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Project Id</label>
+                            <input type="text" class="form-control form-control-sm" formControlName="projectId" placeholder="Enter project id" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Status <span class="mandatory">*</span></label>
+                            <select class="form-control form-control-sm" formControlName="status" [ngClass]="{'is-invalid':projectForm.controls['status'].touched && projectForm.controls['status'].errors?.required}">
+                                <option disabled value="">Select status</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                            </select>
+                            <span class="mandatory" *ngIf="projectForm.controls['status'].touched && projectForm.controls['status'].errors?.required">Please select status</span>
+                        </div>
+    
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">Project Manager<span class="mandatory">*</span></label>
+                            <!-- <input type="text" class="form-control" placeholder="Project Manager"
+                                formControlName="projectManager"> -->
+                                <select class="form-control form-control-sm" formControlName="projectManager" [ngClass]="{'is-invalid':projectForm.controls['projectManager'].touched && projectForm.controls['projectManager'].errors?.required}">
+                                    <option disabled value="">Select project manager</option>
+                                    <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.first_name + ' ' + ' ' + manager.last_name +' '+'('+manager.resource_number+')'}}</option>
+                                </select>
+                                <span class="mandatory" *ngIf="projectForm.controls['projectManager'].touched && projectForm.controls['projectManager'].errors?.required">Please select a project manager</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Time Approver <span class="mandatory">*</span></label>
+                            <!-- <input type="text" class="form-control" placeholder="Time Approver"
+                                formControlName="timeApprover"> -->
+                                <select class="form-control form-control-sm" formControlName="timeApprover" [ngClass]="{'is-invalid':projectForm.controls['timeApprover'].touched && projectForm.controls['timeApprover'].errors?.required}">
+                                    <option disabled value="">Select time approver</option>
+                                    <option *ngFor="let approver of allManagers" [value]="approver.id">{{approver.first_name + ' ' + ' ' + approver.last_name +' '+'('+approver.resource_number+')'}}</option>
+                                </select>
+                                <span class="mandatory" *ngIf="projectForm.controls['timeApprover'].touched && projectForm.controls['timeApprover'].errors?.required">Please select a time approver</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">SOW/ Task Order Executed <span class="mandatory">*</span></label>
+                            <select class="form-control form-control-sm" formControlName='executed' [ngClass]="{'is-invalid':projectForm.controls['executed'].touched && projectForm.controls['executed'].errors?.required}">
+                                <option disabled value=''>Select Executed</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <span class="mandatory" *ngIf="projectForm.controls['executed'].touched && projectForm.controls['executed'].errors?.required">Please select yes/ no</span>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Start Date<span class="mandatory">*</span></label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" class="form-control form-control-sm" placeholder="Start Date" #projectaddStartDate="bsDatepicker" bsDatepicker
+                                    formControlName="startDate" [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" [ngClass]="{'is-invalid':projectForm.controls['startDate'].touched && projectForm.controls['startDate'].errors?.required}" (keypress)="stopManualEntry($event)" [maxDate]="minEndDate(projectForm.value.endDate)">
+                                <div class="input-group-append">
+                                    <div class="input-group-text btn" (click)="projectaddStartDate.toggle()">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                                <span class="mandatory" *ngIf="projectForm.controls['startDate'].touched && projectForm.controls['startDate'].errors?.required">Please enter start date</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">End Date <span class="mandatory">*</span></label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" class="form-control form-control-sm" placeholder="End Date" #projectaddEndDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }"
+                                    formControlName="endDate" [ngClass]="{'is-invalid':projectForm.controls['endDate'].touched && projectForm.controls['endDate'].errors?.required}" [minDate]="minEndDate(projectForm.value.startDate)" (keypress)="stopManualEntry($event)">
+                                <div class="input-group-append">
+                                    <div class="input-group-text btn" (click)="projectaddEndDate.toggle()">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                                <span class="mandatory" *ngIf="projectForm.controls['endDate'].touched && projectForm.controls['endDate'].errors?.required">Please enter end date</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-button" (click)="hideModal()">Cancel</button>
+                <button class="save-button" (click)="updateProject()">Update</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div bsModal #milestonesData="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}"
+    id="" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="ml-2 mt-2">MILESTONE DETAILS</strong>
+                <span type="button" class="close mr-2" (click)="hideMilestoneModal()">&times;</span>
+            </div>
+            <div class="modal-body col-lg-12">
+                <form [formGroup]="milestoneForm">
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-12">
+                            <label class="form-label">Milestone Name<span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Milestone Name"
+                                formControlName="milestoneName" [ngClass]="{'is-invalid':milestoneForm.controls['milestoneName'].touched && milestoneForm.controls['milestoneName'].errors?.required}" maxlength="75" appAlphaWithSpace inputType="noWhiteSpaceAtBeginning">
+                                <span class="mandatory" *ngIf="milestoneForm.controls['milestoneName'].touched && milestoneForm.controls['milestoneName'].errors?.required">Please enter milestone name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 row pt-2">
+                        <div class="col-lg-4">
+                            <label class="form-label">Start Date <span class="mandatory">*</span></label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" class="form-control form-control-sm" placeholder="Start Date" #startDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }"
+                                    formControlName="startDate" [bsValue]="milestoneStartDate" [ngClass]="{'is-invalid':milestoneForm.controls['startDate'].touched && milestoneForm.controls['startDate'].errors?.required}" (keypress)="stopManualEntry($event)" [maxDate]="minEndDate(milestoneForm.value.endDate)">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text btn" (click)="startDate.toggle()">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                            </div>
+                                <span class="mandatory" *ngIf="milestoneForm.controls['startDate'].touched && milestoneForm.controls['startDate'].errors?.required">Please enter start date</span>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">End Date <span class="mandatory">*</span></label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" class="form-control form-control-sm" placeholder="End Date" #endDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }"
+                                    formControlName="endDate" [bsValue]="milestoneEndDate" [ngClass]="{'is-invalid':milestoneForm.controls['endDate'].touched && milestoneForm.controls['endDate'].errors?.required}" [minDate]="minEndDate(milestoneForm.value.startDate)" (keypress)="stopManualEntry($event)">
+                                <div class="input-group-append">
+                                    <div class="input-group-text btn" (click)="endDate.toggle()">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                                <span class="mandatory" *ngIf="milestoneForm.controls['endDate'].touched && milestoneForm.controls['endDate'].errors?.required">Please enter end date</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label">Estimated hours <span class="mandatory">*</span></label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Estimated hours"
+                                formControlName="estimatedHours" [ngClass]="{'is-invalid':milestoneForm.controls['estimatedHours'].touched && milestoneForm.controls['estimatedHours'].errors?.required}" appAlphaWithSpace inputType="strictlyNumber">
+                                <span class="mandatory" *ngIf="milestoneForm.controls['estimatedHours'].touched && milestoneForm.controls['estimatedHours'].errors?.required">Please enter estimated hour</span>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-button" (click)="hideMilestoneModal()">Cancel</button>
+                <button *ngIf="this.milistoneType === 'add'" class="save-button" (click)="addMilestone()">Save</button>
+                <button *ngIf="this.milistoneType === 'edit'" class="save-button" (click)="updateMilestone()">Update</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div bsModal #resourceData="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}"
+    id="certificationDetailsModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="ml-2 mt-2">Resource Details</strong>
+                <span type="button" class="close mr-2" (click)="hideResourceModal()">&times;</span>
+            </div>
+            <form [formGroup]="resouceForm">
+                <div class="modal-body col-lg-12">
+                    <div class="row">
+                        <div class="col-sm-4">
+                          <span class="form-label">Name</span>
+                        </div>
+                        <div class="col-sm-1">
+                            :
+                        </div>
+                        <div class="col-sm-4">
+                          <span class="form-label">{{resourceName}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <span class="form-label">Resource ID</span>
+                      </div>
+                      <div class="col-sm-1">
+                        :
+                    </div>
+                      <div class="col-sm-4">
+                        <span class="form-label">{{resourceNumber}}</span>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <span class="form-label">Email</span>
+                    </div>
+                    <div class="col-sm-1">
+                        :
+                    </div>
+                    <div class="col-sm-4">
+                      <span class="form-label">{{resourceEmail}}</span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+                    <div class="col-sm-4">
+                      <span class="form-label">Project Assigned Date <span class="mandatory">*</span></span>
+                    </div>
+                    <div class="col-sm-1">
+                        :
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" formControlName="projectAssignedDate" placeholder="Select project assigned date" #projectAssignedDate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY',showWeekNumbers: false }" [ngClass]="{'is-invalid':resouceForm.controls['projectAssignedDate'].touched && resouceForm.controls['projectAssignedDate'].errors?.required}" (keypress)="stopManualEntry($event)">
+                            <div class="input-group-append">
+                                <div class="input-group-text btn" (click)="projectAssignedDate.toggle()">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                            </div> 
+                        </div>
+                        <span class="mandatory" *ngIf="resouceForm.controls['projectAssignedDate'].touched && resouceForm.controls['projectAssignedDate'].errors?.required">Please enter project assigned date</span>
+                    </div>
+                </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <span class="form-label" style="width: 150px;">Weekly Work Hours Limit <span class="mandatory">*</span></span>
+                    </div>
+                    <div class="col-sm-1">
+                        :
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control form-control-sm" formControlName="workHours" appAlphaWithSpace inputType="strictlyNumber" [ngClass]="{'is-invalid':resouceForm.controls['workHours'].touched && resouceForm.controls['workHours'].errors?.required}" placeholder="Enter weekly work hours limit" maxlength="2">
+                      <span class="mandatory" *ngIf="resouceForm.controls['workHours'].touched && resouceForm.controls['workHours'].errors?.required">Please enter weekly work hours limit</span>
+                    </div>
+                </div>
+                <div class="row pt-1"  *ngIf="this.resourceType === 'edit'">
+                    <div class="col-sm-4">
+                      <span class="form-label">Project Status<span class="mandatory">*</span></span>
+                    </div>
+                    <div class="col-sm-1">
+                        :
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-control form-control-sm" formControlName='projectStatus' [ngClass]="{'is-invalid':resouceForm.controls['projectStatus'].touched && resouceForm.controls['projectStatus'].errors?.required}">
+                            <option disabled value=''>Select Project Status</option>
+                            <option>Assigned</option>
+                            <option>Unassigned</option>
+                          </select>
+                          <span class="mandatory" *ngIf="resouceForm.controls['projectStatus'].touched && resouceForm.controls['projectStatus'].errors?.required">Please select project status</span>
+                    </div>
+                </div>
+                </div>
+            </form>
+          
+            <div class="modal-footer">
+                <button class="cancel-button" (click)="hideResourceModal()">Cancel</button>
+                <button  *ngIf="this.resourceType === 'add'" class="save-button" (click)="saveResource()">Save</button>
+                <button  *ngIf="this.resourceType === 'edit'" class="save-button" (click)="updateResource()">Update</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<h1 class="topHeader" style="color: #3F51B5; font-size: 20px;">Projects</h1>
+<div class="card p-0" style="border-radius: 1rem; margin-top: -5px;">
+    <div class="card-body col-lg-12 pt-0">
+        <mat-tab-group [(selectedIndex)]="tabIndex" *ngIf="this.role === 'Admin'" class="pl-0">
+            <mat-tab label="Manage Projects" >
+
+                <div class="pt-4" style="overflow: hidden;">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <span type="submit" (click)="getProjectsList('All')">
+                                <b>Total Projects</b><a class="box ml-1">{{this.projectList?.total_projects_count}}</a>
+                            </span>
+                        </div>
+                        <div class="col-lg-3">
+                            <span type="submit" (click)="getProjectsList('Active')">
+                                <b>Active Projects</b> <a
+                                    class="box ml-1">{{this.projectList?.active_projects_count}}</a>
+                            </span>
+                        </div>
+                        <div class="col-lg-3">
+                            <span type="submit" (click)="getProjectsList('Inactive')">
+                                <b>Inactive Projects</b> <a
+                                    class="box ml-1">{{this.projectList?.inactive_projects_count}}</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-lg-3">
+                            <div class="search-container">
+                                <input class="form-control form-control-sm search-input" type="text"
+                                    [(ngModel)]="searchText" (keyup)="search()" placeholder="Search Projects">
+                                <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 text-right">
+                            <button type="button" [routerLink]="['/project-list','add-project']" class="add-button">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Projects
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ag-grid-container py-3 pr-3">
+                        <ag-grid-angular class="ag-theme-alpine" [gridOptions]="gridOptions"
+                            (paginationChanged)="onPaginationChanged($event)"
+                            (gridReady)="onGridReady($event)"></ag-grid-angular>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="My Projects">
+                <app-my-projects></app-my-projects>
+            </mat-tab>
+        </mat-tab-group>
+
+        <div *ngIf="this.role === 'Approver' || this.role ==='Resource'">
+            <app-my-projects></app-my-projects>
+        </div>
+
+
+    </div>
+</div>
+    

@@ -1,0 +1,182 @@
+<p-toast></p-toast>
+<h1 class="topHeader" style="color: #3F51B5; font-size: 20px;font-size: 20px;">Timesheets</h1>
+<div class="card p-0" style="border-radius: 1.25rem;margin-top: -5px;">
+  <div class="card-body p-0">
+    <mat-tab-group [(selectedIndex)]="tabIndex" (selectedTabChange)="onTabChange($event)">
+      <mat-tab label="My Timesheet">
+
+        <div class="p-0" style="border-radius: 1.25rem;">
+          <div class="col-lg-12 pt-2">
+            <div class="col-lg-3">
+              <label class="form-label">Select Month</label>
+              <div class="input-group">
+              <input type="text" class="form-control form-control-sm" placeholder="Select Month" #selectMonth="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY',showWeekNumbers: false }"  (keypress)="stopManualEntry($event)"
+              [(ngModel)]="searchText" (keydown)="false" placement="bottom left" (paste)="false" (cut)="false" [bsConfig]="datePickerConfig" (ngModelChange)="selecMyTimeSheet()">
+                <div class="input-group-append">
+                  <div class="input-group-text btn">
+                    <i class="fa fa-calendar" (click)="selectMonth.toggle()"></i>
+                  </div>
+                </div>
+          </div>
+
+            
+              <!-- <input type="text" class="form-control form-control-sm" bsDatepicker  [maxDate]="minMonthDate"  placeholder="Select Month"
+                [(ngModel)]="searchText" [bsConfig]="{dateInputFormat: 'MM-YYYY'}" (onShown)="onOpenCalendar($event)"
+                (ngModelChange)="selecMyTimeSheet()"> -->
+
+            </div>
+        
+          </div>
+          <div class="col-lg-12 pt-4">
+            <table class="table table-bordered">
+              <thead style="background-color:#F8F8F8; border-bottom: rgb(221, 219, 219) solid 1px;">
+                <tr>
+                  <th class="font" scope="col">Dates</th>
+                  <th class="font" scope="col" (click)="sortStatusColumn()">
+                    Status
+                    <span data-toggle="tooltip" data-placement="top" title="Sort" [ngClass]="{'fa-solid fas fa-arrow-up': statusSortDirection === 'asc', 'fa-solid fa-arrow-down': statusSortDirection === 'desc'}"></span>
+                  </th>                  <th class ="font" scope="col">Comments</th>
+                  <th class="font" scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="timeSheetList && timeSheetList.length > 0; else noDataMessage" >
+                <ng-container *ngFor="let row of timeSheetList;let i = index">
+                  <tr>
+                    <td class="font">{{row?.start_date | customDate}} - {{row?.end_date | customDate}}</td>
+                    <td class="font" [ngStyle]="{ color: getStatusColor(row?.status) }">{{row?.status === 'Saved' ? 'Draft' : '' || row?.status === 'NotSubmitted' ? 'Pending Submission' : '' || row?.status}}</td>
+                    <td class="font">
+                      <div class="truncate-text" title="{{row?.approver_comments}}">
+                        {{row?.approver_comments}}
+                      </div>
+                    </td>
+                    <td class="font">
+                      <!-- <i data-toggle="tooltip" data-placement="top" title="Edit timesheets" (click)="row.status === 'Saved' || row.status === 'Submitted' || row.status === 'NotSubmitted' || row.status === 'Rejected' ? editTimesheet(row) : null"
+                        class="fa-solid fas fa-file-pen" [ngClass]="{ 'disabled-icon': uploadOption==='true' ? !(row.status === 'Saved' || row.status === 'NotSubmitted' || row.status === 'Rejected') || row.download_doc === true : !(row.status === 'Saved' || row.status === 'NotSubmitted' || row.status === 'Rejected')}"
+                        style="cursor: pointer; margin-right: 10px; font-size:17px"></i>  -->
+                        <i data-toggle="tooltip" *ngIf="uploadOption == 'true'" data-placement="top" title="Edit timesheets" (click)="row.status === 'Saved' || row.status === 'Submitted' || row.status === 'NotSubmitted' || row.status === 'Rejected' || row.status === 'Approved' ? editTimesheet(row) : null"
+                          class="fa-solid fas fa-file-pen" [ngClass]="{ 'disabled-icon':  row.manual_entry === true }"
+                          style="cursor: pointer; margin-right: 10px; font-size:17px;"></i>
+                        <i data-toggle="tooltip" *ngIf="uploadOption == 'false'" data-placement="top" title="Edit timesheets" (click)="row.status === 'Saved' || row.status === 'Submitted' || row.status === 'NotSubmitted' || row.status === 'Rejected' ? editTimesheet(row) : null"
+                          class="fa-solid fas fa-file-pen" [ngClass]="{ 'disabled-icon': row.status === 'Approved' || row.status === 'Submitted'}"
+                          style="cursor: pointer; margin-right: 10px; font-size:17px;"></i>
+
+
+
+                      <!-- <i class='view mr-1 mb-1 fa-solid fa-file-lines'  style='cursor:pointer;font-size: 17px; ' alt='timesheets-view-icon' data-toggle='tooltip' data-placement='top' title='View timesheets' (click)="row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected' ? showModal(row) : null" [ngClass]="{ 'disabled-icon': uploadOption==='true' ? !(row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected') || row.download_doc === true :  !(row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected')}"></i> -->
+                      <i class='view mr-1 mb-1 fa-solid fa-file-lines' *ngIf="uploadOption == 'true'" style='cursor:pointer;color: #b8b894; font-size: 17px;' alt='fine-print--v1' data-toggle='tooltip' data-placement='top' title='View timesheets' (click)="row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected' ? showModal(row) : null" 
+                      [ngClass]="{ 'disabled-icon': row.manual_entry == false }"></i>
+                      <i class='view mr-1 mb-1 fa-solid fa-file-lines' *ngIf="uploadOption == 'false'" style='cursor:pointer;color: #b8b894; font-size: 17px;' alt='fine-print--v1' data-toggle='tooltip' data-placement='top' title='View timesheets' (click)="row.status === 'Saved' || row.status === 'Approved' || row.status === 'Submitted' || row.status === 'Rejected' ? showModal(row) : null" 
+                      [ngClass]="{ 'disabled-icon': row.status==='NotSubmitted'}"></i>
+
+                      <!-- <i data-toggle="tooltip" data-placement="top" title="Download timesheets" (click)="row.status === 'Approved' || (row.status === 'Submitted' && uploadOption == 'true') ? downloadTimesheetPDF(row) : null" class="fas fa-file-pdf"
+                      [ngClass]="{ 'disabled-icon': uploadOption==='true' ? !(row.status === 'Approved' || row.status === 'Submitted') || row.download_doc === true : !(row.status === 'Approved')}" style="cursor: pointer; margin-left: 10px; font-size:17px; color: red;"></i> -->
+                        
+                      <i data-toggle="tooltip" *ngIf="uploadOption == 'true'" data-placement="top" title="Download timesheets" (click)="row.status === 'Approved' || (row.status === 'Submitted') ? downloadTimesheetPDF(row) : null" class="fas fa-file-pdf"
+                        [ngClass]="{ 'disabled-icon': row.manual_entry == false || row.status==='Rejected'}" style="cursor: pointer; margin-left: 10px; font-size:17px; color: red;"></i>
+                      <i data-toggle="tooltip" *ngIf="uploadOption == 'false'" data-placement="top" title="Download timesheets" (click)="row.status === 'Approved' || (row.status === 'Submitted') ? downloadTimesheetPDF(row) : null" class="fas fa-file-pdf"
+                        [ngClass]="{ 'disabled-icon': row.status === 'Submitted' || row.status === 'NotSubmitted' || row.status === 'Saved' || row.status === 'Rejected'}" style="cursor: pointer; margin-left: 10px; font-size:17px; color: red;"></i>
+
+
+                        <i *ngIf="uploadOption==='true'" data-toggle="tooltip" data-placement="top" title="Download uploaded document" (click)="downloadApprovedTimesheetFile(row)" [ngClass]="{ 'disabled-icon': row.download_doc === false }" class="fa-solid fa-file-circle-check" style="cursor: pointer; margin-left: 10px; font-size:17px; color: #DF920B;"></i>
+                    </td>
+                  </tr>
+                  <tr> <!-- Add a new row after each data row for the horizontal line -->
+                    <td colspan="5" style="padding: 0;">
+                      <hr style="border-top: 1px solid #ccc; margin: 0;">
+                    </td>
+                  </tr>
+                </ng-container>
+               
+              </tbody>
+              <ng-template #noDataMessage>
+                <tr>
+                  <td colspan="12" class="font text-center">No Rows To Show</td>
+                </tr>
+              </ng-template>
+            </table>
+            <div *ngIf="this.timeSheetList?.length > 8" class="text-right">
+              <a [routerLink]="['/myTimeSheet']">>> View more</a>
+  
+            </div>
+  
+          </div>
+          
+
+
+
+
+        </div>
+
+
+      </mat-tab>
+      <mat-tab label="Timesheet Entry">
+        <app-time-sheet-entry ></app-time-sheet-entry>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<div [config]="{backdrop: 'static'}" bsModal #timesheetData="bs-modal" class="modal fade" tabindex="-1" id="timesheetDataModal" role="dialog"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title ml-2 mt-3"><strong>Timesheets</strong></h5>
+        <span type="button"  class="close mr-2" (click)="hideModal()">&times;</span>
+      </div>
+      <div class="modal-body pt-2">
+        <!-- <b class="form-label">Total Work hours: {{this.totalHours}} </b> -->
+        <!-- <ag-grid-angular class="ag-theme-alpine pt-3" [rowData]="this.timesheetDetails" [columnDefs]="viewColumnsDefs"
+          [pagination]="true" [paginationPageSize]="10" (gridReady)="onGridReady($event)"></ag-grid-angular> -->
+          <ng-container *ngFor="let gridConfig of gridConfigurations;let i = index">
+            <!-- <b class="form-label">Total Work hours: {{this.totalHours}} </b> -->
+            <div class="row">
+              <div class="col-lg-12">
+                <h3 *ngIf="gridConfigurations.length > 1" style="margin-top: 5px; font-weight: bold; color: #5865C7;">Timesheet - {{i+1}}</h3>
+              </div>
+            </div>
+            <div class="row pt-1">
+              <div class="col-lg-6">
+                <div class="row">
+                  <span class="col-lg-5"><b class="form-label">Client Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.client_name}}</span>
+                </div>
+                <div class="row">
+                  <span class="col-lg-5"><b class="form-label">Project Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.project_name}}</span>
+                </div>
+                <div class="row">
+                  <span class="col-lg-5"><b class="form-label">Project Manager Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.project_manager_name}}</span>
+                </div>
+                <div class="row">
+                  <span class="col-lg-5"><b class="form-label">Time Approver Name</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.time_approver_name}}</span>
+                </div>
+                <div class="row" *ngIf="gridConfig.rowData.resource_details?.timesheet_status == 'Rejected' || gridConfig.rowData.resource_details?.timesheet_status == 'Approved'">
+                  <span class="col-lg-5"><b class="form-label">Approver Comments</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.approver_comments}}</span>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="row">
+                  <span class="col-lg-5"><b class="form-label">Project Work Hour Limit</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label">{{gridConfig.rowData.resource_details?.project_work_hour_limit}}</span>
+                </div>
+                <div class="row">
+                  <span class="col-lg-5"><b class="form-label">Project Work Hours</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label" [ngStyle]="{'color':gridConfig.rowData.resource_details?.project_work_hours > gridConfig.rowData.resource_details?.project_work_hour_limit ? 'red' : ''}">{{gridConfig.rowData.resource_details?.project_work_hours}}</span>
+                </div>
+                <div class="row">
+                  <span class="col-lg-5"><b class="form-label">Timesheet Status</b></span><span class="col-lg-1"><b>:</b></span><span class="col-lg-5 form-label" [ngStyle]="{'color':getStatusColor(gridConfig.rowData.resource_details?.timesheet_status)}">{{gridConfig.rowData.resource_details?.timesheet_status}}</span>
+                </div>
+              </div>
+            </div>
+            <ag-grid-angular class="ag-theme-alpine view-timesheets pt-1"
+              [rowData]="gridConfig.rowData.timesheets"
+              [columnDefs]="gridConfig.columnDefs"
+              [suppressHorizontalScroll]="true"
+              [pagination]="gridConfig.pagination"
+              [paginationPageSize]="gridConfig.paginationPageSize"
+              (gridReady)="onGridReady($event)">
+            </ag-grid-angular>
+            <hr>
+          </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

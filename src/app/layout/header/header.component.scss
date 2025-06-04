@@ -1,0 +1,80 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(214, 211, 211);
+  height: 55px;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  padding-left: 0 !important;
+}
+
+
+.header1 {
+  color: #322f2f;
+  text-align: center;
+
+}
+
+.name1 {
+  font-size: 13px;
+  margin-top: 18px;
+  // margin-left:120px;
+  font-family:Arial;
+  // margin-bottom: 0px;
+  font-weight: 900;
+}
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+/* Position the dropdown at the right side of the screen */
+.dropdown-menu {
+  right: auto;
+}
+
+/* Highlight the header */
+.navbar {
+  background-color: white;
+  box-shadow: 0 8px 8px -5px rgba(97, 94, 94, 0.4);
+}
+
+.dropdown-menu a:hover {
+  background-color: #8a8b8d;
+  color: #fff;
+}
+.eye-icon {
+  float: right;
+    margin-top: -43px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.fa{
+  padding-top: 20px !important;
+}
+
+.mat-menu-item {
+  outline: none;
+}
+
+.modal-header .close{
+  padding: 1.5rem 0.5rem !important;
+}
+.modal-header{
+  padding:0 0 !important;
+}
+.text-label {
+	font-size: 14px;
+    margin-right: 10px;
+    padding-top: 10px;
+	/* font-weight: 400; */
+	cursor: pointer;
+	max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
